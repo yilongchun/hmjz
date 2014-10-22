@@ -35,6 +35,7 @@
 }
 //登陆
 -(void)login:(UITapGestureRecognizer *) rapGr{
+    [self viewTapped:rapGr];
     NSLog(@"登陆");
     HUD.labelText = @"正在加载中";
     [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
@@ -48,6 +49,7 @@
 -(void)viewTapped:(UITapGestureRecognizer*)tapGr{
     [self.username resignFirstResponder];
     [self.password resignFirstResponder];
+    [self moveView:0];
 }
 
 
@@ -68,18 +70,24 @@
 
 #pragma mark - 输入框代理
 -(void)textFieldDidBeginEditing:(UITextField *)textField{   //开始编辑时，整体上移
-    [self moveView:-80];
+    if(textField.tag == 0){
+        [self moveView:-40];
+    }else if(textField.tag == 1){
+        if(self.view.frame.origin.y == -40){
+            [self moveView:-40];
+        }else if(self.view.frame.origin.y == 0){
+            [self moveView:-80];
+        }
+    }
 }
--(void)textFieldDidEndEditing:(UITextField *)textField{     //结束编辑时，整体下移
-    [self moveView:80];
-}
+
 #pragma mark - 键盘回车
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField.tag==0) {
         [self.password becomeFirstResponder];
     }
     if (textField.tag==1) {
-        [textField resignFirstResponder];
+        [self login:nil];
     }
     return YES;
 }
@@ -87,15 +95,17 @@
 -(void)moveView:(float)move{
     NSTimeInterval animationDuration = 1.0f;
     CGRect frame = self.view.frame;
-    frame.origin.y +=move;//view的X轴上移
+    if(move == 0){
+        frame.origin.y =0;
+    }else{
+        frame.origin.y +=move;//view的X轴上移
+    }
     [UIView beginAnimations:@"ResizeView" context:nil];
     self.view.frame = frame;
     [UIView setAnimationDuration:animationDuration];
     self.view.frame = frame;
     [UIView commitAnimations];//设置调整界面的动画效果
 }
-
-
 
 
 @end

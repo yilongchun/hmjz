@@ -40,6 +40,9 @@
     NSMutableDictionary *infolist = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
     hostname = [infolist objectForKey:@"Httpurl"];
     
+    self.username.text = @"13276367907";
+    self.password.text = @"123456";
+    
 }
 //登陆
 -(void)loginTag:(UITapGestureRecognizer *) rapGr{
@@ -48,8 +51,8 @@
     [HUD show:YES];
     MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:hostname customHeaderFields:nil];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:@"13276367907" forKey:@"userId"];
-    [dic setValue:@"123456" forKey:@"password"];
+    [dic setValue:self.username.text forKey:@"userId"];
+    [dic setValue:self.password.text forKey:@"password"];
     
     MKNetworkOperation *op = [engine operationWithPath:@"/sma/app/Plogin.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
@@ -60,14 +63,26 @@
         if (resultDict == nil) {
             NSLog(@"json parse failed \r\n");
         }
-        NSLog(@"%@", [resultDict objectForKey:@"code"]);
-        NSLog(@"%@", [resultDict objectForKey:@"msg"]);
-        NSLog(@"%@", [resultDict objectForKey:@"success"]);
-        NSDictionary *data = [resultDict objectForKey:@"data"];
-        NSLog(@"%@", [data objectForKey:@"hxusercode"]);
-        NSLog(@"%@", [data objectForKey:@"userid"]);
-        NSLog(@"%@", [data objectForKey:@"hxpassword"]);
-        [HUD hide:YES];
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+//        NSString *code = [resultDict objectForKey:@"code"];
+        if ([success boolValue]) {
+            [HUD hide:YES];
+            NSLog(@"%@",msg);
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
+            NSLog(@"%@", [data objectForKey:@"userid"]);
+            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+        }else{
+            [HUD hide:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = msg;
+            hud.margin = 10.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1];
+        }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
         [HUD hide:YES];

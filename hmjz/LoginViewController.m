@@ -26,7 +26,7 @@
     [self.view addGestureRecognizer:tapGr];
     //添加登陆事件
     self.loginBtn.userInteractionEnabled = YES;
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(login:)];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loginTag:)];
     [self.loginBtn addGestureRecognizer:singleTap];
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -34,15 +34,15 @@
     HUD.delegate = self;
 }
 //登陆
--(void)login:(UITapGestureRecognizer *) rapGr{
+-(void)loginTag:(UITapGestureRecognizer *) rapGr{
     [self viewTapped:rapGr];
-    NSLog(@"登陆");
     HUD.labelText = @"正在加载中";
-    [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+    [HUD showWhileExecuting:@selector(login) onTarget:self withObject:nil animated:YES];
 }
-- (void)myTask {
+- (void)login {
     // Do something usefull in here instead of sleeping ...
-    sleep(3);
+    NSLog(@"%@",self.username.text);
+    NSLog(@"%@",self.password.text);
 }
 
 //隐藏键盘
@@ -87,7 +87,7 @@
         [self.password becomeFirstResponder];
     }
     if (textField.tag==1) {
-        [self login:nil];
+        [self loginTag:nil];
     }
     return YES;
 }

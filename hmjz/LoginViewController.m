@@ -43,6 +43,23 @@
     // Do something usefull in here instead of sleeping ...
     NSLog(@"%@",self.username.text);
     NSLog(@"%@",self.password.text);
+    
+    
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"mobile.hmjxt.com" customHeaderFields:nil];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:@"13276367907" forKey:@"userId"];
+    [dic setValue:@"123456" forKey:@"password"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/app/Plogin.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    }];
+    [engine enqueueOperation:op];
+    
+    
+    
 }
 
 //隐藏键盘

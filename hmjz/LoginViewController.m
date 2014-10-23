@@ -8,13 +8,12 @@
 
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
-#import "MKNetworkOperation.h"
-#import "MKNetworkEngine.h"
+#import"MKNetworkKit.h"
 #import "MainViewController.h"
+#import "Utils.h"
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
-    NSString *hostname;
 }
 
 @end
@@ -36,10 +35,8 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.delegate = self;
-    //从资源文件获取请求路径
-    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
-    NSMutableDictionary *infolist = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    hostname = [infolist objectForKey:@"Httpurl"];
+    
+    
     
     self.username.text = @"13276367907";
     self.password.text = @"123456";
@@ -50,7 +47,7 @@
     [self viewTapped:rapGr];
     HUD.labelText = @"正在加载中";
     [HUD show:YES];
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:hostname customHeaderFields:nil];
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.username.text forKey:@"userId"];
     [dic setValue:self.password.text forKey:@"password"];
@@ -70,16 +67,19 @@
 //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [HUD hide:YES];
-            NSLog(@"%@",msg);
+//            NSLog(@"%@",msg);
             NSDictionary *data = [resultDict objectForKey:@"data"];
-            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
-            NSLog(@"%@", [data objectForKey:@"userid"]);
-            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+//            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
+//            NSLog(@"%@", [data objectForKey:@"userid"]);
+            NSString *userid = [data objectForKey:@"userid"];
+//            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+            
             MainViewController *mvc = [[MainViewController alloc] init];
             //UIModalTransitionStyleCoverVertical 从下往上
             //UIModalTransitionStyleCrossDissolve 渐变
             //UIModalTransitionStyleFlipHorizontal 翻转
             //UIModalTransitionStylePartialCurl从下往上翻页
+            mvc.userid = userid;
             mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
             [self presentViewController:mvc animated:YES completion:^{
                 NSLog(@"completion");
@@ -106,6 +106,8 @@
     [engine enqueueOperation:op];
 
 }
+
+
 
 
 //隐藏键盘

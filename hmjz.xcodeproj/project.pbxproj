@@ -12,9 +12,7 @@
 		E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */; };
 		E4B2C90319F7621900B0E1DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90219F7621900B0E1DE /* main.m */; };
 		E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90519F7621900B0E1DE /* AppDelegate.m */; };
-		E4B2C90C19F7621900B0E1DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90A19F7621900B0E1DE /* Main.storyboard */; };
 		E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90D19F7621900B0E1DE /* Images.xcassets */; };
-		E4B2C91119F7621900B0E1DE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90F19F7621900B0E1DE /* LaunchScreen.xib */; };
 		E4B2C91D19F7621900B0E1DE /* hmjzTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C91C19F7621900B0E1DE /* hmjzTests.m */; };
 		E4C776FE19F88AAB00532B09 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F719F88AAB00532B09 /* Default.png */; };
 		E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F819F88AAB00532B09 /* Default@2x.png */; };
@@ -40,6 +38,7 @@
 		E4C7779A19F8966800532B09 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C7779019F8966800532B09 /* Reachability.m */; };
 		E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C777A319F8B4BD00532B09 /* MainViewController.m */; };
 		E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C777A419F8B4BD00532B09 /* MainViewController.xib */; };
+		E4C777A919F8CD3900532B09 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C777A819F8CD3900532B09 /* Utils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +105,8 @@
 		E4C777A219F8B4BD00532B09 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		E4C777A319F8B4BD00532B09 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		E4C777A419F8B4BD00532B09 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		E4C777A719F8CD3900532B09 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		E4C777A819F8CD3900532B09 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +169,8 @@
 				E4C777A219F8B4BD00532B09 /* MainViewController.h */,
 				E4C777A319F8B4BD00532B09 /* MainViewController.m */,
 				E4C777A419F8B4BD00532B09 /* MainViewController.xib */,
+				E4C777A719F8CD3900532B09 /* Utils.h */,
+				E4C777A819F8CD3900532B09 /* Utils.m */,
 			);
 			path = hmjz;
 			sourceTree = "<group>";
@@ -354,8 +357,6 @@
 				E4C7770319F88AAB00532B09 /* ic_login_user.png in Resources */,
 				E4C7770419F88AAB00532B09 /* ic_login.png in Resources */,
 				E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */,
-				E4B2C90C19F7621900B0E1DE /* Main.storyboard in Resources */,
-				E4B2C91119F7621900B0E1DE /* LaunchScreen.xib in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
@@ -395,6 +396,7 @@
 				E4C7779519F8966800532B09 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,
 				E4C7779319F8966800532B09 /* NSDate+RFC1123.m in Sources */,
+				E4C777A919F8CD3900532B09 /* Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,8 +519,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = hmjz/hmjz.pch;
@@ -526,7 +528,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "450e45f1-b6ef-4e14-814c-d78946f38f3d";
 			};
 			name = Debug;
 		};
@@ -535,8 +537,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = hmjz/hmjz.pch;
@@ -544,7 +546,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "450e45f1-b6ef-4e14-814c-d78946f38f3d";
 			};
 			name = Release;
 		};

@@ -8,9 +8,12 @@
 
 #import "LoginViewController.h"
 #import "MBProgressHUD.h"
+#import "MKNetworkOperation.h"
+#import "MKNetworkEngine.h"
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
+    NSString *hostname;
 }
 
 @end
@@ -32,20 +35,18 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.delegate = self;
+    //从资源文件获取请求路径
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSMutableDictionary *infolist = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    hostname = [infolist objectForKey:@"Httpurl"];
+    
 }
 //登陆
 -(void)loginTag:(UITapGestureRecognizer *) rapGr{
     [self viewTapped:rapGr];
     HUD.labelText = @"正在加载中";
-    [HUD showWhileExecuting:@selector(login) onTarget:self withObject:nil animated:YES];
-}
-- (void)login {
-    // Do something usefull in here instead of sleeping ...
-    NSLog(@"%@",self.username.text);
-    NSLog(@"%@",self.password.text);
-    
-    
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:@"mobile.hmjxt.com" customHeaderFields:nil];
+    [HUD show:YES];
+    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:hostname customHeaderFields:nil];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:@"13276367907" forKey:@"userId"];
     [dic setValue:@"123456" forKey:@"password"];
@@ -53,14 +54,34 @@
     MKNetworkOperation *op = [engine operationWithPath:@"/sma/app/Plogin.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSLog(@"%@", [resultDict objectForKey:@"code"]);
+        NSLog(@"%@", [resultDict objectForKey:@"msg"]);
+        NSLog(@"%@", [resultDict objectForKey:@"success"]);
+        NSDictionary *data = [resultDict objectForKey:@"data"];
+        NSLog(@"%@", [data objectForKey:@"hxusercode"]);
+        NSLog(@"%@", [data objectForKey:@"userid"]);
+        NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+        [HUD hide:YES];
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
     }];
     [engine enqueueOperation:op];
-    
-    
-    
+
 }
+
 
 //隐藏键盘
 -(void)viewTapped:(UITapGestureRecognizer*)tapGr{

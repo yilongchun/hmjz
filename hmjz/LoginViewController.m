@@ -10,6 +10,7 @@
 #import "MBProgressHUD.h"
 #import "MKNetworkOperation.h"
 #import "MKNetworkEngine.h"
+#import "MainViewController.h"
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -74,6 +75,15 @@
             NSLog(@"%@", [data objectForKey:@"hxusercode"]);
             NSLog(@"%@", [data objectForKey:@"userid"]);
             NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+            MainViewController *mvc = [[MainViewController alloc] init];
+            //UIModalTransitionStyleCoverVertical 从下往上
+            //UIModalTransitionStyleCrossDissolve 渐变
+            //UIModalTransitionStyleFlipHorizontal 翻转
+            //UIModalTransitionStylePartialCurl从下往上翻页
+            mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            [self presentViewController:mvc animated:YES completion:^{
+                NSLog(@"completion");
+            }];
         }else{
             [HUD hide:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

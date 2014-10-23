@@ -12,7 +12,6 @@
 		E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */; };
 		E4B2C90319F7621900B0E1DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90219F7621900B0E1DE /* main.m */; };
 		E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90519F7621900B0E1DE /* AppDelegate.m */; };
-		E4B2C90919F7621900B0E1DE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90819F7621900B0E1DE /* ViewController.m */; };
 		E4B2C90C19F7621900B0E1DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90A19F7621900B0E1DE /* Main.storyboard */; };
 		E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90D19F7621900B0E1DE /* Images.xcassets */; };
 		E4B2C91119F7621900B0E1DE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90F19F7621900B0E1DE /* LaunchScreen.xib */; };
@@ -39,6 +38,8 @@
 		E4C7779819F8966800532B09 /* MKNetworkEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C7778A19F8966800532B09 /* MKNetworkEngine.m */; };
 		E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C7778D19F8966800532B09 /* MKNetworkOperation.m */; };
 		E4C7779A19F8966800532B09 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C7779019F8966800532B09 /* Reachability.m */; };
+		E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C777A319F8B4BD00532B09 /* MainViewController.m */; };
+		E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C777A419F8B4BD00532B09 /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +63,6 @@
 		E4B2C90219F7621900B0E1DE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E4B2C90419F7621900B0E1DE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4B2C90519F7621900B0E1DE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E4B2C90719F7621900B0E1DE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E4B2C90819F7621900B0E1DE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E4B2C90B19F7621900B0E1DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E4B2C90D19F7621900B0E1DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E4B2C91019F7621900B0E1DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -104,6 +103,9 @@
 		E4C7778D19F8966800532B09 /* MKNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MKNetworkOperation.m; sourceTree = "<group>"; };
 		E4C7778F19F8966800532B09 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		E4C7779019F8966800532B09 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		E4C777A219F8B4BD00532B09 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		E4C777A319F8B4BD00532B09 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		E4C777A419F8B4BD00532B09 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,20 +153,21 @@
 		E4B2C8FF19F7621900B0E1DE /* hmjz */ = {
 			isa = PBXGroup;
 			children = (
-				E4C7777919F8966800532B09 /* MKNetworkKit */,
 				E4B2C90419F7621900B0E1DE /* AppDelegate.h */,
 				E4B2C90519F7621900B0E1DE /* AppDelegate.m */,
-				E4B2C90719F7621900B0E1DE /* ViewController.h */,
-				E4B2C90819F7621900B0E1DE /* ViewController.m */,
 				E4B2C90A19F7621900B0E1DE /* Main.storyboard */,
 				E4B2C90D19F7621900B0E1DE /* Images.xcassets */,
 				E4B2C90F19F7621900B0E1DE /* LaunchScreen.xib */,
-				E4B2C90019F7621900B0E1DE /* Supporting Files */,
 				E4AE1F1419F775A7003C90B9 /* LoginViewController.h */,
 				E4AE1F1519F775A7003C90B9 /* LoginViewController.m */,
 				E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */,
 				E4AE1F2119F78FC9003C90B9 /* MBProgressHUD.h */,
 				E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */,
+				E4B2C90019F7621900B0E1DE /* Supporting Files */,
+				E4C7777919F8966800532B09 /* MKNetworkKit */,
+				E4C777A219F8B4BD00532B09 /* MainViewController.h */,
+				E4C777A319F8B4BD00532B09 /* MainViewController.m */,
+				E4C777A419F8B4BD00532B09 /* MainViewController.xib */,
 			);
 			path = hmjz;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				E4B2C91119F7621900B0E1DE /* LaunchScreen.xib in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
+				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
 				E4C7770219F88AAB00532B09 /* ic_login_pic.png in Resources */,
 				E4C7770119F88AAB00532B09 /* ic_login_password.png in Resources */,
@@ -382,7 +386,6 @@
 				E4C7779719F8966800532B09 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				E4C7779A19F8966800532B09 /* Reachability.m in Sources */,
 				E4C7779619F8966800532B09 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
-				E4B2C90919F7621900B0E1DE /* ViewController.m in Sources */,
 				E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */,
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */,
@@ -390,6 +393,7 @@
 				E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */,
 				E4B2C90319F7621900B0E1DE /* main.m in Sources */,
 				E4C7779519F8966800532B09 /* NSString+MKNetworkKitAdditions.m in Sources */,
+				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,
 				E4C7779319F8966800532B09 /* NSDate+RFC1123.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

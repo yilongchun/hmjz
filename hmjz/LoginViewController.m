@@ -36,8 +36,6 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
-    
-    
     self.username.text = @"13276367907";
     self.password.text = @"123456";
     
@@ -75,13 +73,17 @@
 //            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
             
             MainViewController *mvc = [[MainViewController alloc] init];
+            UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
+            
+            
+            
             //UIModalTransitionStyleCoverVertical 从下往上
             //UIModalTransitionStyleCrossDissolve 渐变
             //UIModalTransitionStyleFlipHorizontal 翻转
             //UIModalTransitionStylePartialCurl从下往上翻页
             mvc.userid = userid;
             mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            [self presentViewController:mvc animated:YES completion:^{
+            [self presentViewController:nc animated:YES completion:^{
                 NSLog(@"completion");
             }];
         }else{

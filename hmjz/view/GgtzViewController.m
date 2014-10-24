@@ -11,6 +11,7 @@
 #import"MKNetworkKit.h"
 #import "Utils.h"
 #import "MBProgressHUD.h"
+#import "GgxqViewController.h"
 
 @interface GgtzViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -26,11 +27,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
-    
-//    NSArray *array = [NSArray arrayWithObjects:@"1",@"2", nil];
-//    self.dataSource = array;
+
+    //初始化tableview
     CGRect cg = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     mytableView = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
     [mytableView setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
@@ -40,9 +38,7 @@
     if ([mytableView respondsToSelector:@selector(setLayoutMargins:)]) {
         [mytableView setLayoutMargins:UIEdgeInsetsZero];
     }
-    // 设置tableView的数据源
     mytableView.dataSource = self;
-    // 设置tableView的委托
     mytableView.delegate = self;
     [self.view addSubview:mytableView];
     
@@ -85,7 +81,7 @@
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [HUD hide:YES];
-            [self okMsk:msg];
+            [self okMsk:@"加载成功"];
             
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
@@ -94,7 +90,6 @@
                 [self.mytableView reloadData];
 //                NSDictionary *total = [data objectForKey:@"total"];
 //                NSLog(@"%@",rows);
-//                NSLog(@"%@",total);
                 
             }
         }else{
@@ -123,7 +118,7 @@
     HUD.delegate = self;
     HUD.labelText = msg;
     [HUD show:YES];
-    [HUD hide:YES afterDelay:1];
+    [HUD hide:YES afterDelay:0.5];
 }
 
 
@@ -134,7 +129,7 @@
     hud.labelText = msg;
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:0.5];
 }
 
 
@@ -158,8 +153,9 @@
     NSString *tncreatedate = [info objectForKey:@"tncreatedate"];
     cell.gtitle.text = tntitle;
     cell.gdispcription.text = tncontent;
-    cell.gdispcription.numberOfLines = 0;// 不可少Label属性之一
+    cell.gdispcription.numberOfLines = 2;// 不可少Label属性之一
     cell.gdispcription.lineBreakMode = NSLineBreakByCharWrapping;// 不可少Label属性之二
+    [cell.gdispcription sizeToFit];
     cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
     cell.gdate.text = tncreatedate;
     return cell;
@@ -178,6 +174,16 @@
     }
 }
  
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *tnid = [info objectForKey:@"tnid"];
+    GgxqViewController *ggxq = [[GgxqViewController alloc]init];
+    ggxq.title = @"公告详情";
+    ggxq.tnid = tnid;
+    [self.navigationController pushViewController:ggxq animated:YES];
+    
+}
+
 
 
 

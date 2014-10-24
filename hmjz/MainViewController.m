@@ -94,7 +94,7 @@
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
     YsdtViewController *ysdt = [[YsdtViewController alloc] init];
-//    GgtzViewController *ysdt = [[GgtzViewController alloc] init];
+    ysdt.userid = self.userid;
     [self.navigationController pushViewController:ysdt animated:YES];
 }
 //班务活动

@@ -25,13 +25,19 @@
     yqjs.title = @"园情介绍";
     GgtzViewController *ggtz = [[GgtzViewController alloc] init];
     ggtz.title = @"公告通知";
+    ggtz.userid = self.userid;
     [self setViewControllers:[NSArray arrayWithObjects:yqjs, ggtz, nil]];
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"返回";
+    self.navigationItem.backBarButtonItem = backItem;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 
 @end

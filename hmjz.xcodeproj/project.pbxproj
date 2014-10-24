@@ -23,6 +23,8 @@
 		E4C69A7219FA18F200B0EFEA /* FHSegmentedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A7119FA18F200B0EFEA /* FHSegmentedViewController.m */; };
 		E4C69A7919FA31C400B0EFEA /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A7719FA31C400B0EFEA /* 37x-Checkmark.png */; };
 		E4C69A7A19FA31C400B0EFEA /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A7819FA31C400B0EFEA /* 37x-Checkmark@2x.png */; };
+		E4C69A7E19FA34FB00B0EFEA /* GgxqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */; };
+		E4C69A7F19FA34FB00B0EFEA /* GgxqViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */; };
 		E4C776FE19F88AAB00532B09 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F719F88AAB00532B09 /* Default.png */; };
 		E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F819F88AAB00532B09 /* Default@2x.png */; };
 		E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F919F88AAB00532B09 /* ic_login_bg.png */; };
@@ -105,6 +107,9 @@
 		E4C69A7119FA18F200B0EFEA /* FHSegmentedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSegmentedViewController.m; sourceTree = "<group>"; };
 		E4C69A7719FA31C400B0EFEA /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		E4C69A7819FA31C400B0EFEA /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
+		E4C69A7B19FA34FB00B0EFEA /* GgxqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GgxqViewController.h; path = view/GgxqViewController.h; sourceTree = "<group>"; };
+		E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GgxqViewController.m; path = view/GgxqViewController.m; sourceTree = "<group>"; };
+		E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GgxqViewController.xib; path = view/GgxqViewController.xib; sourceTree = "<group>"; };
 		E4C776F719F88AAB00532B09 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		E4C776F819F88AAB00532B09 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = "<group>"; };
 		E4C776F919F88AAB00532B09 /* ic_login_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_login_bg.png; path = images/ic_login_bg.png; sourceTree = "<group>"; };
@@ -363,6 +368,9 @@
 				E4C69A6619F9E35400B0EFEA /* GgtzTableViewCell.h */,
 				E4C69A6719F9E35400B0EFEA /* GgtzTableViewCell.m */,
 				E4C69A6819F9E35400B0EFEA /* GgtzTableViewCell.xib */,
+				E4C69A7B19FA34FB00B0EFEA /* GgxqViewController.h */,
+				E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */,
+				E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -469,6 +477,7 @@
 				E4C777C019F8D7F300532B09 /* ic_index_009.png in Resources */,
 				E4C69A6A19F9E35400B0EFEA /* GgtzTableViewCell.xib in Resources */,
 				E4C69A6519F9DD5200B0EFEA /* GgtzViewController.xib in Resources */,
+				E4C69A7F19FA34FB00B0EFEA /* GgxqViewController.xib in Resources */,
 				E4C7770219F88AAB00532B09 /* ic_login_pic.png in Resources */,
 				E4C7770119F88AAB00532B09 /* ic_login_password.png in Resources */,
 				E4C69A7919FA31C400B0EFEA /* 37x-Checkmark.png in Resources */,
@@ -505,6 +514,7 @@
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4C69A6919F9E35400B0EFEA /* GgtzTableViewCell.m in Sources */,
 				E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */,
+				E4C69A7E19FA34FB00B0EFEA /* GgxqViewController.m in Sources */,
 				E4C69A7219FA18F200B0EFEA /* FHSegmentedViewController.m in Sources */,
 				E4C7779219F8966800532B09 /* NSData+MKBase64.m in Sources */,
 				E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */,

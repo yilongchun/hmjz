@@ -11,4 +11,6 @@
 
 @interface YsdtViewController : FHSegmentedViewController
 
+@property(nonatomic,copy) NSString *userid;
+
 @end

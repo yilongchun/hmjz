@@ -25,6 +25,15 @@
 		E4C69A7A19FA31C400B0EFEA /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A7819FA31C400B0EFEA /* 37x-Checkmark@2x.png */; };
 		E4C69A7E19FA34FB00B0EFEA /* GgxqViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */; };
 		E4C69A7F19FA34FB00B0EFEA /* GgxqViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */; };
+		E4C69AB619FA48A700B0EFEA /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69AAC19FA48A700B0EFEA /* EGORefreshTableHeaderView.m */; };
+		E4C69AB719FA48A700B0EFEA /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AAE19FA48A700B0EFEA /* blackArrow.png */; };
+		E4C69AB819FA48A700B0EFEA /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AAF19FA48A700B0EFEA /* blackArrow@2x.png */; };
+		E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB019FA48A700B0EFEA /* blueArrow.png */; };
+		E4C69ABA19FA48A700B0EFEA /* blueArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB119FA48A700B0EFEA /* blueArrow@2x.png */; };
+		E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB219FA48A700B0EFEA /* grayArrow.png */; };
+		E4C69ABC19FA48A700B0EFEA /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB319FA48A700B0EFEA /* grayArrow@2x.png */; };
+		E4C69ABD19FA48A700B0EFEA /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB419FA48A700B0EFEA /* whiteArrow.png */; };
+		E4C69ABE19FA48A700B0EFEA /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C69AB519FA48A700B0EFEA /* whiteArrow@2x.png */; };
 		E4C776FE19F88AAB00532B09 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F719F88AAB00532B09 /* Default.png */; };
 		E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F819F88AAB00532B09 /* Default@2x.png */; };
 		E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C776F919F88AAB00532B09 /* ic_login_bg.png */; };
@@ -110,6 +119,16 @@
 		E4C69A7B19FA34FB00B0EFEA /* GgxqViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GgxqViewController.h; path = view/GgxqViewController.h; sourceTree = "<group>"; };
 		E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GgxqViewController.m; path = view/GgxqViewController.m; sourceTree = "<group>"; };
 		E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GgxqViewController.xib; path = view/GgxqViewController.xib; sourceTree = "<group>"; };
+		E4C69AAB19FA48A700B0EFEA /* EGORefreshTableHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EGORefreshTableHeaderView.h; sourceTree = "<group>"; };
+		E4C69AAC19FA48A700B0EFEA /* EGORefreshTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EGORefreshTableHeaderView.m; sourceTree = "<group>"; };
+		E4C69AAE19FA48A700B0EFEA /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
+		E4C69AAF19FA48A700B0EFEA /* blackArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackArrow@2x.png"; sourceTree = "<group>"; };
+		E4C69AB019FA48A700B0EFEA /* blueArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueArrow.png; sourceTree = "<group>"; };
+		E4C69AB119FA48A700B0EFEA /* blueArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueArrow@2x.png"; sourceTree = "<group>"; };
+		E4C69AB219FA48A700B0EFEA /* grayArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grayArrow.png; sourceTree = "<group>"; };
+		E4C69AB319FA48A700B0EFEA /* grayArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grayArrow@2x.png"; sourceTree = "<group>"; };
+		E4C69AB419FA48A700B0EFEA /* whiteArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = whiteArrow.png; sourceTree = "<group>"; };
+		E4C69AB519FA48A700B0EFEA /* whiteArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteArrow@2x.png"; sourceTree = "<group>"; };
 		E4C776F719F88AAB00532B09 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = images/Default.png; sourceTree = "<group>"; };
 		E4C776F819F88AAB00532B09 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "images/Default@2x.png"; sourceTree = "<group>"; };
 		E4C776F919F88AAB00532B09 /* ic_login_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_login_bg.png; path = images/ic_login_bg.png; sourceTree = "<group>"; };
@@ -224,6 +243,7 @@
 				E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */,
 				E4AE1F2119F78FC9003C90B9 /* MBProgressHUD.h */,
 				E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */,
+				E4C69AA819FA48A700B0EFEA /* EGOTableViewPullRefresh */,
 				E4B2C90019F7621900B0E1DE /* Supporting Files */,
 				E4C7777919F8966800532B09 /* MKNetworkKit */,
 				E4C777C119F8E48300532B09 /* view */,
@@ -287,6 +307,47 @@
 				E4C776FD19F88AAB00532B09 /* ic_login.png */,
 			);
 			name = images;
+			sourceTree = "<group>";
+		};
+		E4C69AA819FA48A700B0EFEA /* EGOTableViewPullRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				E4C69AA919FA48A700B0EFEA /* Classes */,
+				E4C69AAD19FA48A700B0EFEA /* Resources */,
+			);
+			path = EGOTableViewPullRefresh;
+			sourceTree = "<group>";
+		};
+		E4C69AA919FA48A700B0EFEA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E4C69AAA19FA48A700B0EFEA /* View */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		E4C69AAA19FA48A700B0EFEA /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E4C69AAB19FA48A700B0EFEA /* EGORefreshTableHeaderView.h */,
+				E4C69AAC19FA48A700B0EFEA /* EGORefreshTableHeaderView.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E4C69AAD19FA48A700B0EFEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E4C69AAE19FA48A700B0EFEA /* blackArrow.png */,
+				E4C69AAF19FA48A700B0EFEA /* blackArrow@2x.png */,
+				E4C69AB019FA48A700B0EFEA /* blueArrow.png */,
+				E4C69AB119FA48A700B0EFEA /* blueArrow@2x.png */,
+				E4C69AB219FA48A700B0EFEA /* grayArrow.png */,
+				E4C69AB319FA48A700B0EFEA /* grayArrow@2x.png */,
+				E4C69AB419FA48A700B0EFEA /* whiteArrow.png */,
+				E4C69AB519FA48A700B0EFEA /* whiteArrow@2x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		E4C7772D19F88B8B00532B09 /* Frameworks */ = {
@@ -456,18 +517,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4C69ABA19FA48A700B0EFEA /* blueArrow@2x.png in Resources */,
 				E4C7770319F88AAB00532B09 /* ic_login_user.png in Resources */,
+				E4C69AB719FA48A700B0EFEA /* blackArrow.png in Resources */,
 				E4C7770419F88AAB00532B09 /* ic_login.png in Resources */,
 				E4C777BE19F8D7F300532B09 /* ic_index_007.png in Resources */,
 				E4C777B019F8D68300532B09 /* YsdtViewController.xib in Resources */,
+				E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */,
 				E4C777C619F8E4DE00532B09 /* BwhdViewController.xib in Resources */,
 				E4C69A7A19FA31C400B0EFEA /* 37x-Checkmark@2x.png in Resources */,
 				E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */,
+				E4C69AB819FA48A700B0EFEA /* blackArrow@2x.png in Resources */,
+				E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
 				E4C777B219F8D7AC00532B09 /* ic_index_002.png in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
+				E4C69ABD19FA48A700B0EFEA /* whiteArrow.png in Resources */,
 				E4C777AB19F8D4CF00532B09 /* ic_index_bg.png in Resources */,
 				E4C777BF19F8D7F300532B09 /* ic_index_008.png in Resources */,
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
@@ -484,6 +551,8 @@
 				E4C776FE19F88AAB00532B09 /* Default.png in Resources */,
 				E4C777BD19F8D7F300532B09 /* ic_index_006.png in Resources */,
 				E4C777B619F8D7DF00532B09 /* ic_index_004.png in Resources */,
+				E4C69ABE19FA48A700B0EFEA /* whiteArrow@2x.png in Resources */,
+				E4C69ABC19FA48A700B0EFEA /* grayArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,6 +572,7 @@
 			files = (
 				E4AE1F1719F775A7003C90B9 /* LoginViewController.m in Sources */,
 				E4C777C519F8E4DE00532B09 /* BwhdViewController.m in Sources */,
+				E4C69AB619FA48A700B0EFEA /* EGORefreshTableHeaderView.m in Sources */,
 				E4C7779419F8966800532B09 /* NSDictionary+RequestEncoding.m in Sources */,
 				E4C7779819F8966800532B09 /* MKNetworkEngine.m in Sources */,
 				E4C7779719F8966800532B09 /* UIImageView+MKNetworkKitAdditions.m in Sources */,

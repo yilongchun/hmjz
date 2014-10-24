@@ -13,9 +13,14 @@
 #import "MBProgressHUD.h"
 #import "GgxqViewController.h"
 
+
+
 @interface GgtzViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
     MKNetworkEngine *engine;
+    NSNumber *totalpage;
+    NSNumber *page;
+    NSNumber *rows;
 }
     
 
@@ -64,6 +69,10 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
+    
+    
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:4];
     //初始化数据
     [self loadData];
     
@@ -77,9 +86,11 @@
     
     //userid=23b3850a-8758-48e6-9027-122388f07a7b&page=1&rows=15&recordId=
     
+    
+    
     [dic setValue:@"9edd09c5-2b5f-47f6-8cd0-5479d268d338" forKey:@"userid"];
-    [dic setValue:@"1" forKey:@"page"];
-    [dic setValue:@"10" forKey:@"rows"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
     [dic setValue:@"8671eb9e-c834-41dd-8e37-62c1ac730c65" forKey:@"recordId"];
     
     MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
@@ -97,14 +108,18 @@
         if ([success boolValue]) {
             [HUD hide:YES];
             [self okMsk:@"加载成功"];
-            
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
-                NSArray *rows = [data objectForKey:@"rows"];
-                self.dataSource = rows;
+                NSArray *arr = [data objectForKey:@"rows"];
+                self.dataSource = [NSMutableArray arrayWithArray:arr];
                 [self.mytableView reloadData];
-//                NSDictionary *total = [data objectForKey:@"total"];
-//                NSLog(@"%@",rows);
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                NSLog(@"%@",totalpage);
                 
             }
         }else{
@@ -147,36 +162,55 @@
 #pragma mark - UITableViewDatasource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self dataSource] count];
+    return [[self dataSource] count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *cellIdentifier = @"ggtzcell";
-    GgtzTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    if (!cell) {
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"GgtzTableViewCell" owner:self options:nil] lastObject];
+    
+    if ([self.dataSource count] == indexPath.row) {
+        static NSString *cellIdentifier = @"morecell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.textLabel.text = @"点击加载更多";
+        }
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        return cell;
+
+    }else{
+        static NSString *cellIdentifier = @"ggtzcell";
+        GgtzTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"GgtzTableViewCell" owner:self options:nil] lastObject];
+        }
+        
+        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+        NSString *tntitle = [info objectForKey:@"tntitle"];
+        NSString *tncontent = [info objectForKey:@"tncontent"];
+        NSNumber *noticecount = [info objectForKey:@"noticecount"];
+        NSString *tncreatedate = [info objectForKey:@"tncreatedate"];
+        cell.gtitle.text = tntitle;
+        cell.gdispcription.text = tncontent;
+        cell.gdispcription.numberOfLines = 2;// 不可少Label属性之一
+        cell.gdispcription.lineBreakMode = NSLineBreakByCharWrapping;// 不可少Label属性之二
+        [cell.gdispcription sizeToFit];
+        cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
+        cell.gdate.text = tncreatedate;
+        return cell;
     }
     
-    NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
-    NSString *tntitle = [info objectForKey:@"tntitle"];
-    NSString *tncontent = [info objectForKey:@"tncontent"];
-    NSNumber *noticecount = [info objectForKey:@"noticecount"];
-    NSString *tncreatedate = [info objectForKey:@"tncreatedate"];
-    cell.gtitle.text = tntitle;
-    cell.gdispcription.text = tncontent;
-    cell.gdispcription.numberOfLines = 2;// 不可少Label属性之一
-    cell.gdispcription.lineBreakMode = NSLineBreakByCharWrapping;// 不可少Label属性之二
-    [cell.gdispcription sizeToFit];
-    cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
-    cell.gdate.text = tncreatedate;
-    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 100;
+    if ([self.dataSource count] == indexPath.row) {
+        return 44;
+    }else{
+        return 100;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
         [cell setSeparatorInset:UIEdgeInsetsZero];
     }
@@ -186,12 +220,18 @@
 }
  
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
-    NSString *tnid = [info objectForKey:@"tnid"];
-    GgxqViewController *ggxq = [[GgxqViewController alloc]init];
-    ggxq.title = @"公告详情";
-    ggxq.tnid = tnid;
-    [self.navigationController pushViewController:ggxq animated:YES];
+    if ([self.dataSource count] == indexPath.row) {
+        
+    }else{
+        
+        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+        NSString *tnid = [info objectForKey:@"tnid"];
+        GgxqViewController *ggxq = [[GgxqViewController alloc]init];
+        ggxq.title = @"公告详情";
+        ggxq.tnid = tnid;
+        [self.navigationController pushViewController:ggxq animated:YES];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
 

@@ -18,7 +18,7 @@
 }
 
 @property (nonatomic, strong) UITableView *mytableView;
-@property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 @property(nonatomic,copy) NSString *userid;
 
 - (void)reloadTableViewDataSource;

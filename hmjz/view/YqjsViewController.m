@@ -33,7 +33,7 @@
     HUD.delegate = self;
     
     HUD.labelText = @"正在加载中";
-    [HUD show:YES];
+    
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *student = [userDefaults objectForKey:@"student"];
@@ -43,6 +43,7 @@
 
 //查询园情介绍
 - (void)getInfo:(NSString *)studentid{
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:studentid forKey:@"studentId"];
     
@@ -89,6 +90,10 @@
         [hud hide:YES afterDelay:2];
     }];
     [engine enqueueOperation:op];
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)web{
+    [HUD show:YES];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)web{

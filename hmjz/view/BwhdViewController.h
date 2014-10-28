@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BwhdViewController : UIViewController
+@interface BwhdViewController : UIViewController<UITabBarDelegate>
 
+@property(nonatomic, assign) UIViewController *selectedViewController;
+@property (weak, nonatomic) IBOutlet UITabBar *mytabbar;
+@property(nonatomic, assign) NSInteger selectedViewControllerIndex;
 @end

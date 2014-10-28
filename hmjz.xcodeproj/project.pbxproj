@@ -10,6 +10,16 @@
 		E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4587D19FF5C4600B759FD /* iOS_42.png */; };
 		E4A4588219FF78B600B759FD /* BjjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4588019FF78B600B759FD /* BjjsViewController.m */; };
 		E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588119FF78B600B759FD /* BjjsViewController.xib */; };
+		E4A4588A19FF813600B759FD /* ic_bwrz_001.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588419FF813600B759FD /* ic_bwrz_001.png */; };
+		E4A4588B19FF813600B759FD /* ic_bwrz_001@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588519FF813600B759FD /* ic_bwrz_001@2x.png */; };
+		E4A4588C19FF813600B759FD /* ic_bwrz_002.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588619FF813600B759FD /* ic_bwrz_002.png */; };
+		E4A4588D19FF813600B759FD /* ic_bwrz_002@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588719FF813600B759FD /* ic_bwrz_002@2x.png */; };
+		E4A4588E19FF813600B759FD /* ic_bwrz_003.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588819FF813600B759FD /* ic_bwrz_003.png */; };
+		E4A4588F19FF813600B759FD /* ic_bwrz_003@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588919FF813600B759FD /* ic_bwrz_003@2x.png */; };
+		E4A4589819FF8A1F00B759FD /* Bwhd2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4589619FF8A1F00B759FD /* Bwhd2ViewController.m */; };
+		E4A4589919FF8A1F00B759FD /* Bwhd2ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A4589719FF8A1F00B759FD /* Bwhd2ViewController.xib */; };
+		E4A4589D19FF8A4700B759FD /* BjtzViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4589B19FF8A4700B759FD /* BjtzViewController.m */; };
+		E4A4589E19FF8A4700B759FD /* BjtzViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A4589C19FF8A4700B759FD /* BjtzViewController.xib */; };
 		E4AE1F1719F775A7003C90B9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F1519F775A7003C90B9 /* LoginViewController.m */; };
 		E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */; };
 		E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */; };
@@ -103,6 +113,18 @@
 		E4A4587F19FF78B600B759FD /* BjjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BjjsViewController.h; path = view/BjjsViewController.h; sourceTree = "<group>"; };
 		E4A4588019FF78B600B759FD /* BjjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BjjsViewController.m; path = view/BjjsViewController.m; sourceTree = "<group>"; };
 		E4A4588119FF78B600B759FD /* BjjsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BjjsViewController.xib; path = view/BjjsViewController.xib; sourceTree = "<group>"; };
+		E4A4588419FF813600B759FD /* ic_bwrz_001.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bwrz_001.png; sourceTree = "<group>"; };
+		E4A4588519FF813600B759FD /* ic_bwrz_001@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bwrz_001@2x.png"; sourceTree = "<group>"; };
+		E4A4588619FF813600B759FD /* ic_bwrz_002.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bwrz_002.png; sourceTree = "<group>"; };
+		E4A4588719FF813600B759FD /* ic_bwrz_002@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bwrz_002@2x.png"; sourceTree = "<group>"; };
+		E4A4588819FF813600B759FD /* ic_bwrz_003.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_bwrz_003.png; sourceTree = "<group>"; };
+		E4A4588919FF813600B759FD /* ic_bwrz_003@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_bwrz_003@2x.png"; sourceTree = "<group>"; };
+		E4A4589519FF8A1F00B759FD /* Bwhd2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Bwhd2ViewController.h; path = view/Bwhd2ViewController.h; sourceTree = "<group>"; };
+		E4A4589619FF8A1F00B759FD /* Bwhd2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Bwhd2ViewController.m; path = view/Bwhd2ViewController.m; sourceTree = "<group>"; };
+		E4A4589719FF8A1F00B759FD /* Bwhd2ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Bwhd2ViewController.xib; path = view/Bwhd2ViewController.xib; sourceTree = "<group>"; };
+		E4A4589A19FF8A4700B759FD /* BjtzViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BjtzViewController.h; path = view/BjtzViewController.h; sourceTree = "<group>"; };
+		E4A4589B19FF8A4700B759FD /* BjtzViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BjtzViewController.m; path = view/BjtzViewController.m; sourceTree = "<group>"; };
+		E4A4589C19FF8A4700B759FD /* BjtzViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BjtzViewController.xib; path = view/BjtzViewController.xib; sourceTree = "<group>"; };
 		E4AE1F1419F775A7003C90B9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E4AE1F1519F775A7003C90B9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -316,6 +338,12 @@
 		E4B2C92619F7641500B0E1DE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4A4588419FF813600B759FD /* ic_bwrz_001.png */,
+				E4A4588519FF813600B759FD /* ic_bwrz_001@2x.png */,
+				E4A4588619FF813600B759FD /* ic_bwrz_002.png */,
+				E4A4588719FF813600B759FD /* ic_bwrz_002@2x.png */,
+				E4A4588819FF813600B759FD /* ic_bwrz_003.png */,
+				E4A4588919FF813600B759FD /* ic_bwrz_003@2x.png */,
 				E4A4587D19FF5C4600B759FD /* iOS_42.png */,
 				E4D88C7D19FF331F0095AB3F /* ic_index_011.png */,
 				E4D88C7B19FF331B0095AB3F /* ic_index_010.png */,
@@ -474,6 +502,12 @@
 				E4A4587F19FF78B600B759FD /* BjjsViewController.h */,
 				E4A4588019FF78B600B759FD /* BjjsViewController.m */,
 				E4A4588119FF78B600B759FD /* BjjsViewController.xib */,
+				E4A4589519FF8A1F00B759FD /* Bwhd2ViewController.h */,
+				E4A4589619FF8A1F00B759FD /* Bwhd2ViewController.m */,
+				E4A4589719FF8A1F00B759FD /* Bwhd2ViewController.xib */,
+				E4A4589A19FF8A4700B759FD /* BjtzViewController.h */,
+				E4A4589B19FF8A4700B759FD /* BjtzViewController.m */,
+				E4A4589C19FF8A4700B759FD /* BjtzViewController.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -572,22 +606,29 @@
 				E4C69ABA19FA48A700B0EFEA /* blueArrow@2x.png in Resources */,
 				E4C7770319F88AAB00532B09 /* ic_login_user.png in Resources */,
 				E4C69AB719FA48A700B0EFEA /* blackArrow.png in Resources */,
+				E4A4588F19FF813600B759FD /* ic_bwrz_003@2x.png in Resources */,
+				E4A4588B19FF813600B759FD /* ic_bwrz_001@2x.png in Resources */,
 				E4C7770419F88AAB00532B09 /* ic_login.png in Resources */,
 				E4C777BE19F8D7F300532B09 /* ic_index_007.png in Resources */,
 				E4C777B019F8D68300532B09 /* YsdtViewController.xib in Resources */,
 				E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */,
 				E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */,
+				E4A4588C19FF813600B759FD /* ic_bwrz_002.png in Resources */,
 				E4C777C619F8E4DE00532B09 /* BwhdViewController.xib in Resources */,
 				E4C69A7A19FA31C400B0EFEA /* 37x-Checkmark@2x.png in Resources */,
 				E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */,
 				E4D88C7C19FF331B0095AB3F /* ic_index_010.png in Resources */,
 				E4D88C8419FF383E0095AB3F /* ShezhiViewController.xib in Resources */,
 				E4D88C7E19FF331F0095AB3F /* ic_index_011.png in Resources */,
+				E4A4588D19FF813600B759FD /* ic_bwrz_002@2x.png in Resources */,
 				E4C69AB819FA48A700B0EFEA /* blackArrow@2x.png in Resources */,
+				E4A4588A19FF813600B759FD /* ic_bwrz_001.png in Resources */,
+				E4A4589E19FF8A4700B759FD /* BjtzViewController.xib in Resources */,
 				E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
+				E4A4588E19FF813600B759FD /* ic_bwrz_003.png in Resources */,
 				E4C777B219F8D7AC00532B09 /* ic_index_002.png in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
 				E4C69ABD19FA48A700B0EFEA /* whiteArrow.png in Resources */,
@@ -596,6 +637,7 @@
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
 				E4C777BC19F8D7F300532B09 /* ic_index_005.png in Resources */,
 				E4C777D019F8FEE700532B09 /* YezxViewController.xib in Resources */,
+				E4A4589919FF8A1F00B759FD /* Bwhd2ViewController.xib in Resources */,
 				E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */,
 				E4C777B419F8D7CE00532B09 /* ic_index_003.png in Resources */,
 				E4C777C019F8D7F300532B09 /* ic_index_009.png in Resources */,
@@ -642,6 +684,7 @@
 				E4C7779619F8966800532B09 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				E4C777CF19F8FEE700532B09 /* YezxViewController.m in Sources */,
 				E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */,
+				E4A4589D19FF8A4700B759FD /* BjtzViewController.m in Sources */,
 				E4C777AF19F8D68300532B09 /* YsdtViewController.m in Sources */,
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4C69A6919F9E35400B0EFEA /* GgtzTableViewCell.m in Sources */,
@@ -652,6 +695,7 @@
 				E4C7779219F8966800532B09 /* NSData+MKBase64.m in Sources */,
 				E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */,
 				E4B2C90319F7621900B0E1DE /* main.m in Sources */,
+				E4A4589819FF8A1F00B759FD /* Bwhd2ViewController.m in Sources */,
 				E4C7779519F8966800532B09 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,
 				E4C69A5F19F9DCCD00B0EFEA /* YqjsViewController.m in Sources */,

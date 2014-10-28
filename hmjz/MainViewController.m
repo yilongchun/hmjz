@@ -38,9 +38,10 @@
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
+    //设置信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *userid = [userDefaults objectForKey:@"userid"];
-    [self getParentInfo:userid];
+//    NSString *userid = [userDefaults objectForKey:@"userid"];
+    
     
     NSDictionary *student = [userDefaults objectForKey:@"student"];
     NSString *studentname = [student objectForKey:@"studnetname"];
@@ -77,34 +78,7 @@
     
 }
 
--(void)getParentInfo:(NSString *) userid{
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:userid forKey:@"userid"];
-    MKNetworkOperation *op = [engine operationWithPath:@"/Notice/findbyidList.do" params:dic httpMethod:@"POST"];
-    [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
-        NSString *result = [operation responseString];
-        NSError *error;
-        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-        if (resultDict == nil) {
-            NSLog(@"json parse failed \r\n");
-        }
-        
-        NSNumber *success = [resultDict objectForKey:@"success"];
-//        NSString *msg = [resultDict objectForKey:@"msg"];
-        
-        if ([success boolValue]) {
-            
-        }else{
-            
-        }
-    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
-        
-    }];
-    [engine enqueueOperation:op];
-}
+
 
 /*
 #pragma mark - Navigation

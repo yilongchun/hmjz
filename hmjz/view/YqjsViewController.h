@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface YqjsViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIWebView *mywebview;
 
 @end

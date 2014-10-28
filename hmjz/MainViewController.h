@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface MainViewController : UIViewController<UINavigationControllerDelegate>
+- (IBAction)chooseChildren:(UIButton *)sender;
+- (IBAction)chooseClass:(UIButton *)sender;
+- (IBAction)setup:(UIButton *)sender;
 
 - (IBAction)ysdtAction:(UIButton *)sender;
 - (IBAction)bwhdAction:(UIButton *)sender;
@@ -19,5 +22,8 @@
 - (IBAction)bbqdAction:(UIButton *)sender;
 - (IBAction)xztAction:(UIButton *)sender;
 @property(nonatomic,copy) NSString *userid;
+@property (weak, nonatomic) IBOutlet UIImageView *studentimg;
+@property (weak, nonatomic) IBOutlet UILabel *studentname;
+@property (weak, nonatomic) IBOutlet UILabel *studentage;
 
 @end

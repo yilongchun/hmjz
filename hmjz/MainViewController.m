@@ -12,8 +12,12 @@
 #import "YsdtViewController.h"
 #import "BwhdViewController.h"
 #import "YezxViewController.h"
-
 #import "GgtzViewController.h"
+#import "ShezhiViewController.h"
+#import "ChooseChildrenViewController.h"
+#import "ChooseClassViewController.h"
+
+
 
 @interface MainViewController (){
     MKNetworkEngine *engine;
@@ -33,7 +37,38 @@
     
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
-    [self getParentInfo:self.userid];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [userDefaults objectForKey:@"userid"];
+    [self getParentInfo:userid];
+    
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    NSString *studentname = [student objectForKey:@"studnetname"];
+    NSNumber *studentage = [student objectForKey:@"age"];
+    NSString *flieid = [student objectForKey:@"flieid"];
+    
+//    NSString *flieid = @"3b276e4a-5589-460a-a68e-7e16a1701a34";
+    
+    self.studentname.text = studentname;
+    self.studentage.text = [NSString stringWithFormat:@"年龄：%@岁",studentage];
+    
+    //设置头像
+    if ([Utils isBlankString:flieid]) {
+        [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
+    }else{
+        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/SM/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
+    }
+    self.studentimg.layer.cornerRadius = self.studentimg.frame.size.height/2;
+    self.studentimg.layer.masksToBounds = YES;
+    [self.studentimg setContentMode:UIViewContentModeScaleAspectFill];
+    [self.studentimg setClipsToBounds:YES];
+    self.studentimg.layer.borderColor = [UIColor yellowColor].CGColor;
+    self.studentimg.layer.borderWidth = 1.0f;
+    self.studentimg.layer.shadowOffset = CGSizeMake(4.0, 4.0);
+    self.studentimg.layer.shadowOpacity = 0.5;
+    self.studentimg.layer.shadowRadius = 2.0;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,6 +122,30 @@
     }
 }
 
+//选择宝宝
+- (IBAction)chooseChildren:(UIButton *)sender {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    ChooseChildrenViewController *cc = [[ChooseChildrenViewController alloc] init];
+    [self.navigationController pushViewController:cc animated:YES];
+}
+//选择班级
+- (IBAction)chooseClass:(UIButton *)sender {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    ChooseClassViewController *cc = [[ChooseClassViewController alloc] init];
+    [self.navigationController pushViewController:cc animated:YES];
+}
+//设置
+- (IBAction)setup:(UIButton *)sender {
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    ShezhiViewController *sz = [[ShezhiViewController alloc] init];
+    [self.navigationController pushViewController:sz animated:YES];
+}
 //园所动态
 - (IBAction)ysdtAction:(UIButton *)sender {
     

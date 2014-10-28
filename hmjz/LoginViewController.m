@@ -14,6 +14,7 @@
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
+    MKNetworkEngine *engine;
 }
 
 @end
@@ -36,7 +37,9 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
-    self.username.text = @"13276367907";
+    engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
+    
+    self.username.text = @"13276367905";
     self.password.text = @"123456";
     
 }
@@ -45,7 +48,7 @@
     [self viewTapped:rapGr];
     HUD.labelText = @"正在加载中";
     [HUD show:YES];
-    MKNetworkEngine *engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.username.text forKey:@"userId"];
     [dic setValue:self.password.text forKey:@"password"];
@@ -64,29 +67,21 @@
         NSString *msg = [resultDict objectForKey:@"msg"];
 //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
-            [HUD hide:YES];
+            //[HUD hide:YES];
 //            NSLog(@"%@",msg);
             NSDictionary *data = [resultDict objectForKey:@"data"];
 //            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
 //            NSLog(@"%@", [data objectForKey:@"userid"]);
             NSString *userid = [data objectForKey:@"userid"];
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setObject:userid forKey:@"userid"];
 //            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
             
-            MainViewController *mvc = [[MainViewController alloc] init];
-            UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
+            [self getParentInfo:userid];//获取家长信息
             
             
-            
-            //UIModalTransitionStyleCoverVertical 从下往上
-            //UIModalTransitionStyleCrossDissolve 渐变
-            //UIModalTransitionStyleFlipHorizontal 翻转
-            //UIModalTransitionStylePartialCurl从下往上翻页
-            mvc.userid = userid;
-            mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-            [self presentViewController:nc animated:YES completion:^{
-                NSLog(@"completion");
-            }];
-        }else{
+            }else{
             [HUD hide:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeText;
@@ -109,8 +104,179 @@
 
 }
 
+//登陆之后根据userid获取家长信息
+- (void)getParentInfo:(NSString *)userid{
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:userid forKey:@"userid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Parent/findbyid.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        
+        if ([success boolValue]) {
+            NSArray *array = [resultDict objectForKey:@"data"];
+            if ([array count] > 0) {
+                NSDictionary *data = [array objectAtIndex:0];
+                NSString *parentid = [data objectForKey:@"id"];
+                //NSString *parentname = [data objectForKey:@"parentname"];
+                [self getChildrenInfo:parentid];//获取宝宝信息
+            }else{
+                
+            }
+        }else{
+            [HUD hide:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = msg;
+            hud.margin = 10.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }];
+    [engine enqueueOperation:op];
+}
 
+//根据家长id获取宝宝信息
+- (void)getChildrenInfo:(NSString *)parentid{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:parentid forKey:@"parentid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Puser/findbyid.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        
+        if ([success boolValue]) {
+            NSArray *array = [resultDict objectForKey:@"data"];
+            if ([array count] == 1) {//只有一个宝宝默认选择
+                NSDictionary *data = [array objectAtIndex:0];
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
+                
+                NSString *studentid = [data objectForKey:@"studentid"];//学生id
+                [self getClassInfo:studentid];//获取班级信息
+                
+            }else if([array count] > 1){//有多个宝宝需要用户选择
+                
+                
+            }
+        }else{
+            [HUD hide:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = msg;
+            hud.margin = 10.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }];
+    [engine enqueueOperation:op];
+}
+//根据学生id获取班级信息
+- (void)getClassInfo:(NSString *)studentid{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:studentid forKey:@"studentid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pclass/findbyid.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        
+        if ([success boolValue]) {
+            NSArray *array = [resultDict objectForKey:@"data"];
+            if ([array count] == 1) {//只有一个班级默认选择
+                NSDictionary *data = [array objectAtIndex:0];
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
+                
+                MainViewController *mvc = [[MainViewController alloc] init];
+                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
+                
+                
+                
+                //UIModalTransitionStyleCoverVertical 从下往上
+                //UIModalTransitionStyleCrossDissolve 渐变
+                //UIModalTransitionStyleFlipHorizontal 翻转
+                //UIModalTransitionStylePartialCurl从下往上翻页
+                //mvc.userid = userid;
+                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+                [self presentViewController:nc animated:YES completion:^{
+                    NSLog(@"completion");
+                }];
 
+                
+            }else if([array count] > 1){//有多个班级需要用户选择
+                
+                
+            }
+            [HUD hide:YES];
+        }else{
+            [HUD hide:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = msg;
+            hud.margin = 10.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }];
+    [engine enqueueOperation:op];
+}
 
 //隐藏键盘
 -(void)viewTapped:(UITapGestureRecognizer*)tapGr{
@@ -138,7 +304,10 @@
 #pragma mark - 输入框代理
 -(void)textFieldDidBeginEditing:(UITextField *)textField{   //开始编辑时，整体上移
     if(textField.tag == 0){
-        [self moveView:-40];
+        if(self.view.frame.origin.y == 0){
+            [self moveView:-40];
+        }
+        
     }else if(textField.tag == 1){
         if(self.view.frame.origin.y == -40){
             [self moveView:-40];

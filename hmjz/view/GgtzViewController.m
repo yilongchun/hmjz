@@ -85,12 +85,17 @@
     
     //userid=23b3850a-8758-48e6-9027-122388f07a7b&page=1&rows=15&recordId=
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *class = [userDefaults objectForKey:@"class"];
+    
+    NSString *schoolid = [class objectForKey:@"schoolid"];
     
     
-    [dic setValue:@"9edd09c5-2b5f-47f6-8cd0-5479d268d338" forKey:@"userid"];
+    [dic setValue:self.userid forKey:@"userid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    [dic setValue:@"8671eb9e-c834-41dd-8e37-62c1ac730c65" forKey:@"recordId"];
+    [dic setValue:schoolid forKey:@"recordId"];
     
     MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
@@ -143,7 +148,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
     
-    [dic setValue:@"9edd09c5-2b5f-47f6-8cd0-5479d268d338" forKey:@"userid"];
+    [dic setValue:self.userid forKey:@"userid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:@"8671eb9e-c834-41dd-8e37-62c1ac730c65" forKey:@"recordId"];
@@ -216,7 +221,7 @@
 #pragma mark - UITableViewDatasource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (page != totalpage) {
+    if (page != totalpage && [self.dataSource count] != 0) {
         return [[self dataSource] count] + 1;
     }else{
         return [[self dataSource] count];

@@ -10,6 +10,7 @@
 
 @interface Utils : NSObject
 
-+(NSString *)getHostname;
++ (NSString *)getHostname;
 
++ (BOOL) isBlankString:(NSString *)string;
 @end

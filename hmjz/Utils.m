@@ -10,12 +10,25 @@
 
 @implementation Utils
 
-+(NSString *)getHostname{
++ (NSString *)getHostname{
     //从资源文件获取请求路径
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSMutableDictionary *infolist = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
-    NSString *hostname = [infolist objectForKey:@"Httpurl"];
+    NSString *hostname = [infolist objectForKey:@"Httpurl2"];
     return hostname;
+}
+
++ (BOOL) isBlankString:(NSString *)string {
+    if (string == nil || string == NULL) {
+        return YES;
+    }
+    if ([string isKindOfClass:[NSNull class]]) {
+        return YES;
+    }
+    if ([[string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length]==0) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

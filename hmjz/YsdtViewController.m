@@ -9,6 +9,7 @@
 #import "YsdtViewController.h"
 #import "YqjsViewController.h"
 #import "GgtzViewController.h"
+#import "BjjsViewController.h"
 
 @interface YsdtViewController ()
 @end
@@ -23,10 +24,12 @@
     
     YqjsViewController *yqjs = [[YqjsViewController alloc] init];
     yqjs.title = @"园情介绍";
+    BjjsViewController *bjjs = [[BjjsViewController alloc] init];
+    bjjs.title = @"班级介绍";
     GgtzViewController *ggtz = [[GgtzViewController alloc] init];
     ggtz.title = @"公告通知";
     ggtz.userid = self.userid;
-    [self setViewControllers:[NSArray arrayWithObjects:yqjs, ggtz, nil]];
+    [self setViewControllers:[NSArray arrayWithObjects:yqjs, bjjs, ggtz, nil]];
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     backItem.title = @"返回";

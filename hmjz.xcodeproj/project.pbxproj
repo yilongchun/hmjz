@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4587D19FF5C4600B759FD /* iOS_42.png */; };
+		E4A4588219FF78B600B759FD /* BjjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4588019FF78B600B759FD /* BjjsViewController.m */; };
+		E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588119FF78B600B759FD /* BjjsViewController.xib */; };
 		E4AE1F1719F775A7003C90B9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F1519F775A7003C90B9 /* LoginViewController.m */; };
 		E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */; };
 		E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1F2219F78FC9003C90B9 /* MBProgressHUD.m */; };
@@ -98,6 +100,9 @@
 
 /* Begin PBXFileReference section */
 		E4A4587D19FF5C4600B759FD /* iOS_42.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iOS_42.png; sourceTree = "<group>"; };
+		E4A4587F19FF78B600B759FD /* BjjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BjjsViewController.h; path = view/BjjsViewController.h; sourceTree = "<group>"; };
+		E4A4588019FF78B600B759FD /* BjjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BjjsViewController.m; path = view/BjjsViewController.m; sourceTree = "<group>"; };
+		E4A4588119FF78B600B759FD /* BjjsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BjjsViewController.xib; path = view/BjjsViewController.xib; sourceTree = "<group>"; };
 		E4AE1F1419F775A7003C90B9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E4AE1F1519F775A7003C90B9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		E4AE1F1619F775A7003C90B9 /* LoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
@@ -466,6 +471,9 @@
 				E4D88C8A19FF3A4F0095AB3F /* ChooseClassViewController.h */,
 				E4D88C8B19FF3A4F0095AB3F /* ChooseClassViewController.m */,
 				E4D88C8C19FF3A4F0095AB3F /* ChooseClassViewController.xib */,
+				E4A4587F19FF78B600B759FD /* BjjsViewController.h */,
+				E4A4588019FF78B600B759FD /* BjjsViewController.m */,
+				E4A4588119FF78B600B759FD /* BjjsViewController.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -588,6 +596,7 @@
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
 				E4C777BC19F8D7F300532B09 /* ic_index_005.png in Resources */,
 				E4C777D019F8FEE700532B09 /* YezxViewController.xib in Resources */,
+				E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */,
 				E4C777B419F8D7CE00532B09 /* ic_index_003.png in Resources */,
 				E4C777C019F8D7F300532B09 /* ic_index_009.png in Resources */,
 				E4C69A6A19F9E35400B0EFEA /* GgtzTableViewCell.xib in Resources */,
@@ -627,6 +636,7 @@
 				E4D88C8819FF39410095AB3F /* ChooseChildrenViewController.m in Sources */,
 				E4C7779419F8966800532B09 /* NSDictionary+RequestEncoding.m in Sources */,
 				E4C7779819F8966800532B09 /* MKNetworkEngine.m in Sources */,
+				E4A4588219FF78B600B759FD /* BjjsViewController.m in Sources */,
 				E4C7779719F8966800532B09 /* UIImageView+MKNetworkKitAdditions.m in Sources */,
 				E4C7779A19F8966800532B09 /* Reachability.m in Sources */,
 				E4C7779619F8966800532B09 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,

@@ -1,24 +1,24 @@
 //
-//  YqjsViewController.m
+//  BjjsViewController.m
 //  hmjz
 //
-//  Created by yons on 14-10-24.
+//  Created by yons on 14-10-28.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //
 
-#import "YqjsViewController.h"
+#import "BjjsViewController.h"
 #import"MKNetworkKit.h"
 #import "Utils.h"
 #import "MBProgressHUD.h"
 
-@interface YqjsViewController ()<MBProgressHUDDelegate>{
+@interface BjjsViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
     MKNetworkEngine *engine;
 }
 
 @end
 
-@implementation YqjsViewController
+@implementation BjjsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -36,19 +36,17 @@
     [HUD show:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *student = [userDefaults objectForKey:@"student"];
-    NSString *studentid = [student objectForKey:@"studentid"];
-    [self getInfo:studentid];
+    NSDictionary *student = [userDefaults objectForKey:@"class"];
+    NSString *classid = [student objectForKey:@"classid"];
+    [self getInfo:classid];
 }
 
-//查询园情介绍
-- (void)getInfo:(NSString *)studentid{
+//获取班级介绍
+- (void)getInfo:(NSString *)classid{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:studentid forKey:@"studentId"];
+    [dic setValue:classid forKey:@"classId"];
     
-    
-    
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pschool/findbyid.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pclass/classfindbyid.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
@@ -68,7 +66,6 @@
                 NSString *introduce = [data objectForKey:@"introduce"];
                 [self.mywebview loadHTMLString:introduce baseURL:[NSURL URLWithString:[Utils getHostname]]];
             }
-            
         }else{
             [HUD hide:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

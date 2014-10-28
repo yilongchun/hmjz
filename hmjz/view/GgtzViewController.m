@@ -81,7 +81,6 @@
 //加载数据
 - (void)loadData{
     
-    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
     //userid=23b3850a-8758-48e6-9027-122388f07a7b&page=1&rows=15&recordId=
@@ -135,16 +134,71 @@
     [engine enqueueOperation:op];
 }
 
+- (void)loadMore{
+    
+    if (page < totalpage) {
+        page = [NSNumber numberWithInt:[page intValue] +1];
+    }
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    
+    
+    [dic setValue:@"9edd09c5-2b5f-47f6-8cd0-5479d268d338" forKey:@"userid"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
+    [dic setValue:@"8671eb9e-c834-41dd-8e37-62c1ac730c65" forKey:@"recordId"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        //        NSString *code = [resultDict objectForKey:@"code"];
+        if ([success boolValue]) {
+            [HUD hide:YES];
+            //[self okMsk:@"加载成功"];
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                [self.dataSource addObjectsFromArray:arr];
+                [self.mytableView reloadData];
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                NSLog(@"%@",totalpage);
+            }
+        }else{
+            [HUD hide:YES];
+            [self alertMsg:msg];
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        [self alertMsg:@"请求失败"];
+    }];
+    [engine enqueueOperation:op];
+}
 
+//成功
 - (void)okMsk:(NSString *)msg{
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    HUD.delegate = self;
-    HUD.labelText = msg;
-    [HUD show:YES];
-    [HUD hide:YES afterDelay:0.5];
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:hud];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.delegate = self;
+    hud.labelText = msg;
+    [hud show:YES];
+    [hud hide:YES afterDelay:0.5];
 }
 
 
@@ -162,7 +216,11 @@
 #pragma mark - UITableViewDatasource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[self dataSource] count] + 1;
+    if (page != totalpage) {
+        return [[self dataSource] count] + 1;
+    }else{
+        return [[self dataSource] count];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -203,7 +261,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.dataSource count] == indexPath.row) {
-        return 44;
+            return 44;
     }else{
         return 100;
     }
@@ -221,9 +279,14 @@
  
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([self.dataSource count] == indexPath.row) {
+        if (page == totalpage) {
+            
+        }else{
+            [HUD show:YES];
+            [self loadMore];
+        }
         
     }else{
-        
         NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
         NSString *tnid = [info objectForKey:@"tnid"];
         GgxqViewController *ggxq = [[GgxqViewController alloc]init];
@@ -232,13 +295,14 @@
         [self.navigationController pushViewController:ggxq animated:YES];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
 }
 
 #pragma mark -
 #pragma mark Data Source Loading / Reloading Methods
 
 - (void)reloadTableViewDataSource{
+    page = [NSNumber numberWithInt:1];
+    [HUD show:YES];
     [self loadData];
     //  should be calling your tableviews data source model to reload
     //  put here just for demo
@@ -256,13 +320,11 @@
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    
     [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    
     [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
     
 }
@@ -279,13 +341,11 @@
 }
 
 - (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-    
     return _reloading; // should return if data source model is reloading
     
 }
 
 - (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-    
     return [NSDate date]; // should return date data source was last changed
     
 }

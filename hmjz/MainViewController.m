@@ -91,6 +91,7 @@
 */
 //隐藏导航栏
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    NSLog(@"%@",viewController);
     if ([viewController isKindOfClass:[MainViewController class]]) {
         [self.navigationController setNavigationBarHidden:YES];
     }

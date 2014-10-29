@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShezhiViewController : UIViewController
+@interface ShezhiViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (nonatomic, strong) UITableView *mytableview;
 
 @end

@@ -19,9 +19,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    UIViewController *vc = [[LoginViewController alloc] init];
+    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
+    [vc setNavigationBarHidden:YES];
+//    UIViewController *vc = [[LoginViewController alloc] init];
     self.window.rootViewController = vc;
     [self.window makeKeyAndVisible];
+    
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     return YES;
 }

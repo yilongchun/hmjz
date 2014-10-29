@@ -236,7 +236,7 @@
                 [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
                 
                 MainViewController *mvc = [[MainViewController alloc] init];
-                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
+//                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
                 
                 
                 
@@ -245,10 +245,12 @@
                 //UIModalTransitionStyleFlipHorizontal 翻转
                 //UIModalTransitionStylePartialCurl从下往上翻页
                 //mvc.userid = userid;
-                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                [self presentViewController:nc animated:YES completion:^{
-                    NSLog(@"completion");
-                }];
+//                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//                self.navigationController.delegate = self;
+                [self.navigationController pushViewController:mvc animated:YES];
+//                [self presentViewController:nc animated:YES completion:^{
+//                    NSLog(@"completion");
+//                }];
 
                 
             }else if([array count] > 1){//有多个班级需要用户选择
@@ -285,6 +287,12 @@
     [self moveView:0];
 }
 
+//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+//    NSLog(@"%@",viewController);
+////    if ([viewController isKindOfClass:[MainViewController class]]) {
+////        [self.navigationController setNavigationBarHidden:YES];
+////    }
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

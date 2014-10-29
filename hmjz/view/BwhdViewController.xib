@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BwhdViewController">
             <connections>
-                <outlet property="mytabbar" destination="WN1-Tq-vvS" id="Z2E-01-H2C"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,28 +14,10 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <tabBar contentMode="scaleToFill" id="WN1-Tq-vvS">
-                    <rect key="frame" x="0.0" y="519" width="320" height="49"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <items>
-                        <tabBarItem title="班务活动" image="ic_bwrz_002.png" id="W1P-BL-TZo"/>
-                        <tabBarItem tag="1" title="班级通知" image="ic_bwrz_003.png" id="vFZ-Dz-gcX"/>
-                    </items>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="tLa-Wz-cEF"/>
-                    </connections>
-                </tabBar>
-            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <point key="canvasLocation" x="413" y="292"/>
         </view>
     </objects>
-    <resources>
-        <image name="ic_bwrz_002.png" width="22" height="22"/>
-        <image name="ic_bwrz_003.png" width="22" height="22"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -256,7 +256,7 @@
         cell.gdispcription.text = tncontent;
         cell.gdispcription.numberOfLines = 2;// 不可少Label属性之一
         cell.gdispcription.lineBreakMode = NSLineBreakByCharWrapping;// 不可少Label属性之二
-        [cell.gdispcription sizeToFit];
+        //[cell.gdispcription sizeToFit];
         cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
         cell.gdate.text = tncreatedate;
         return cell;

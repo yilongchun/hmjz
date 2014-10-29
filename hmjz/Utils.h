@@ -12,5 +12,7 @@
 
 + (NSString *)getHostname;
 
++ (NSString *)getImageHostname;
+
 + (BOOL) isBlankString:(NSString *)string;
 @end

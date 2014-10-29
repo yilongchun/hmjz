@@ -18,6 +18,14 @@
     return hostname;
 }
 
++ (NSString *)getImageHostname{
+    //从资源文件获取请求路径
+    NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSMutableDictionary *infolist = [[NSMutableDictionary alloc] initWithContentsOfFile:plistPath];
+    NSString *hostname = [infolist objectForKey:@"HttpImageurl"];
+    return hostname;
+}
+
 + (BOOL) isBlankString:(NSString *)string {
     if (string == nil || string == NULL) {
         return YES;

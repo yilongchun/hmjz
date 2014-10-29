@@ -26,6 +26,8 @@
 	<string>mobile.hmjxt.com</string>
 	<key>Httpurl2</key>
 	<string>115.29.103.36</string>
+	<key>HttpImageurl</key>
+	<string>image.hmjxt.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BjtzViewController : UIViewController
+@interface BjtzViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, strong) UITableView *mytableview;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 
 @end

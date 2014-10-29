@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EGORefreshTableHeaderView.h"
 
-@interface BwhdViewController : UIViewController<UITabBarDelegate>
+@interface BwhdViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,EGORefreshTableHeaderDelegate>{
+    
+    EGORefreshTableHeaderView *_refreshHeaderView;
+    BOOL _reloading;
+    
+}
 
-@property(nonatomic, assign) UIViewController *selectedViewController;
-@property (weak, nonatomic) IBOutlet UITabBar *mytabbar;
-@property(nonatomic, assign) NSInteger selectedViewControllerIndex;
+
+@property (nonatomic, strong) UITableView *mytableview;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+
+- (void)reloadTableViewDataSource;
+- (void)doneLoadingTableViewData;
+
 @end

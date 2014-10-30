@@ -7,6 +7,7 @@
 //
 
 #import "YezxViewController.h"
+#import "JYSlideSegmentController.h"
 
 @interface YezxViewController ()
 
@@ -19,6 +20,16 @@
     
     [self.navigationController setNavigationBarHidden:NO];
     self.title = @"育儿资讯";
+    
+       
+}
+
+- (void)updateSelectedSegmentLabel
+{
+    
+    
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,5 +46,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+
 
 @end

@@ -18,9 +18,12 @@
 #import "ChooseClassViewController.h"
 #import "BjtzViewController.h"
 #import "BwhdViewController.h"
+#import "MyViewController.h"
+#import "JYSlideSegmentController.h"
 
 @interface MainViewController (){
     MKNetworkEngine *engine;
+    NSArray *typearr;
 }
 
 @end
@@ -69,7 +72,7 @@
     self.studentimg.layer.shadowOpacity = 0.5;
     self.studentimg.layer.shadowRadius = 2.0;
     
-    
+    [self loadYezx];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,7 +94,7 @@
 */
 //隐藏导航栏
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-    NSLog(@"%@",viewController);
+    
     if ([viewController isKindOfClass:[MainViewController class]]) {
         [self.navigationController setNavigationBarHidden:YES];
     }
@@ -160,13 +163,65 @@
     [self.navigationController pushViewController:tabBarCtl animated:YES];
     [tabBarCtl.navigationController setNavigationBarHidden:NO];
 }
+
+- (void)loadYezx{
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *userid = [userDefaults objectForKey:@"userid"];
+        [dic setValue:userid forKey:@"userid"];
+    
+        MKNetworkOperation *op = [engine operationWithPath:@"/sma/MationType/findAllList.do" params:dic httpMethod:@"POST"];
+        [op addCompletionHandler:^(MKNetworkOperation *operation) {
+            NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+            NSString *result = [operation responseString];
+            NSError *error;
+            NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+            if (resultDict == nil) {
+                NSLog(@"json parse failed \r\n");
+            }
+            NSNumber *success = [resultDict objectForKey:@"success"];
+//            NSString *msg = [resultDict objectForKey:@"msg"];
+            //        NSString *code = [resultDict objectForKey:@"code"];
+            if ([success boolValue]) {
+                NSArray *data = [resultDict objectForKey:@"data"];
+                if (data != nil) {
+                    typearr = data;
+                }
+            }else{
+    
+    
+            }
+        }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+            NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        }];
+        [engine enqueueOperation:op];
+}
+
 //育儿资讯
 - (IBAction)yezxAction:(UIButton *)sender {
-    YezxViewController *vc = [[YezxViewController alloc] init];
+    
+    NSMutableArray *vcs = [NSMutableArray array];
+    for (int i = 0; i < [typearr count]; i++) {
+        NSDictionary *type = [typearr objectAtIndex:i];
+        
+        MyViewController *vc = [[MyViewController alloc] init];
+        vc.typeId = [type objectForKey:@"id"];
+//        UIViewController *vc = [[UIViewController alloc] init];
+        vc.title = [NSString stringWithFormat:@"%@", [type objectForKey:@"typename"]];
+        [vcs addObject:vc];
+    }
+    
+    JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+    slideSegmentController.title = @"育儿资讯";
+    slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
+    slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
-    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:slideSegmentController animated:YES];
+    
+   
 }
 //家长园地
 - (IBAction)jzydAction:(UIButton *)sender {

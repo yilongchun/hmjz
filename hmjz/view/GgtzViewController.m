@@ -8,7 +8,7 @@
 
 #import "GgtzViewController.h"
 #import "GgtzTableViewCell.h"
-#import"MKNetworkKit.h"
+#import "MKNetworkKit.h"
 #import "Utils.h"
 #import "MBProgressHUD.h"
 #import "GgxqViewController.h"
@@ -111,7 +111,7 @@
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [HUD hide:YES];
-            [self okMsk:@"加载成功"];
+//            [self okMsk:@"加载成功"];
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
@@ -123,7 +123,7 @@
                 }else{
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
-                NSLog(@"%@",totalpage);
+                
                 
             }
         }else{
@@ -179,7 +179,7 @@
                 }else{
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
-                NSLog(@"%@",totalpage);
+                
             }
         }else{
             [HUD hide:YES];

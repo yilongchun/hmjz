@@ -25,6 +25,12 @@
 		E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C90519F7621900B0E1DE /* AppDelegate.m */; };
 		E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4B2C90D19F7621900B0E1DE /* Images.xcassets */; };
 		E4B2C91D19F7621900B0E1DE /* hmjzTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B2C91C19F7621900B0E1DE /* hmjzTests.m */; };
+		E4B54BA11A01DB5100AC8D86 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4B54B921A01C93600AC8D86 /* UIKit.framework */; };
+		E4B54BAC1A01E1BD00AC8D86 /* JYSlideSegmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BAB1A01E1BD00AC8D86 /* JYSlideSegmentController.m */; };
+		E4B54BB01A01FE2600AC8D86 /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BAE1A01FE2600AC8D86 /* MyViewController.m */; };
+		E4B54BB11A01FE2600AC8D86 /* MyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BAF1A01FE2600AC8D86 /* MyViewController.xib */; };
+		E4B54BB51A020A3000AC8D86 /* MyViewControllerDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */; };
+		E4B54BB61A020A3000AC8D86 /* MyViewControllerDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */; };
 		E4C69A5F19F9DCCD00B0EFEA /* YqjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A5D19F9DCCD00B0EFEA /* YqjsViewController.m */; };
 		E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A5E19F9DCCD00B0EFEA /* YqjsViewController.xib */; };
 		E4C69A6419F9DD5200B0EFEA /* GgtzViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A6219F9DD5200B0EFEA /* GgtzViewController.m */; };
@@ -153,6 +159,15 @@
 		E4B2C91619F7621900B0E1DE /* hmjzTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hmjzTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B2C91B19F7621900B0E1DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4B2C91C19F7621900B0E1DE /* hmjzTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = hmjzTests.m; sourceTree = "<group>"; };
+		E4B54B921A01C93600AC8D86 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		E4B54BAA1A01E1BD00AC8D86 /* JYSlideSegmentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JYSlideSegmentController.h; sourceTree = "<group>"; };
+		E4B54BAB1A01E1BD00AC8D86 /* JYSlideSegmentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JYSlideSegmentController.m; sourceTree = "<group>"; };
+		E4B54BAD1A01FE2600AC8D86 /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyViewController.h; path = view/MyViewController.h; sourceTree = "<group>"; };
+		E4B54BAE1A01FE2600AC8D86 /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyViewController.m; path = view/MyViewController.m; sourceTree = "<group>"; };
+		E4B54BAF1A01FE2600AC8D86 /* MyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyViewController.xib; path = view/MyViewController.xib; sourceTree = "<group>"; };
+		E4B54BB21A020A3000AC8D86 /* MyViewControllerDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyViewControllerDetail.h; path = view/MyViewControllerDetail.h; sourceTree = "<group>"; };
+		E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyViewControllerDetail.m; path = view/MyViewControllerDetail.m; sourceTree = "<group>"; };
+		E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyViewControllerDetail.xib; path = view/MyViewControllerDetail.xib; sourceTree = "<group>"; };
 		E4C69A5C19F9DCCD00B0EFEA /* YqjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YqjsViewController.h; path = view/YqjsViewController.h; sourceTree = "<group>"; };
 		E4C69A5D19F9DCCD00B0EFEA /* YqjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YqjsViewController.m; path = view/YqjsViewController.m; sourceTree = "<group>"; };
 		E4C69A5E19F9DCCD00B0EFEA /* YqjsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YqjsViewController.xib; path = view/YqjsViewController.xib; sourceTree = "<group>"; };
@@ -291,6 +306,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4B54BA11A01DB5100AC8D86 /* UIKit.framework in Frameworks */,
 				E4C7773219F8911900532B09 /* Foundation.framework in Frameworks */,
 				E4C7772F19F88BFC00532B09 /* ImageIO.framework in Frameworks */,
 				E4C7772C19F88B5B00532B09 /* Security.framework in Frameworks */,
@@ -463,6 +479,7 @@
 		E4C7772D19F88B8B00532B09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4B54B921A01C93600AC8D86 /* UIKit.framework */,
 				E4C7773119F8911900532B09 /* Foundation.framework */,
 				E4C7772E19F88BFC00532B09 /* ImageIO.framework */,
 				E4C7772B19F88B5B00532B09 /* Security.framework */,
@@ -519,6 +536,8 @@
 		E4C777C119F8E48300532B09 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				E4B54BAA1A01E1BD00AC8D86 /* JYSlideSegmentController.h */,
+				E4B54BAB1A01E1BD00AC8D86 /* JYSlideSegmentController.m */,
 				E4C69A7019FA18F200B0EFEA /* FHSegmentedViewController.h */,
 				E4C69A7119FA18F200B0EFEA /* FHSegmentedViewController.m */,
 				E4C777AC19F8D68300532B09 /* YsdtViewController.h */,
@@ -554,6 +573,12 @@
 				E4A4589A19FF8A4700B759FD /* BjtzViewController.h */,
 				E4A4589B19FF8A4700B759FD /* BjtzViewController.m */,
 				E4A4589C19FF8A4700B759FD /* BjtzViewController.xib */,
+				E4B54BAD1A01FE2600AC8D86 /* MyViewController.h */,
+				E4B54BAE1A01FE2600AC8D86 /* MyViewController.m */,
+				E4B54BAF1A01FE2600AC8D86 /* MyViewController.xib */,
+				E4B54BB21A020A3000AC8D86 /* MyViewControllerDetail.h */,
+				E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */,
+				E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -700,8 +725,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4B54BB11A01FE2600AC8D86 /* MyViewController.xib in Resources */,
 				E4C69ABA19FA48A700B0EFEA /* blueArrow@2x.png in Resources */,
 				E4C7770319F88AAB00532B09 /* ic_login_user.png in Resources */,
+				E4B54BB61A020A3000AC8D86 /* MyViewControllerDetail.xib in Resources */,
 				E4C69AB719FA48A700B0EFEA /* blackArrow.png in Resources */,
 				E4A4588F19FF813600B759FD /* ic_bwrz_003@2x.png in Resources */,
 				E4A4588B19FF813600B759FD /* ic_bwrz_001@2x.png in Resources */,
@@ -792,8 +819,10 @@
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4C69A6919F9E35400B0EFEA /* GgtzTableViewCell.m in Sources */,
 				E4D88C8319FF383E0095AB3F /* ShezhiViewController.m in Sources */,
+				E4B54BAC1A01E1BD00AC8D86 /* JYSlideSegmentController.m in Sources */,
 				E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */,
 				E4C69A7E19FA34FB00B0EFEA /* GgxqViewController.m in Sources */,
+				E4B54BB51A020A3000AC8D86 /* MyViewControllerDetail.m in Sources */,
 				E4C69A7219FA18F200B0EFEA /* FHSegmentedViewController.m in Sources */,
 				E4C7779219F8966800532B09 /* NSData+MKBase64.m in Sources */,
 				E4C7C9A71A009909006A0284 /* AFSecurityPolicy.m in Sources */,
@@ -810,6 +839,7 @@
 				E4C7C9A51A009909006A0284 /* AFHTTPSessionManager.m in Sources */,
 				E4C7C9A61A009909006A0284 /* AFNetworkReachabilityManager.m in Sources */,
 				E4D88C8D19FF3A4F0095AB3F /* ChooseClassViewController.m in Sources */,
+				E4B54BB01A01FE2600AC8D86 /* MyViewController.m in Sources */,
 				E4C7C9A31A009909006A0284 /* AFHTTPRequestOperation.m in Sources */,
 				E4C7779319F8966800532B09 /* NSDate+RFC1123.m in Sources */,
 				E4C7C9BF1A009AD3006A0284 /* UIActivityIndicatorView+AFNetworking.m in Sources */,

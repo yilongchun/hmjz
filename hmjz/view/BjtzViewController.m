@@ -95,7 +95,7 @@
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [HUD hide:YES];
-            [self okMsk:@"加载成功"];
+//            [self okMsk:@"加载成功"];
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
@@ -206,26 +206,26 @@
 #pragma mark - UITableViewDatasource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (page != totalpage && [self.dataSource count] != 0) {
-        return [[self dataSource] count] + 1;
-    }else{
+//    if (page != totalpage && [self.dataSource count] != 0) {
+//        return [[self dataSource] count] + 1;
+//    }else{
         return [[self dataSource] count];
-    }
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([self.dataSource count] == indexPath.row) {
-        static NSString *cellIdentifier = @"morecell";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-            cell.textLabel.text = @"点击加载更多";
-        }
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        return cell;
-        
-    }else{
+//    if ([self.dataSource count] == indexPath.row) {
+//        static NSString *cellIdentifier = @"morecell";
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (!cell) {
+//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//            cell.textLabel.text = @"点击加载更多";
+//        }
+//        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+//        return cell;
+//        
+//    }else{
         static NSString *cellIdentifier = @"ggtzcell";
         GgtzTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
@@ -254,16 +254,16 @@
         cell.gdate.text = tncreatedate;
         cell.gsource.text = [NSString stringWithFormat:@"来自:%@",source];
         return cell;
-    }
+//    }
     
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.dataSource count] == indexPath.row) {
-        return 44;
-    }else{
+//    if ([self.dataSource count] == indexPath.row) {
+//        return 44;
+//    }else{
         return 100;
-    }
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -277,22 +277,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.dataSource count] == indexPath.row) {
-        if (page == totalpage) {
-            
-        }else{
-            [HUD show:YES];
-//            [self loadMore];
-        }
-        
-    }else{
+//    if ([self.dataSource count] == indexPath.row) {
+//        if (page == totalpage) {
+//            
+//        }else{
+//            [HUD show:YES];
+////            [self loadMore];
+//        }
+//        
+//    }else{
         //        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
         //        NSString *tnid = [info objectForKey:@"tnid"];
         //        GgxqViewController *ggxq = [[GgxqViewController alloc]init];
         //        ggxq.title = @"公告详情";
         //        ggxq.tnid = tnid;
         //        [self.navigationController pushViewController:ggxq animated:YES];
-    }
+//    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

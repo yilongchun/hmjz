@@ -39,7 +39,7 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    self.username.text = @"13276367905";
+    self.username.text = @"13276367907";
     self.password.text = @"123456";
     
 }
@@ -185,7 +185,13 @@
                 [self getClassInfo:studentid];//获取班级信息
                 
             }else if([array count] > 1){//有多个宝宝需要用户选择
+                NSDictionary *data = [array objectAtIndex:0];
                 
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
+                
+                NSString *studentid = [data objectForKey:@"studentid"];//学生id
+                [self getClassInfo:studentid];//获取班级信息
                 
             }
         }else{

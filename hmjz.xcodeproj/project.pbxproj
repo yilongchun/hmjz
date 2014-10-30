@@ -31,6 +31,12 @@
 		E4B54BB11A01FE2600AC8D86 /* MyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BAF1A01FE2600AC8D86 /* MyViewController.xib */; };
 		E4B54BB51A020A3000AC8D86 /* MyViewControllerDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */; };
 		E4B54BB61A020A3000AC8D86 /* MyViewControllerDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */; };
+		E4B54BBA1A0224DC00AC8D86 /* MyViewControllerCellDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BB81A0224DC00AC8D86 /* MyViewControllerCellDetail.m */; };
+		E4B54BBB1A0224DC00AC8D86 /* MyViewControllerCellDetail.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BB91A0224DC00AC8D86 /* MyViewControllerCellDetail.xib */; };
+		E4B54BBE1A0227C500AC8D86 /* ic_user_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BBC1A0227C500AC8D86 /* ic_user_bg.png */; };
+		E4B54BBF1A0227C500AC8D86 /* ic_user_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BBD1A0227C500AC8D86 /* ic_user_bg2.png */; };
+		E4B54BC31A0227E200AC8D86 /* GrdaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4B54BC11A0227E200AC8D86 /* GrdaViewController.m */; };
+		E4B54BC41A0227E200AC8D86 /* GrdaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4B54BC21A0227E200AC8D86 /* GrdaViewController.xib */; };
 		E4C69A5F19F9DCCD00B0EFEA /* YqjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A5D19F9DCCD00B0EFEA /* YqjsViewController.m */; };
 		E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C69A5E19F9DCCD00B0EFEA /* YqjsViewController.xib */; };
 		E4C69A6419F9DD5200B0EFEA /* GgtzViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C69A6219F9DD5200B0EFEA /* GgtzViewController.m */; };
@@ -168,6 +174,14 @@
 		E4B54BB21A020A3000AC8D86 /* MyViewControllerDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyViewControllerDetail.h; path = view/MyViewControllerDetail.h; sourceTree = "<group>"; };
 		E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyViewControllerDetail.m; path = view/MyViewControllerDetail.m; sourceTree = "<group>"; };
 		E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyViewControllerDetail.xib; path = view/MyViewControllerDetail.xib; sourceTree = "<group>"; };
+		E4B54BB71A0224DC00AC8D86 /* MyViewControllerCellDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyViewControllerCellDetail.h; path = view/MyViewControllerCellDetail.h; sourceTree = "<group>"; };
+		E4B54BB81A0224DC00AC8D86 /* MyViewControllerCellDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyViewControllerCellDetail.m; path = view/MyViewControllerCellDetail.m; sourceTree = "<group>"; };
+		E4B54BB91A0224DC00AC8D86 /* MyViewControllerCellDetail.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyViewControllerCellDetail.xib; path = view/MyViewControllerCellDetail.xib; sourceTree = "<group>"; };
+		E4B54BBC1A0227C500AC8D86 /* ic_user_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_user_bg.png; sourceTree = "<group>"; };
+		E4B54BBD1A0227C500AC8D86 /* ic_user_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_user_bg2.png; sourceTree = "<group>"; };
+		E4B54BC01A0227E200AC8D86 /* GrdaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GrdaViewController.h; path = view/GrdaViewController.h; sourceTree = "<group>"; };
+		E4B54BC11A0227E200AC8D86 /* GrdaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GrdaViewController.m; path = view/GrdaViewController.m; sourceTree = "<group>"; };
+		E4B54BC21A0227E200AC8D86 /* GrdaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GrdaViewController.xib; path = view/GrdaViewController.xib; sourceTree = "<group>"; };
 		E4C69A5C19F9DCCD00B0EFEA /* YqjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YqjsViewController.h; path = view/YqjsViewController.h; sourceTree = "<group>"; };
 		E4C69A5D19F9DCCD00B0EFEA /* YqjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YqjsViewController.m; path = view/YqjsViewController.m; sourceTree = "<group>"; };
 		E4C69A5E19F9DCCD00B0EFEA /* YqjsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YqjsViewController.xib; path = view/YqjsViewController.xib; sourceTree = "<group>"; };
@@ -403,6 +417,8 @@
 		E4B2C92619F7641500B0E1DE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4B54BBC1A0227C500AC8D86 /* ic_user_bg.png */,
+				E4B54BBD1A0227C500AC8D86 /* ic_user_bg2.png */,
 				E4A4588419FF813600B759FD /* ic_bwrz_001.png */,
 				E4A4588519FF813600B759FD /* ic_bwrz_001@2x.png */,
 				E4A4588619FF813600B759FD /* ic_bwrz_002.png */,
@@ -579,6 +595,12 @@
 				E4B54BB21A020A3000AC8D86 /* MyViewControllerDetail.h */,
 				E4B54BB31A020A3000AC8D86 /* MyViewControllerDetail.m */,
 				E4B54BB41A020A3000AC8D86 /* MyViewControllerDetail.xib */,
+				E4B54BB71A0224DC00AC8D86 /* MyViewControllerCellDetail.h */,
+				E4B54BB81A0224DC00AC8D86 /* MyViewControllerCellDetail.m */,
+				E4B54BB91A0224DC00AC8D86 /* MyViewControllerCellDetail.xib */,
+				E4B54BC01A0227E200AC8D86 /* GrdaViewController.h */,
+				E4B54BC11A0227E200AC8D86 /* GrdaViewController.m */,
+				E4B54BC21A0227E200AC8D86 /* GrdaViewController.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -747,7 +769,10 @@
 				E4A4588D19FF813600B759FD /* ic_bwrz_002@2x.png in Resources */,
 				E4C69AB819FA48A700B0EFEA /* blackArrow@2x.png in Resources */,
 				E4A4588A19FF813600B759FD /* ic_bwrz_001.png in Resources */,
+				E4B54BBF1A0227C500AC8D86 /* ic_user_bg2.png in Resources */,
 				E4A4589E19FF8A4700B759FD /* BjtzViewController.xib in Resources */,
+				E4B54BBB1A0224DC00AC8D86 /* MyViewControllerCellDetail.xib in Resources */,
+				E4B54BBE1A0227C500AC8D86 /* ic_user_bg.png in Resources */,
 				E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
@@ -760,6 +785,7 @@
 				E4C777BF19F8D7F300532B09 /* ic_index_008.png in Resources */,
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
 				E4C777BC19F8D7F300532B09 /* ic_index_005.png in Resources */,
+				E4B54BC41A0227E200AC8D86 /* GrdaViewController.xib in Resources */,
 				E4C777D019F8FEE700532B09 /* YezxViewController.xib in Resources */,
 				E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */,
 				E4C777B419F8D7CE00532B09 /* ic_index_003.png in Resources */,
@@ -812,6 +838,7 @@
 				E4C7779619F8966800532B09 /* UIAlertView+MKNetworkKitAdditions.m in Sources */,
 				E4C7C9C11A009AD3006A0284 /* UIButton+AFNetworking.m in Sources */,
 				E4C7C9A91A009909006A0284 /* AFURLRequestSerialization.m in Sources */,
+				E4B54BBA1A0224DC00AC8D86 /* MyViewControllerCellDetail.m in Sources */,
 				E4C777CF19F8FEE700532B09 /* YezxViewController.m in Sources */,
 				E4AE1F2319F78FC9003C90B9 /* MBProgressHUD.m in Sources */,
 				E4A4589D19FF8A4700B759FD /* BjtzViewController.m in Sources */,
@@ -826,6 +853,7 @@
 				E4C69A7219FA18F200B0EFEA /* FHSegmentedViewController.m in Sources */,
 				E4C7779219F8966800532B09 /* NSData+MKBase64.m in Sources */,
 				E4C7C9A71A009909006A0284 /* AFSecurityPolicy.m in Sources */,
+				E4B54BC31A0227E200AC8D86 /* GrdaViewController.m in Sources */,
 				E4C7C9AB1A009909006A0284 /* AFURLSessionManager.m in Sources */,
 				E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */,
 				E4C7C9A41A009909006A0284 /* AFHTTPRequestOperationManager.m in Sources */,

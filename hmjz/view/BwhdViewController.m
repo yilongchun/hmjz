@@ -13,6 +13,7 @@
 #import "Utils.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "MyViewControllerCellDetail.h"
 
 @interface BwhdViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -303,6 +304,11 @@
 //        ggxq.tnid = tnid;
 //        [self.navigationController pushViewController:ggxq animated:YES];
 //    }
+    NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *detailid = [data objectForKey:@"id"];
+    MyViewControllerCellDetail *detail = [[MyViewControllerCellDetail alloc] init];
+    detail.detailid = detailid;
+    [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

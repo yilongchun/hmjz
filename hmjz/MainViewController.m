@@ -20,6 +20,7 @@
 #import "BwhdViewController.h"
 #import "MyViewController.h"
 #import "JYSlideSegmentController.h"
+#import "GrdaViewController.h"
 
 @interface MainViewController (){
     MKNetworkEngine *engine;
@@ -62,6 +63,10 @@
     }else{
         [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/SM/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
     }
+    
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(grdaAction:)];
+    [self.studentimg addGestureRecognizer:singleTap1];
+    
     self.studentimg.layer.cornerRadius = self.studentimg.frame.size.height/2;
     self.studentimg.layer.masksToBounds = YES;
     [self.studentimg setContentMode:UIViewContentModeScaleAspectFill];
@@ -116,6 +121,15 @@
     ChooseClassViewController *cc = [[ChooseClassViewController alloc] init];
     [self.navigationController pushViewController:cc animated:YES];
 }
+
+- (void)grdaAction:(UITapGestureRecognizer *)sender{
+    GrdaViewController *vc = [[GrdaViewController alloc] init];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 //设置
 - (IBAction)setup:(UIButton *)sender {
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

@@ -7,14 +7,8 @@
 //
 
 #import "KcbViewController.h"
-#import "Utils.h"
-#import "MKNetworkKit.h"
-#import "MBProgressHUD.h"
 
-@interface KcbViewController ()<MBProgressHUDDelegate>{
-    MKNetworkEngine *engine;
-    MBProgressHUD *HUD;
-}
+@interface KcbViewController ()
 
 
 @end
@@ -25,20 +19,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
-    
-    //添加加载等待条
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"加载中";
-    [self.view addSubview:HUD];
-    HUD.delegate = self;
-    
     [self loadData];
     
 }
 
 - (void)loadData{
-    [HUD show:YES];
+    
     NSString *leftstr = [[NSMutableString alloc] initWithString:@""];
     NSString *rightstr = [[NSMutableString alloc] initWithString:@""];
     if ([self.dataSource count] > 9) {
@@ -87,9 +73,26 @@
     [attributedString2 addAttribute:NSParagraphStyleAttributeName value:paragraphStyle2 range:NSMakeRange(0, [self.rightContent.text length])];
     [self.rightContent setAttributedText:attributedString2];
     [self.rightContent sizeToFit];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
     
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
     
-    [HUD hide:YES];
+    // 开启
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning {

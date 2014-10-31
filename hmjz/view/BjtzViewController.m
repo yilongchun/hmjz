@@ -13,6 +13,7 @@
 #import "Utils.h"
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
+#import "BjtzDetailViewController.h"
 
 @interface BjtzViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -294,6 +295,12 @@
         //        [self.navigationController pushViewController:ggxq animated:YES];
 //    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+    BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
+    vc.title = @"通知详情";
+    vc.dataSource = [NSMutableArray arrayWithObject:info];
+    [self.navigationController pushViewController:vc animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {

@@ -123,6 +123,8 @@
 		E4D88C8E19FF3A4F0095AB3F /* ChooseClassViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4D88C8C19FF3A4F0095AB3F /* ChooseClassViewController.xib */; };
 		E4E700B61A031FFB00FB4339 /* ContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E700B41A031FFB00FB4339 /* ContentCell.m */; };
 		E4E700B71A031FFB00FB4339 /* ContentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700B51A031FFB00FB4339 /* ContentCell.xib */; };
+		E4E700BB1A033F5200FB4339 /* BjtzDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E700B91A033F5200FB4339 /* BjtzDetailViewController.m */; };
+		E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BA1A033F5200FB4339 /* BjtzDetailViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -313,6 +315,9 @@
 		E4E700B31A031FFB00FB4339 /* ContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContentCell.h; path = view/ContentCell.h; sourceTree = "<group>"; };
 		E4E700B41A031FFB00FB4339 /* ContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContentCell.m; path = view/ContentCell.m; sourceTree = "<group>"; };
 		E4E700B51A031FFB00FB4339 /* ContentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ContentCell.xib; path = view/ContentCell.xib; sourceTree = "<group>"; };
+		E4E700B81A033F5200FB4339 /* BjtzDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BjtzDetailViewController.h; path = view/BjtzDetailViewController.h; sourceTree = "<group>"; };
+		E4E700B91A033F5200FB4339 /* BjtzDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BjtzDetailViewController.m; path = view/BjtzDetailViewController.m; sourceTree = "<group>"; };
+		E4E700BA1A033F5200FB4339 /* BjtzDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BjtzDetailViewController.xib; path = view/BjtzDetailViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -601,6 +606,9 @@
 				E4E700B31A031FFB00FB4339 /* ContentCell.h */,
 				E4E700B41A031FFB00FB4339 /* ContentCell.m */,
 				E4E700B51A031FFB00FB4339 /* ContentCell.xib */,
+				E4E700B81A033F5200FB4339 /* BjtzDetailViewController.h */,
+				E4E700B91A033F5200FB4339 /* BjtzDetailViewController.m */,
+				E4E700BA1A033F5200FB4339 /* BjtzDetailViewController.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -778,6 +786,7 @@
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
+				E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */,
 				E4A4588E19FF813600B759FD /* ic_bwrz_003.png in Resources */,
 				E4C777B219F8D7AC00532B09 /* ic_index_002.png in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
@@ -846,6 +855,7 @@
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4C69A6919F9E35400B0EFEA /* GgtzTableViewCell.m in Sources */,
 				E4D88C8319FF383E0095AB3F /* ShezhiViewController.m in Sources */,
+				E4E700BB1A033F5200FB4339 /* BjtzDetailViewController.m in Sources */,
 				E4B54BAC1A01E1BD00AC8D86 /* JYSlideSegmentController.m in Sources */,
 				E4B2C90619F7621900B0E1DE /* AppDelegate.m in Sources */,
 				E4C69A7E19FA34FB00B0EFEA /* GgxqViewController.m in Sources */,

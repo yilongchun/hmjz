@@ -11,6 +11,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "MKNetworkKit.h"
 #import "MBProgressHUD.h"
+#import "ContentCell.h"
 
 @interface MyViewControllerCellDetail ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
@@ -24,7 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"%@",self.detailid);
+    
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
@@ -34,8 +35,16 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
-    [self setTitle:self.title];
+    self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+//    if ([self.mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [self.mytableview setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([self.mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
+//    }
     
+    [self setTitle:self.title];
     [self loadData];
 }
 
@@ -57,26 +66,14 @@
         //        NSString *msg = [resultDict objectForKey:@"msg"];
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                self.dataSource = [NSMutableArray arrayWithObject:data];
+                [self.mytableview reloadData];
+            }
             [HUD hide:YES];
-            
-//            NSDictionary *data = [resultDict objectForKey:@"data"];
-//            if (data != nil) {
-//                NSArray *arr = [data objectForKey:@"rows"];
-//                self.dataSource = [NSMutableArray arrayWithArray:arr];
-//                [self.mytableview reloadData];
-//                NSNumber *total = [data objectForKey:@"total"];
-//                if ([total intValue] % [rows intValue] == 0) {
-//                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
-//                }else{
-//                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
-//                }
-//                NSLog(@"%@",totalpage);
-//                
-//            }
         }else{
             [HUD hide:YES];
-            
-            
         }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
@@ -84,6 +81,63 @@
         
     }];
     [engine enqueueOperation:op];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.dataSource count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *cellIdentifier = @"contentcell";
+    ContentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if (!cell) {
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
+    }
+    NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *title = [data objectForKey:@"activityTitle"];
+    NSString *date = [data objectForKey:@"createDate"];
+    NSString *content = [data objectForKey:@"activityContent"];
+    cell.contentTitle.text = title;
+    cell.contentDate.text = date;
+    cell.content.text = content;
+//    cell.content.text = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
+    cell.content.numberOfLines = 0;
+    [cell.content sizeToFit];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSInteger row = [indexPath row];
+    // 列寬
+    CGFloat contentWidth = self.mytableview.frame.size.width;
+    // 用何種字體進行顯示
+    UIFont *font = [UIFont systemFontOfSize:17];
+    // 該行要顯示的內容
+    NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"activityContent"];
+//    NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
+    // 計算出顯示完內容需要的最小尺寸
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
+    return size.height+86;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
 }
 
 - (void)didReceiveMemoryWarning {

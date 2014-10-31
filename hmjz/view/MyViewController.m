@@ -38,13 +38,14 @@
     //初始化tableview
     CGRect cg = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     self.mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
-    [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
-    if ([self.mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
-        [self.mytableview setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([self.mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
-    }
+    self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+//    if ([self.mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [self.mytableview setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([self.mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
+//    }
     self.mytableview.dataSource = self;
     self.mytableview.delegate = self;
     [self.view addSubview:self.mytableview];
@@ -165,12 +166,12 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

@@ -41,13 +41,14 @@
     //初始化tableview
     CGRect cg = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64);
     mytableView = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
-    [mytableView setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
-    if ([mytableView respondsToSelector:@selector(setSeparatorInset:)]) {
-        [mytableView setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([mytableView respondsToSelector:@selector(setLayoutMargins:)]) {
-        [mytableView setLayoutMargins:UIEdgeInsetsZero];
-    }
+    mytableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [mytableView setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+//    if ([mytableView respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [mytableView setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([mytableView respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [mytableView setLayoutMargins:UIEdgeInsetsZero];
+//    }
     mytableView.dataSource = self;
     mytableView.delegate = self;
     [self.view addSubview:mytableView];
@@ -256,6 +257,7 @@
         //[cell.gdispcription sizeToFit];
         cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
         cell.gdate.text = tncreatedate;
+        [cell.imageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
         return cell;
     }
     

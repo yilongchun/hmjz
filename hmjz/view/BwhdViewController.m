@@ -38,7 +38,7 @@
     //初始化tableview
     CGRect cg = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
-    //mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+    mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
         [mytableview setSeparatorInset:UIEdgeInsetsZero];
@@ -72,7 +72,7 @@
     
     
     page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:4];
+    rows = [NSNumber numberWithInt:10];
     //初始化数据
     [self loadData];
 
@@ -150,7 +150,7 @@
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:@"t_activity_title" forKey:@"type"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findPageList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

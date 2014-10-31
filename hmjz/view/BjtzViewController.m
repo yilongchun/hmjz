@@ -36,13 +36,14 @@
     //初始化tableview
     CGRect cg = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
     mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
-    [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
-    if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
-        [mytableview setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
-        [mytableview setLayoutMargins:UIEdgeInsetsZero];
-    }
+//    [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+//    if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [mytableview setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [mytableview setLayoutMargins:UIEdgeInsetsZero];
+//    }
+    mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     mytableview.dataSource = self;
     mytableview.delegate = self;
     [self.view addSubview:mytableview];
@@ -59,7 +60,7 @@
     
     
     page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:4];
+    rows = [NSNumber numberWithInt:10];
     //初始化数据
     [self loadData];
 
@@ -83,7 +84,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+                NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -100,14 +101,13 @@
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
                 self.dataSource = [NSMutableArray arrayWithArray:arr];
-                //                NSLog(@"%lu",(unsigned long)[arr count]);
-                [mytableview reloadData];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
                 }else{
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
+                [mytableview reloadData];
             }
         }else{
             [HUD hide:YES];
@@ -236,14 +236,14 @@
         NSString *teacherfileid = [info objectForKey:@"fileid"];
         NSString *tncontent = [info objectForKey:@"tncontent"];
         NSNumber *noticecount = [info objectForKey:@"noticecount"];
-        NSString *tncreatedate = [info objectForKey:@"tnmoddate"];
+        NSString *tncreatedate = [info objectForKey:@"tncreatedate"];
         NSString *source = [info objectForKey:@"noticename"];
         cell.gtitle.text = tntitle;
         
         if ([Utils isBlankString:teacherfileid]) {
             [cell.imageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
         }else{
-            NSLog(@"%@",teacherfileid);
+//            NSLog(@"%@",teacherfileid);
             [cell.imageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],teacherfileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
         }
         cell.gdispcription.text = tncontent;
@@ -268,12 +268,12 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{

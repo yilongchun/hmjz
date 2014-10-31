@@ -10,7 +10,9 @@
 
 @interface MyViewControllerCellDetail : UIViewController
 
-@property(nonatomic,copy) NSString *detailid;
-@property(nonatomic,copy) NSString *title;
+@property (weak, nonatomic) IBOutlet UITableView *mytableview;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic,copy) NSString *detailid;
+@property (nonatomic,copy) NSString *title;
 
 @end

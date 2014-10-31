@@ -303,13 +303,9 @@
     
 
     JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
-    
+    //设置背景图片
     UIImage *image = [UIImage imageNamed:@"ic_kcb_bg.png"];
-    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44-64)];
-    [imgview setImage:image];
-    
-    [slideSegmentController.view setBackgroundColor:[UIColor colorWithPatternImage:imgview.image]];
-//    [slideSegmentController.view addSubview:imgview];
+    slideSegmentController.view.layer.contents = (id)image.CGImage;
     
     
     slideSegmentController.title = @"课程表";

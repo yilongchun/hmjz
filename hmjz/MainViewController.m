@@ -20,10 +20,12 @@
 #import "MyViewController.h"
 #import "JYSlideSegmentController.h"
 #import "GrdaViewController.h"
+#import "KcbViewController.h"
 
 @interface MainViewController (){
     MKNetworkEngine *engine;
-    NSArray *typearr;
+    NSArray *typearr;//育儿资讯分类
+    NSArray *kcbarr;//课程表
 }
 
 @end
@@ -73,6 +75,7 @@
     self.studentimg.layer.shadowRadius = 2.0;
     
     [self loadYezx];
+    [self loadKcb];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -234,8 +237,89 @@
 //家长园地
 - (IBAction)jzydAction:(UIButton *)sender {
 }
+
+- (void)loadKcb{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *class = [userDefaults objectForKey:@"class"];
+    NSString *classid = [class objectForKey:@"classid"];
+    [dic setValue:classid forKey:@"classid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Schedule/findPbyid.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        //            NSString *msg = [resultDict objectForKey:@"msg"];
+        //        NSString *code = [resultDict objectForKey:@"code"];
+        if ([success boolValue]) {
+            NSArray *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                kcbarr = data;
+            }
+        }else{
+            
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    }];
+    [engine enqueueOperation:op];
+}
 //课程表
 - (IBAction)kcbAction:(UIButton *)sender {
+    NSMutableArray *vcs = [NSMutableArray array];
+    
+    KcbViewController *vc1 = [[KcbViewController alloc] init];
+    vc1.title = @"周一";
+    vc1.dataSource = kcbarr;
+    vc1.weekName = @"monday";
+    [vcs addObject:vc1];
+    KcbViewController *vc2 = [[KcbViewController alloc] init];
+    vc2.title = @"周二";
+    vc2.dataSource = kcbarr;
+    vc2.weekName = @"tuesday";
+    [vcs addObject:vc2];
+    KcbViewController *vc3 = [[KcbViewController alloc] init];
+    vc3.title = @"周三";
+    vc3.dataSource = kcbarr;
+    vc3.weekName = @"wednesday";
+    [vcs addObject:vc3];
+    KcbViewController *vc4 = [[KcbViewController alloc] init];
+    vc4.title = @"周四";
+    vc4.dataSource = kcbarr;
+    vc4.weekName = @"thursday";
+    [vcs addObject:vc4];
+    KcbViewController *vc5 = [[KcbViewController alloc] init];
+    vc5.title = @"周五";
+    vc5.dataSource = kcbarr;
+    vc5.weekName = @"friday";
+    [vcs addObject:vc5];
+    
+
+    JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+    
+    UIImage *image = [UIImage imageNamed:@"ic_kcb_bg.png"];
+    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(0, 44, self.view.frame.size.width, self.view.frame.size.height-44-64)];
+    [imgview setImage:image];
+    
+    [slideSegmentController.view setBackgroundColor:[UIColor colorWithPatternImage:imgview.image]];
+//    [slideSegmentController.view addSubview:imgview];
+    
+    
+    slideSegmentController.title = @"课程表";
+    slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
+    slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:slideSegmentController animated:YES];
 }
 //宝宝食谱
 - (IBAction)bbspAction:(UIButton *)sender {

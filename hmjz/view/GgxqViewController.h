@@ -10,6 +10,8 @@
 
 @interface GgxqViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UITableView *mytableview;
+@property (nonatomic, strong) NSMutableArray *dataSource;
 @property(nonatomic,copy) NSString *tnid;//公告id
 
 @end

@@ -307,7 +307,7 @@
     UIImage *image = [UIImage imageNamed:@"ic_kcb_bg.png"];
     slideSegmentController.view.layer.contents = (id)image.CGImage;
     
-    
+
     slideSegmentController.title = @"课程表";
     slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
     slideSegmentController.indicator.backgroundColor = [UIColor greenColor];

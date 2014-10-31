@@ -55,6 +55,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="gdate" destination="8Ix-7D-vYb" id="zAf-wm-Vq0"/>
                 <outlet property="gdispcription" destination="HZO-3r-Rwq" id="rVy-h9-P2P"/>

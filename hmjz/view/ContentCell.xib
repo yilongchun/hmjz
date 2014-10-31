@@ -37,6 +37,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="content" destination="GI0-3t-MKC" id="mk4-CU-XzD"/>
                 <outlet property="contentDate" destination="aQh-jg-ZZ0" id="Jhh-kg-Hbo"/>

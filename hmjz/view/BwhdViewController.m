@@ -308,6 +308,7 @@
     NSString *detailid = [data objectForKey:@"id"];
     MyViewControllerCellDetail *detail = [[MyViewControllerCellDetail alloc] init];
     detail.detailid = detailid;
+    detail.title = @"活动详情";
     [self.navigationController pushViewController:detail animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

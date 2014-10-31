@@ -11,5 +11,6 @@
 @interface MyViewControllerCellDetail : UIViewController
 
 @property(nonatomic,copy) NSString *detailid;
+@property(nonatomic,copy) NSString *title;
 
 @end

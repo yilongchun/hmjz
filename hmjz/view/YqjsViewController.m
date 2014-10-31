@@ -47,7 +47,7 @@
     
     
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pschool/findbyid.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pschool/findbyid.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

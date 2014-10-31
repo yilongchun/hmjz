@@ -81,7 +81,7 @@
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:userid forKey:@"userid"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidclass.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
@@ -138,7 +138,7 @@
 //    [dic setValue:rows forKey:@"rows"];
 //    [dic setValue:userid forKey:@"userid"];
 //    
-//    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidclass.do" params:dic httpMethod:@"POST"];
+//    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"POST"];
 //    [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
 //        NSString *result = [operation responseString];

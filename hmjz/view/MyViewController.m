@@ -79,7 +79,7 @@
     [dic setValue:[NSNumber numberWithInt:0] forKey:@"isdel"];
     [dic setValue:self.typeId forKey:@"typeid"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Mation/findPageList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Mation/findPageList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

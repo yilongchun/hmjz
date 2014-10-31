@@ -21,6 +21,9 @@
     NSNumber *totalpage;
     NSNumber *page;
     NSNumber *rows;
+    
+    NSString *schoolid;
+    NSString *userid;
 }
     
 
@@ -33,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
 
     //初始化tableview
@@ -69,10 +71,15 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *class = [userDefaults objectForKey:@"class"];
+    schoolid = [class objectForKey:@"schoolid"];
+    userid = [userDefaults objectForKey:@"userid"];
     
     
     page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:4];
+    rows = [NSNumber numberWithInt:10];
     //初始化数据
     [self loadData];
     
@@ -83,21 +90,12 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
-    //userid=23b3850a-8758-48e6-9027-122388f07a7b&page=1&rows=15&recordId=
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    NSDictionary *class = [userDefaults objectForKey:@"class"];
-    
-    NSString *schoolid = [class objectForKey:@"schoolid"];
-    
-    
-    [dic setValue:self.userid forKey:@"userid"];
+    [dic setValue:userid forKey:@"userid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:schoolid forKey:@"recordId"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
@@ -116,14 +114,14 @@
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
                 self.dataSource = [NSMutableArray arrayWithArray:arr];
-                [self.mytableView reloadData];
+                
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
                 }else{
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
-                
+                [self.mytableView reloadData];
                 
             }
         }else{
@@ -147,13 +145,12 @@
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
-    
-    [dic setValue:self.userid forKey:@"userid"];
+    [dic setValue:userid forKey:@"userid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    [dic setValue:@"8671eb9e-c834-41dd-8e37-62c1ac730c65" forKey:@"recordId"];
+    [dic setValue:schoolid forKey:@"recordId"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

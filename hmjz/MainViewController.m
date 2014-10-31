@@ -44,15 +44,11 @@
     
     //设置信息
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    NSString *userid = [userDefaults objectForKey:@"userid"];
-    
-    
+
     NSDictionary *student = [userDefaults objectForKey:@"student"];
     NSString *studentname = [student objectForKey:@"studnetname"];
     NSNumber *studentage = [student objectForKey:@"age"];
     NSString *flieid = [student objectForKey:@"flieid"];
-    
-//    NSString *flieid = @"3b276e4a-5589-460a-a68e-7e16a1701a34";
     
     self.studentname.text = studentname;
     self.studentage.text = [NSString stringWithFormat:@"年龄：%@岁",studentage];
@@ -61,7 +57,7 @@
     if ([Utils isBlankString:flieid]) {
         [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
     }else{
-        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/SM/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
+        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
     }
     
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(grdaAction:)];
@@ -145,7 +141,6 @@
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
     YsdtViewController *ysdt = [[YsdtViewController alloc] init];
-    ysdt.userid = self.userid;
     [self.navigationController pushViewController:ysdt animated:YES];
 }
 //班务活动
@@ -184,7 +179,7 @@
         NSString *userid = [userDefaults objectForKey:@"userid"];
         [dic setValue:userid forKey:@"userid"];
     
-        MKNetworkOperation *op = [engine operationWithPath:@"/sma/MationType/findAllList.do" params:dic httpMethod:@"POST"];
+        MKNetworkOperation *op = [engine operationWithPath:@"/MationType/findAllList.do" params:dic httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *operation) {
             NSLog(@"[operation responseData]-->>%@", [operation responseString]);
             NSString *result = [operation responseString];

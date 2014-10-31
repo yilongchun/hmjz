@@ -93,7 +93,7 @@
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:@"t_activity_title" forKey:@"type"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/classActivity/findPageList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findPageList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
@@ -150,7 +150,7 @@
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:@"t_activity_title" forKey:@"type"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/sma/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

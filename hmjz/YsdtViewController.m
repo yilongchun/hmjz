@@ -28,7 +28,6 @@
     bjjs.title = @"班级介绍";
     GgtzViewController *ggtz = [[GgtzViewController alloc] init];
     ggtz.title = @"公告通知";
-    ggtz.userid = self.userid;
     [self setViewControllers:[NSArray arrayWithObjects:yqjs, bjjs, ggtz, nil]];
     
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

@@ -23,13 +23,13 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>Httpurl</key>
-	<string>mobile.hmjxt.com</string>
-	<key>Httpurl2</key>
-	<string>115.29.103.36</string>
+	<string>mobile.hmjxt.com/sma</string>
 	<key>HttpImageurl</key>
 	<string>image.hmjxt.com</string>
+	<key>Httpurl2</key>
+	<string>115.29.103.36/sma</string>
 	<key>HttpImageurl2</key>
-	<string>115.29.103.36</string>
+	<string>115.29.103.36/SM</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

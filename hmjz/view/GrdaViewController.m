@@ -47,7 +47,9 @@
     }else if ([sexnum intValue]== 1){
         sex = @"女";
     }
-
+    
+    NSDictionary *class= [userDefaults objectForKey:@"class"];
+    classname = [class objectForKey:@"classname"];
     NSString *flieid = [student objectForKey:@"flieid"];
     
     //设置头像
@@ -104,7 +106,7 @@
             cell.textLabel.text = [NSString stringWithFormat:@"性别：%@",sex];
             break;
         case 3:
-            
+            cell.textLabel.text = [NSString stringWithFormat:@"班级：%@",classname];
             break;
             
         default:

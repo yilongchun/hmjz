@@ -36,6 +36,7 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.delegate = self;
+    HUD.labelText = @"正在加载中";
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
@@ -177,7 +178,21 @@
                 
                 MainViewController *mvc = [[MainViewController alloc] init];
                 [HUD hide:YES];
-                [self.navigationController pushViewController:mvc animated:YES];
+                
+                NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
+                if ([loginflag isEqualToString:@"1"]) {
+                    [self.navigationController pushViewController:mvc animated:YES];
+                    [userDefaults removeObjectForKey:@"loginflag"];
+                }else{
+                    for (UIViewController *temp in self.navigationController.viewControllers) {
+                        
+                        if ([temp isKindOfClass:[MainViewController class]]) {
+                            [self.navigationController popToViewController:temp animated:YES];
+                            break;
+                        }
+                    }
+                }
+//                [self.navigationController pushViewController:mvc animated:YES];
                 
             }else if([array count] > 1){//有多个班级需要用户选择
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

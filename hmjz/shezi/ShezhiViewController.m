@@ -106,6 +106,7 @@
         
         
     }else{
+//        [self.navigationController popToRootViewControllerAnimated:YES];
         LoginViewController *loginCtrl = [[LoginViewController alloc] init];
         UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:loginCtrl];
         [navCtrl setNavigationBarHidden:YES];

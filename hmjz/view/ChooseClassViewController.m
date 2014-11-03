@@ -33,8 +33,17 @@
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.delegate = self;
+    HUD.labelText = @"正在加载中";
     
-    engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
+    
+    if ([self.mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.mytableview setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([self.mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    //engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     currentIndex = -1;
     [self loadData];
@@ -117,7 +126,28 @@
     
     MainViewController *mvc = [[MainViewController alloc] init];
     [HUD hide:YES];
-    [self.navigationController pushViewController:mvc animated:YES];
+    
+    NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
+    if ([loginflag isEqualToString:@"1"]) {
+        [self.navigationController pushViewController:mvc animated:YES];
+        [userDefaults removeObjectForKey:@"loginflag"];
+    }else{
+        for (UIViewController *temp in self.navigationController.viewControllers) {
+            NSLog(@"%@",[temp class]);
+            if ([temp isKindOfClass:[MainViewController class]]) {
+                [self.navigationController popToViewController:temp animated:YES];
+                break;
+            }
+        }
+        
+//        [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:0] animated:YES];
+//        [self.navigationController popToViewController:mvc animated:YES];
+//        [self.navigationController popToRootViewControllerAnimated:YES];
+//        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+
+    
 
     
     
@@ -125,6 +155,15 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

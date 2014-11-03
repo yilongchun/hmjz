@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E48CFB2E1A0710D4002ECF19 /* ChildrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */; };
+		E48CFB2F1A0710D4002ECF19 /* ChildrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */; };
 		E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A4587D19FF5C4600B759FD /* iOS_42.png */; };
 		E4A4588219FF78B600B759FD /* BjjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4588019FF78B600B759FD /* BjjsViewController.m */; };
 		E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A4588119FF78B600B759FD /* BjjsViewController.xib */; };
@@ -142,6 +144,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E48CFB2B1A0710D4002ECF19 /* ChildrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChildrenTableViewCell.h; path = view/ChildrenTableViewCell.h; sourceTree = "<group>"; };
+		E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChildrenTableViewCell.m; path = view/ChildrenTableViewCell.m; sourceTree = "<group>"; };
+		E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChildrenTableViewCell.xib; path = view/ChildrenTableViewCell.xib; sourceTree = "<group>"; };
 		E4A4587D19FF5C4600B759FD /* iOS_42.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iOS_42.png; sourceTree = "<group>"; };
 		E4A4587F19FF78B600B759FD /* BjjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BjjsViewController.h; path = view/BjjsViewController.h; sourceTree = "<group>"; };
 		E4A4588019FF78B600B759FD /* BjjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BjjsViewController.m; path = view/BjjsViewController.m; sourceTree = "<group>"; };
@@ -623,6 +628,9 @@
 				E4E700BD1A035A0600FB4339 /* KcbViewController.h */,
 				E4E700BE1A035A0600FB4339 /* KcbViewController.m */,
 				E4E700BF1A035A0600FB4339 /* KcbViewController.xib */,
+				E48CFB2B1A0710D4002ECF19 /* ChildrenTableViewCell.h */,
+				E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */,
+				E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -781,6 +789,7 @@
 				E4C777B019F8D68300532B09 /* YsdtViewController.xib in Resources */,
 				E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */,
 				E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */,
+				E48CFB2F1A0710D4002ECF19 /* ChildrenTableViewCell.xib in Resources */,
 				E4A4588C19FF813600B759FD /* ic_bwrz_002.png in Resources */,
 				E4E700B71A031FFB00FB4339 /* ContentCell.xib in Resources */,
 				E4C777C619F8E4DE00532B09 /* BwhdViewController.xib in Resources */,
@@ -856,6 +865,7 @@
 				E4D88C8819FF39410095AB3F /* ChooseChildrenViewController.m in Sources */,
 				E4C7C9C31A009AD3006A0284 /* UIProgressView+AFNetworking.m in Sources */,
 				E4C7C9BE1A009AD3006A0284 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				E48CFB2E1A0710D4002ECF19 /* ChildrenTableViewCell.m in Sources */,
 				E4C7C9A81A009909006A0284 /* AFURLConnectionOperation.m in Sources */,
 				E4C7779419F8966800532B09 /* NSDictionary+RequestEncoding.m in Sources */,
 				E4E700B61A031FFB00FB4339 /* ContentCell.m in Sources */,

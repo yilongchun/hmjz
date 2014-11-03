@@ -40,6 +40,10 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];
     
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
@@ -105,43 +109,33 @@
 
 //选择宝宝
 - (IBAction)chooseChildren:(UIButton *)sender {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     ChooseChildrenViewController *cc = [[ChooseChildrenViewController alloc] init];
     [self.navigationController pushViewController:cc animated:YES];
 }
 //选择班级
 - (IBAction)chooseClass:(UIButton *)sender {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     ChooseClassViewController *cc = [[ChooseClassViewController alloc] init];
     [self.navigationController pushViewController:cc animated:YES];
 }
 
 - (void)grdaAction:(UITapGestureRecognizer *)sender{
     GrdaViewController *vc = [[GrdaViewController alloc] init];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 //设置
 - (IBAction)setup:(UIButton *)sender {
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     ShezhiViewController *sz = [[ShezhiViewController alloc] init];
     [self.navigationController pushViewController:sz animated:YES];
 }
 //园所动态
 - (IBAction)ysdtAction:(UIButton *)sender {
     
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     YsdtViewController *ysdt = [[YsdtViewController alloc] init];
     [self.navigationController pushViewController:ysdt animated:YES];
 }
@@ -167,10 +161,8 @@
     tabBarCtl.selectedIndex = 0;
     [[tabBarCtl tabBar] setSelectedImageTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     [self.navigationController pushViewController:tabBarCtl animated:YES];
     [tabBarCtl.navigationController setNavigationBarHidden:NO];
 }
@@ -226,9 +218,7 @@
     slideSegmentController.title = @"育儿资讯";
     slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
     slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:slideSegmentController animated:YES];
     
@@ -311,9 +301,7 @@
     slideSegmentController.title = @"课程表";
     slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
     slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
-    self.navigationItem.backBarButtonItem = backItem;
-    backItem.title = @"返回";
+    
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:slideSegmentController animated:YES];
 }

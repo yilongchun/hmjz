@@ -11,6 +11,7 @@
 #import"MKNetworkKit.h"
 #import "MainViewController.h"
 #import "Utils.h"
+#import "ChooseChildrenViewController.h"
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -23,6 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.delegate = self;
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    self.navigationItem.backBarButtonItem = backItem;
+    backItem.title = @"返回";
+    
     // Do any additional setup after loading the view from its nib.
     //添加手势，点击输入框其他区域隐藏键盘
     UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
@@ -177,22 +185,24 @@
             NSArray *array = [resultDict objectForKey:@"data"];
             if ([array count] == 1) {//只有一个宝宝默认选择
                 NSDictionary *data = [array objectAtIndex:0];
-                
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
-                
                 NSString *studentid = [data objectForKey:@"studentid"];//学生id
                 [self getClassInfo:studentid];//获取班级信息
                 
             }else if([array count] > 1){//有多个宝宝需要用户选择
-                NSDictionary *data = [array objectAtIndex:0];
+                
+//                NSDictionary *data = [array objectAtIndex:0];
+//                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//                [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
+//                NSString *studentid = [data objectForKey:@"studentid"];//学生id
+//                [self getClassInfo:studentid];//获取班级信息
                 
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
-                
-                NSString *studentid = [data objectForKey:@"studentid"];//学生id
-                [self getClassInfo:studentid];//获取班级信息
-                
+                [userDefaults setObject:array forKey:@"students"];//将多个宝宝存入userdefaults
+                ChooseChildrenViewController *vc = [[ChooseChildrenViewController alloc] init];//跳转 需要用户选择宝宝
+                [self.navigationController pushViewController:vc animated:YES];
+                [HUD hide:YES];
             }
         }else{
             [HUD hide:YES];
@@ -254,6 +264,7 @@
 //                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
 //                self.navigationController.delegate = self;
                 [self.navigationController pushViewController:mvc animated:YES];
+                [HUD hide:YES];
 //                [self presentViewController:nc animated:YES completion:^{
 //                    NSLog(@"completion");
 //                }];
@@ -293,12 +304,12 @@
     [self moveView:0];
 }
 
-//- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-//    NSLog(@"%@",viewController);
-////    if ([viewController isKindOfClass:[MainViewController class]]) {
-////        [self.navigationController setNavigationBarHidden:YES];
-////    }
-//}
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    NSLog(@"%@",viewController);
+    if ([viewController isKindOfClass:[LoginViewController class]]) {
+        [self.navigationController setNavigationBarHidden:YES];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

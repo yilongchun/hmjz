@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ChooseChildrenViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITableView *mytableview;
+@property (nonatomic, strong) NSArray *dataSource;
 
 @end

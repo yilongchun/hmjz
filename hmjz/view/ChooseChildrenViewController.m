@@ -10,10 +10,15 @@
 #import "ChildrenTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import "Utils.h"
+#import "MKNetworkKit.h"
+#import "MainViewController.h"
+#import "MBProgressHUD.h"
+#import "ChooseClassViewController.h"
 
-
-@interface ChooseChildrenViewController (){
+@interface ChooseChildrenViewController ()<MBProgressHUDDelegate>{
     NSInteger currentIndex;
+    MBProgressHUD *HUD;
+    MKNetworkEngine *engine;
 }
 
 @end
@@ -27,13 +32,37 @@
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController setNavigationBarHidden:NO];
     
+    //添加加载等待条
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    
+    engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
+    
     currentIndex = -1;
     [self loadData];
 }
 
 - (void)loadData{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    NSString *studentid = [student objectForKey:@"studentid"];
+    
     self.dataSource = [userDefaults objectForKey:@"students"];
+    for (int i = 0 ; i < [self.dataSource count]; i++) {
+        NSDictionary *data = [self.dataSource objectAtIndex:i];
+        NSString *studentid2 = [data objectForKey:@"studentid"];
+        if ([studentid isEqualToString:studentid2]) {
+            currentIndex = i;
+            break;
+        }else{
+            
+        }
+    }
+    
+    
+    
     [self.mytableview reloadData];
 }
 
@@ -108,10 +137,77 @@
     [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    NSString *studentid = [data objectForKey:@"studentid"];//学生id
+    
+    [self getClassInfo:studentid];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 80;
+}
+
+//根据学生id获取班级信息
+- (void)getClassInfo:(NSString *)studentid{
+    [HUD show:YES];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:studentid forKey:@"studentid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pclass/findbyid.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        
+        if ([success boolValue]) {
+            NSArray *array = [resultDict objectForKey:@"data"];
+            if ([array count] == 1) {//只有一个班级默认选择
+                NSDictionary *data = [array objectAtIndex:0];
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
+                
+                MainViewController *mvc = [[MainViewController alloc] init];
+                [HUD hide:YES];
+                [self.navigationController pushViewController:mvc animated:YES];
+                
+            }else if([array count] > 1){//有多个班级需要用户选择
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:array forKey:@"classes"];//将班级存入userdefaults
+                ChooseClassViewController *vc = [[ChooseClassViewController alloc] init];
+                [HUD hide:YES];
+                [self.navigationController pushViewController:vc animated:YES];
+                
+            }
+            
+        }else{
+            [HUD hide:YES];
+            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = msg;
+            hud.margin = 10.f;
+            hud.removeFromSuperViewOnHide = YES;
+            [hud hide:YES afterDelay:1];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }];
+    [engine enqueueOperation:op];
 }
 
 - (void)didReceiveMemoryWarning {

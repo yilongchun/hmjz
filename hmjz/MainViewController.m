@@ -47,23 +47,7 @@
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    //设置信息
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    NSDictionary *student = [userDefaults objectForKey:@"student"];
-    NSString *studentname = [student objectForKey:@"studnetname"];
-    NSNumber *studentage = [student objectForKey:@"age"];
-    NSString *flieid = [student objectForKey:@"flieid"];
     
-    self.studentname.text = studentname;
-    self.studentage.text = [NSString stringWithFormat:@"年龄：%@岁",studentage];
-    
-    //设置头像
-    if ([Utils isBlankString:flieid]) {
-        [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
-    }else{
-        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
-    }
     
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(grdaAction:)];
     [self.studentimg addGestureRecognizer:singleTap1];
@@ -78,8 +62,30 @@
     self.studentimg.layer.shadowOpacity = 0.5;
     self.studentimg.layer.shadowRadius = 2.0;
     
-    [self loadYezx];
-    [self loadKcb];
+    [self loadData];//设置学生信息
+    [self loadYezx];//加载育儿资讯分类
+    [self loadKcb];//加载课程表
+}
+
+//加载信息设置
+- (void)loadData{
+    //设置信息
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    NSString *studentname = [student objectForKey:@"studnetname"];
+    NSNumber *studentage = [student objectForKey:@"age"];
+    NSString *flieid = [student objectForKey:@"flieid"];
+    
+    self.studentname.text = studentname;
+    self.studentage.text = [NSString stringWithFormat:@"年龄：%@岁",studentage];
+    
+    //设置头像
+    if ([Utils isBlankString:flieid]) {
+        [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
+    }else{
+        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,7 +115,6 @@
 
 //选择宝宝
 - (IBAction)chooseChildren:(UIButton *)sender {
-    
     ChooseChildrenViewController *cc = [[ChooseChildrenViewController alloc] init];
     [self.navigationController pushViewController:cc animated:YES];
 }
@@ -313,5 +318,21 @@
 }
 //小纸条
 - (IBAction)xztAction:(UIButton *)sender {
+}
+
+//返回到该页面调用
+- (void)viewDidAppear:(BOOL)animated{
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *backflag = [userDefaults objectForKey:@"backflag"];
+    if ([backflag isEqualToString:@"1"]) {
+        [self loadData];//设置学生信息
+        [self loadYezx];//加载育儿资讯分类
+        [self loadKcb];//加载课程表
+    }
+    [userDefaults removeObjectForKey:@"backflag"];
+    
+    
+    
 }
 @end

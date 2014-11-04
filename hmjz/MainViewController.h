@@ -26,4 +26,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *studentname;
 @property (weak, nonatomic) IBOutlet UILabel *studentage;
 
+@property (nonatomic, copy) NSString *flag;
+
 @end

@@ -42,6 +42,7 @@
     if ([self.mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
         [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
     }
+   
     
     //engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
@@ -133,8 +134,8 @@
         [userDefaults removeObjectForKey:@"loginflag"];
     }else{
         for (UIViewController *temp in self.navigationController.viewControllers) {
-            NSLog(@"%@",[temp class]);
             if ([temp isKindOfClass:[MainViewController class]]) {
+                [userDefaults setObject:@"1" forKey:@"backflag"];
                 [self.navigationController popToViewController:temp animated:YES];
                 break;
             }

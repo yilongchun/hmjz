@@ -174,8 +174,9 @@
                 NSDictionary *data = [array objectAtIndex:0];
                 
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
-                
+                [userDefaults setObject:data forKey:@"class"];//将班级存入userdefaults
+                [userDefaults setObject:array forKey:@"classes"];//将所有班级存入userdefaults
+                [userDefaults setObject:@"1" forKey:@"backflag"];//将状态存入userdefaults 返回首页时判断刷新
                 MainViewController *mvc = [[MainViewController alloc] init];
                 [HUD hide:YES];
                 
@@ -185,7 +186,6 @@
                     [userDefaults removeObjectForKey:@"loginflag"];
                 }else{
                     for (UIViewController *temp in self.navigationController.viewControllers) {
-                        
                         if ([temp isKindOfClass:[MainViewController class]]) {
                             [self.navigationController popToViewController:temp animated:YES];
                             break;

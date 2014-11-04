@@ -21,11 +21,14 @@
 #import "JYSlideSegmentController.h"
 #import "GrdaViewController.h"
 #import "KcbViewController.h"
+#import "BbspViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface MainViewController (){
     MKNetworkEngine *engine;
     NSArray *typearr;//育儿资讯分类
     NSArray *kcbarr;//课程表
+    NSArray *sparr;//食谱
 }
 
 @end
@@ -65,6 +68,7 @@
     [self loadData];//设置学生信息
     [self loadYezx];//加载育儿资讯分类
     [self loadKcb];//加载课程表
+    [self loadBbsp];//加载食谱
 }
 
 //加载信息设置
@@ -84,7 +88,7 @@
     if ([Utils isBlankString:flieid]) {
         [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
     }else{
-        [self.studentimg setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
+        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
     }
 }
 
@@ -310,8 +314,78 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:slideSegmentController animated:YES];
 }
+
+//加载食谱
+- (void)loadBbsp{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    NSString *studentid = [student objectForKey:@"studentid"];
+    [dic setValue:studentid forKey:@"studentid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pcookbook/findCookList.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        if ([success boolValue]) {
+            NSArray *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                sparr = data;
+            }
+        }else{
+            
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    }];
+    [engine enqueueOperation:op];
+}
+
 //宝宝食谱
 - (IBAction)bbspAction:(UIButton *)sender {
+    
+    NSMutableArray *vcs = [NSMutableArray array];
+    
+    for (int i = 0 ; i < [sparr count]; i++) {
+        BbspViewController *vc = [[BbspViewController alloc] init];
+        NSArray *data = [sparr objectAtIndex:i];
+        vc.dataSource = data;
+        NSDictionary *info = [data objectAtIndex:0];
+        vc.title = [[info objectForKey:@"occurDate"] substringFromIndex:5];
+        [vcs addObject:vc];
+    }
+    
+//    BbspViewController *vc1 = [[BbspViewController alloc] init];
+//    vc1.title = @"11-03";
+//    [vcs addObject:vc1];
+//    BbspViewController *vc2 = [[BbspViewController alloc] init];
+//    vc2.title = @"周二";
+//    [vcs addObject:vc2];
+//    BbspViewController *vc3 = [[BbspViewController alloc] init];
+//    vc3.title = @"周三";
+//    [vcs addObject:vc3];
+//    BbspViewController *vc4 = [[BbspViewController alloc] init];
+//    vc4.title = @"周四";
+//    [vcs addObject:vc4];
+//    BbspViewController *vc5 = [[BbspViewController alloc] init];
+//    vc5.title = @"周五";
+//    [vcs addObject:vc5];
+    
+    JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+    
+    slideSegmentController.title = @"食谱";
+    slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
+    slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
+    
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:slideSegmentController animated:YES];
 }
 //宝宝签到
 - (IBAction)bbqdAction:(UIButton *)sender {

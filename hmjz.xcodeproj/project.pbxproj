@@ -131,6 +131,10 @@
 		E4E700C11A035A0600FB4339 /* KcbViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BF1A035A0600FB4339 /* KcbViewController.xib */; };
 		E4E700C31A035B1800FB4339 /* ic_kcb_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = E4E700C21A035B1800FB4339 /* ic_kcb_bg.png */; };
 		E4E700C51A03670900FB4339 /* ic_kcb_bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = E4E700C41A03670900FB4339 /* ic_kcb_bg2.png */; };
+		E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0371A08801D00ACE07A /* BbspViewController.m */; };
+		E4F7B03A1A08801D00ACE07A /* BbspViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0381A08801D00ACE07A /* BbspViewController.xib */; };
+		E4F7B0431A08863700ACE07A /* SpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0411A08863700ACE07A /* SpTableViewCell.m */; };
+		E4F7B0441A08863700ACE07A /* SpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -332,6 +336,12 @@
 		E4E700BF1A035A0600FB4339 /* KcbViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KcbViewController.xib; path = view/KcbViewController.xib; sourceTree = "<group>"; };
 		E4E700C21A035B1800FB4339 /* ic_kcb_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_kcb_bg.png; sourceTree = "<group>"; };
 		E4E700C41A03670900FB4339 /* ic_kcb_bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_kcb_bg2.png; sourceTree = "<group>"; };
+		E4F7B0361A08801D00ACE07A /* BbspViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BbspViewController.h; path = view/BbspViewController.h; sourceTree = "<group>"; };
+		E4F7B0371A08801D00ACE07A /* BbspViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BbspViewController.m; path = view/BbspViewController.m; sourceTree = "<group>"; };
+		E4F7B0381A08801D00ACE07A /* BbspViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BbspViewController.xib; path = view/BbspViewController.xib; sourceTree = "<group>"; };
+		E4F7B0401A08863700ACE07A /* SpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpTableViewCell.h; path = view/SpTableViewCell.h; sourceTree = "<group>"; };
+		E4F7B0411A08863700ACE07A /* SpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpTableViewCell.m; path = view/SpTableViewCell.m; sourceTree = "<group>"; };
+		E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpTableViewCell.xib; path = view/SpTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,6 +641,12 @@
 				E48CFB2B1A0710D4002ECF19 /* ChildrenTableViewCell.h */,
 				E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */,
 				E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */,
+				E4F7B0361A08801D00ACE07A /* BbspViewController.h */,
+				E4F7B0371A08801D00ACE07A /* BbspViewController.m */,
+				E4F7B0381A08801D00ACE07A /* BbspViewController.xib */,
+				E4F7B0401A08863700ACE07A /* SpTableViewCell.h */,
+				E4F7B0411A08863700ACE07A /* SpTableViewCell.m */,
+				E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -787,6 +803,7 @@
 				E4C7770419F88AAB00532B09 /* ic_login.png in Resources */,
 				E4C777BE19F8D7F300532B09 /* ic_index_007.png in Resources */,
 				E4C777B019F8D68300532B09 /* YsdtViewController.xib in Resources */,
+				E4F7B0441A08863700ACE07A /* SpTableViewCell.xib in Resources */,
 				E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */,
 				E4A4587E19FF5C4600B759FD /* iOS_42.png in Resources */,
 				E48CFB2F1A0710D4002ECF19 /* ChildrenTableViewCell.xib in Resources */,
@@ -797,6 +814,7 @@
 				E4C776FF19F88AAB00532B09 /* Default@2x.png in Resources */,
 				E4D88C7C19FF331B0095AB3F /* ic_index_010.png in Resources */,
 				E4D88C8419FF383E0095AB3F /* ShezhiViewController.xib in Resources */,
+				E4F7B03A1A08801D00ACE07A /* BbspViewController.xib in Resources */,
 				E4D88C7E19FF331F0095AB3F /* ic_index_011.png in Resources */,
 				E4E700C11A035A0600FB4339 /* KcbViewController.xib in Resources */,
 				E4A4588D19FF813600B759FD /* ic_bwrz_002@2x.png in Resources */,
@@ -890,9 +908,11 @@
 				E4B54BB51A020A3000AC8D86 /* MyViewControllerDetail.m in Sources */,
 				E4C69A7219FA18F200B0EFEA /* FHSegmentedViewController.m in Sources */,
 				E4C7779219F8966800532B09 /* NSData+MKBase64.m in Sources */,
+				E4F7B0431A08863700ACE07A /* SpTableViewCell.m in Sources */,
 				E4C7C9A71A009909006A0284 /* AFSecurityPolicy.m in Sources */,
 				E4B54BC31A0227E200AC8D86 /* GrdaViewController.m in Sources */,
 				E4C7C9AB1A009909006A0284 /* AFURLSessionManager.m in Sources */,
+				E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */,
 				E4C7779919F8966800532B09 /* MKNetworkOperation.m in Sources */,
 				E4C7C9A41A009909006A0284 /* AFHTTPRequestOperationManager.m in Sources */,
 				E4B2C90319F7621900B0E1DE /* main.m in Sources */,

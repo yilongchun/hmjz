@@ -324,7 +324,7 @@
 - (void)viewDidAppear:(BOOL)animated{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *backflag = [userDefaults objectForKey:@"backflag"];
-    NSLog(@"%@",backflag);
+//    NSLog(@"%@",backflag);
     if ([@"1" isEqualToString:backflag]) {
         [userDefaults removeObjectForKey:@"backflag"];
         [self loadData];//设置学生信息

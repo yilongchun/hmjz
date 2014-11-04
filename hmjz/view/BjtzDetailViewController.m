@@ -98,7 +98,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
         }
         NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-        NSLog(@"%@",self.dataSource);
+//        NSLog(@"%@",self.dataSource);
         NSString *title = [data objectForKey:@"tntitle"];
         NSString *date = [data objectForKey:@"tncreatedate"];
         NSString *content = [data objectForKey:@"tncontent"];

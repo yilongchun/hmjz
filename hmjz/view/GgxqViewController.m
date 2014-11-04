@@ -26,7 +26,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSLog(@"公告id:%@",self.tnid);
+//    NSLog(@"公告id:%@",self.tnid);
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     //添加加载等待条
@@ -47,7 +47,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Notice/findbyid.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -95,7 +95,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
         }
         NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-        NSLog(@"%@",self.dataSource);
+//        NSLog(@"%@",self.dataSource);
         NSString *title = [data objectForKey:@"tntitle"];
         NSString *date = [data objectForKey:@"tnmoddate"];
         NSString *content = [data objectForKey:@"tncontent"];

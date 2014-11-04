@@ -185,11 +185,8 @@
         cell.datelabel.text = commentDate;
         cell.commentlabel.text = commentContent;
 //        cell.commentlabel.text = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测";
-        NSLog(@"%f",cell.commentlabel.frame.size.width);
-        
         cell.commentlabel.numberOfLines = 0;
         [cell.commentlabel sizeToFit];
-        
         if ([Utils isBlankString:fileid]) {
             [cell.img setImage:[UIImage imageNamed:@"iOS_42.png"]];
         }else{
@@ -221,9 +218,6 @@
         NSInteger row = [indexPath row];
         // 列寬
         CGFloat contentWidth = self.mytableview.frame.size.width-51-24;
-        
-        
-        
         // 用何種字體進行顯示
         UIFont *font = [UIFont systemFontOfSize:14];
         // 該行要顯示的內容

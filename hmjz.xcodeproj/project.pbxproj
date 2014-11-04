@@ -395,7 +395,6 @@
 		E4B2C8FF19F7621900B0E1DE /* hmjz */ = {
 			isa = PBXGroup;
 			children = (
-				E4C7C98F1A009909006A0284 /* AFNetworking */,
 				E4B2C90419F7621900B0E1DE /* AppDelegate.h */,
 				E4B2C90519F7621900B0E1DE /* AppDelegate.m */,
 				E4B2C90A19F7621900B0E1DE /* Main.storyboard */,
@@ -409,6 +408,7 @@
 				E4C69AA819FA48A700B0EFEA /* EGOTableViewPullRefresh */,
 				E4B2C90019F7621900B0E1DE /* Supporting Files */,
 				E4C7777919F8966800532B09 /* MKNetworkKit */,
+				E4C7C98F1A009909006A0284 /* AFNetworking */,
 				E4C777C119F8E48300532B09 /* view */,
 				E4D88C7F19FF38120095AB3F /* shezhi */,
 				E4C777A219F8B4BD00532B09 /* MainViewController.h */,

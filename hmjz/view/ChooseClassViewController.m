@@ -130,8 +130,9 @@
     
     NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
     if ([loginflag isEqualToString:@"1"]) {
-        [self.navigationController pushViewController:mvc animated:YES];
         [userDefaults removeObjectForKey:@"loginflag"];
+        [self.navigationController pushViewController:mvc animated:YES];
+        
     }else{
         for (UIViewController *temp in self.navigationController.viewControllers) {
             if ([temp isKindOfClass:[MainViewController class]]) {

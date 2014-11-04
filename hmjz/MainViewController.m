@@ -180,7 +180,7 @@
     
         MKNetworkOperation *op = [engine operationWithPath:@"/MationType/findAllList.do" params:dic httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *operation) {
-            NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+//            NSLog(@"[operation responseData]-->>%@", [operation responseString]);
             NSString *result = [operation responseString];
             NSError *error;
             NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -242,7 +242,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Schedule/findPbyid.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -322,17 +322,19 @@
 
 //返回到该页面调用
 - (void)viewDidAppear:(BOOL)animated{
-    
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *backflag = [userDefaults objectForKey:@"backflag"];
-    if ([backflag isEqualToString:@"1"]) {
+    NSLog(@"%@",backflag);
+    if ([@"1" isEqualToString:backflag]) {
+        [userDefaults removeObjectForKey:@"backflag"];
         [self loadData];//设置学生信息
         [self loadYezx];//加载育儿资讯分类
         [self loadKcb];//加载课程表
+        
     }
-    [userDefaults removeObjectForKey:@"backflag"];
-    
-    
-    
+    NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
+    if ([@"1" isEqualToString:loginflag]) {
+        [userDefaults removeObjectForKey:@"loginflag"];
+    }
 }
 @end

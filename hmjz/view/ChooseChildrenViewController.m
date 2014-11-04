@@ -181,12 +181,14 @@
                 [HUD hide:YES];
                 
                 NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
-                if ([loginflag isEqualToString:@"1"]) {
-                    [self.navigationController pushViewController:mvc animated:YES];
+                if ([@"1" isEqualToString:loginflag]) {
                     [userDefaults removeObjectForKey:@"loginflag"];
+                    [self.navigationController pushViewController:mvc animated:YES];
+                    
                 }else{
                     for (UIViewController *temp in self.navigationController.viewControllers) {
                         if ([temp isKindOfClass:[MainViewController class]]) {
+                            [userDefaults setObject:@"1" forKey:@"backflag"];
                             [self.navigationController popToViewController:temp animated:YES];
                             break;
                         }

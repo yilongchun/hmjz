@@ -12,6 +12,7 @@
 #import "MainViewController.h"
 #import "Utils.h"
 #import "ChooseChildrenViewController.h"
+#import "ChooseClassViewController.h"
 
 @interface LoginViewController ()<MBProgressHUDDelegate>{
     MBProgressHUD *HUD;
@@ -30,6 +31,8 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
+    
+    self.navigationController.delegate = self;
     
     // Do any additional setup after loading the view from its nib.
     //添加手势，点击输入框其他区域隐藏键盘
@@ -54,8 +57,8 @@
 //登陆
 -(void)loginTag:(UITapGestureRecognizer *) rapGr{
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@"1" forKey:@"loginflag"];
+    
+    
     
     [self viewTapped:rapGr];
     HUD.labelText = @"正在加载中";
@@ -204,9 +207,31 @@
                 
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:array forKey:@"students"];//将多个宝宝存入userdefaults
-                ChooseChildrenViewController *vc = [[ChooseChildrenViewController alloc] init];//跳转 需要用户选择宝宝
-                [self.navigationController pushViewController:vc animated:YES];
-                [HUD hide:YES];
+                
+                NSDictionary *student = [userDefaults objectForKey:@"student"];//从用户之前的设置读取已经选择的宝宝
+                NSString *tempstudentid = [student objectForKey:@"studentid"];//取得学生id
+                
+                BOOL studentflag = false;
+                
+                for (int i = 0 ; i < [array count]; i++) {
+                    NSDictionary *data = [array objectAtIndex:i];
+                    NSString *studentid = [data objectForKey:@"studentid"];
+                    if ([studentid isEqualToString:tempstudentid]) {
+                        studentflag = true;//如果相等 说明之前已经选择过宝宝
+                        break;
+                    }
+                }
+                if (studentflag) {//如果选择过宝宝 直接读取班级信息
+                    
+                    [self getClassInfo:tempstudentid];//加载班级信息
+                    
+                }else{//如果没有选择过 跳转切换宝宝界面
+                    ChooseChildrenViewController *vc = [[ChooseChildrenViewController alloc] init];//跳转 需要用户选择宝宝
+                    [userDefaults setObject:@"1" forKey:@"loginflag"];
+                    [self.navigationController pushViewController:vc animated:YES];
+                    [HUD hide:YES];
+                }
+                
             }
         }else{
             [HUD hide:YES];
@@ -249,32 +274,56 @@
         
         if ([success boolValue]) {
             NSArray *array = [resultDict objectForKey:@"data"];
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             if ([array count] == 1) {//只有一个班级默认选择
                 NSDictionary *data = [array objectAtIndex:0];
                 
-                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                
                 [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
                 
                 MainViewController *mvc = [[MainViewController alloc] init];
-                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
+//                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
                 
 //                UIModalTransitionStyleCoverVertical 从下往上
 //                UIModalTransitionStyleCrossDissolve 渐变
 //                UIModalTransitionStyleFlipHorizontal 翻转
 //                UIModalTransitionStylePartialCurl从下往上翻页
 //                mvc.userid = userid;
-                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-                self.navigationController.delegate = self;
-                [self presentViewController:nc animated:YES completion:^{
-                    NSLog(@"completion");
-                }];
-//                [self.navigationController pushViewController:mvc animated:YES];
+//                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+//                self.navigationController.delegate = self;
+//                [self presentViewController:nc animated:YES completion:^{
+//                    NSLog(@"completion");
+//                }];
+                [userDefaults setObject:@"1" forKey:@"loginflag"];
+                [self.navigationController pushViewController:mvc animated:YES];
                 [HUD hide:YES];
             }else if([array count] > 1){//有多个班级需要用户选择
+                [userDefaults setObject:array forKey:@"classes"];//将多个班级存入userdefaults
                 
+                NSDictionary *class = [userDefaults objectForKey:@"class"];//从用户之前的设置读取已经选择的班级
+                NSString *tempclassid = [class objectForKey:@"classid"];//取得班级id
                 
+                BOOL classflag = false;
+                for (int i = 0 ; i < [array count]; i++) {
+                    NSDictionary *data = [array objectAtIndex:i];
+                    NSString *classid = [data objectForKey:@"classid"];
+                    if ([classid isEqualToString:tempclassid]) {
+                        classflag = true;//如果相等 说明之前已经选择过班级
+                        break;
+                    }
+                }
+                if (classflag) {//如果选择过班级 直接进入首页
+                    MainViewController *mvc = [[MainViewController alloc] init];
+                    
+                    [self.navigationController pushViewController:mvc animated:YES];
+                    
+                }else{//如果没有选择过 跳转选择班级界面
+                    ChooseClassViewController *vc = [[ChooseClassViewController alloc] init];//跳转 需要用户选择班级
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+                [HUD hide:YES];
             }
-            [HUD hide:YES];
+            
         }else{
             [HUD hide:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

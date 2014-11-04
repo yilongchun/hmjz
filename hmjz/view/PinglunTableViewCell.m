@@ -1,15 +1,14 @@
 //
-//  ContentCell.m
+//  PinglunTableViewCell.m
 //  hmjz
 //
-//  Created by yons on 14-10-31.
+//  Created by yons on 14-11-4.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //
 
-#import "ContentCell.h"
+#import "PinglunTableViewCell.h"
 
-@implementation ContentCell
-@synthesize contentTitle,contentDate,content;
+@implementation PinglunTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code
@@ -23,14 +22,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-//    CGContextRef context = UIGraphicsGetCurrentContext();
-//
-//    CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
-//    CGContextFillRect(context, rect);
-//
-//    CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1].CGColor);
-//    CGContextStrokeRect(context, CGRectMake(0, rect.size.height, rect.size.width, 1));
-    
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [UIColor whiteColor].CGColor);
     CGContextFillRect(context, rect);
@@ -42,5 +33,7 @@
     //下分割线
     CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1].CGColor);
     CGContextStrokeRect(context, CGRectMake(0, rect.size.height, rect.size.width, 1));
+    
 }
+
 @end

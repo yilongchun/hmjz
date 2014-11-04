@@ -37,8 +37,8 @@
     SpTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (!cell) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"SpTableViewCell" owner:self options:nil] lastObject];
+        
     }
-    
     NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
     NSString *cookbookType = [data objectForKey:@"cookbookType"];
     NSString *content = [data objectForKey:@"content"];
@@ -52,6 +52,7 @@
         [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
         
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     
     

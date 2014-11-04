@@ -34,6 +34,7 @@
                     </imageView>
                 </subviews>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="contentlabel" destination="3lp-0i-hr5" id="g6r-Ng-Fei"/>
                 <outlet property="img" destination="jgo-Z9-b3K" id="khp-Gt-5df"/>

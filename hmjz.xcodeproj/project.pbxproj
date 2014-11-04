@@ -135,6 +135,8 @@
 		E4F7B03A1A08801D00ACE07A /* BbspViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0381A08801D00ACE07A /* BbspViewController.xib */; };
 		E4F7B0431A08863700ACE07A /* SpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0411A08863700ACE07A /* SpTableViewCell.m */; };
 		E4F7B0441A08863700ACE07A /* SpTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */; };
+		E4F7B0481A08BC0B00ACE07A /* PinglunTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0461A08BC0B00ACE07A /* PinglunTableViewCell.m */; };
+		E4F7B0491A08BC0B00ACE07A /* PinglunTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0471A08BC0B00ACE07A /* PinglunTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +344,9 @@
 		E4F7B0401A08863700ACE07A /* SpTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpTableViewCell.h; path = view/SpTableViewCell.h; sourceTree = "<group>"; };
 		E4F7B0411A08863700ACE07A /* SpTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpTableViewCell.m; path = view/SpTableViewCell.m; sourceTree = "<group>"; };
 		E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SpTableViewCell.xib; path = view/SpTableViewCell.xib; sourceTree = "<group>"; };
+		E4F7B0451A08BC0B00ACE07A /* PinglunTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinglunTableViewCell.h; path = view/PinglunTableViewCell.h; sourceTree = "<group>"; };
+		E4F7B0461A08BC0B00ACE07A /* PinglunTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PinglunTableViewCell.m; path = view/PinglunTableViewCell.m; sourceTree = "<group>"; };
+		E4F7B0471A08BC0B00ACE07A /* PinglunTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PinglunTableViewCell.xib; path = view/PinglunTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -647,6 +652,9 @@
 				E4F7B0401A08863700ACE07A /* SpTableViewCell.h */,
 				E4F7B0411A08863700ACE07A /* SpTableViewCell.m */,
 				E4F7B0421A08863700ACE07A /* SpTableViewCell.xib */,
+				E4F7B0451A08BC0B00ACE07A /* PinglunTableViewCell.h */,
+				E4F7B0461A08BC0B00ACE07A /* PinglunTableViewCell.m */,
+				E4F7B0471A08BC0B00ACE07A /* PinglunTableViewCell.xib */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -825,6 +833,7 @@
 				E4B54BBB1A0224DC00AC8D86 /* MyViewControllerCellDetail.xib in Resources */,
 				E4B54BBE1A0227C500AC8D86 /* ic_user_bg.png in Resources */,
 				E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */,
+				E4F7B0491A08BC0B00ACE07A /* PinglunTableViewCell.xib in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
@@ -919,6 +928,7 @@
 				E4C7779519F8966800532B09 /* NSString+MKNetworkKitAdditions.m in Sources */,
 				E4C7C9C21A009AD3006A0284 /* UIImageView+AFNetworking.m in Sources */,
 				E4C7C9C01A009AD3006A0284 /* UIAlertView+AFNetworking.m in Sources */,
+				E4F7B0481A08BC0B00ACE07A /* PinglunTableViewCell.m in Sources */,
 				E4C7C9AA1A009909006A0284 /* AFURLResponseSerialization.m in Sources */,
 				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,
 				E4C69A5F19F9DCCD00B0EFEA /* YqjsViewController.m in Sources */,

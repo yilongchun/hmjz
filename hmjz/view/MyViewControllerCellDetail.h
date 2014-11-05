@@ -1,7 +1,7 @@
 //
 //  MyViewControllerCellDetail.h
 //  hmjz
-//
+//  班务活动详情
 //  Created by yons on 14-10-30.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //

@@ -8,6 +8,7 @@
 
 #import "ShezhiViewController.h"
 #import "LoginViewController.h"
+#import "YjfkViewController.h"
 
 @interface ShezhiViewController ()
 
@@ -103,6 +104,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            YjfkViewController *vc = [[YjfkViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
         
         
     }else{

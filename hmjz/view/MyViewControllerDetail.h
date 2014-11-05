@@ -1,7 +1,7 @@
 //
 //  MyViewControllerDetail.h
 //  hmjz
-//
+//  资讯详情 web显示
 //  Created by yons on 14-10-30.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //

@@ -1,7 +1,7 @@
 //
 //  BjtzDetailViewController.h
 //  hmjz
-//
+//  班级通知详情
 //  Created by yons on 14-10-31.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //

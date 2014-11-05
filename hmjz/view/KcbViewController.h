@@ -1,7 +1,7 @@
 //
 //  KcbViewController.h
 //  hmjz
-//
+//  课程表
 //  Created by yons on 14-10-31.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //

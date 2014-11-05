@@ -1,7 +1,7 @@
 //
 //  KPSegmentedViewController.h
 //  KPKuaiPai
-//
+//  工具类 分段选择切换界面
 //  Created by Johnny iDay on 13-12-14.
 //  Copyright (c) 2013年 Johnny iDay. All rights reserved.
 //

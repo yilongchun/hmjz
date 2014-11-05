@@ -1,7 +1,7 @@
 //
 //  JYSlideSegmentController.h
 //  JYSlideSegmentController
-//
+//  工具类 顶部横向多按钮切换界面
 //  Created by Alvin on 14-3-16.
 //  Copyright (c) 2014年 Alvin. All rights reserved.
 //

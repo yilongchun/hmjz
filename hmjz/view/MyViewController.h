@@ -1,7 +1,7 @@
 //
 //  MyViewController.h
 //  hmjz
-//
+//  资讯 公用列表显示
 //  Created by yons on 14-10-30.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //

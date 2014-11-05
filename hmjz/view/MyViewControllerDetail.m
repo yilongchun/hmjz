@@ -48,7 +48,7 @@
     [dic setValue:userid forKey:@"userid"];
     [dic setValue:self.detailid forKey:@"id"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Mation/findbyid.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Mation/findbyid.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

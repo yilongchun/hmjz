@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -30,6 +32,10 @@
 	<string>115.29.103.36/sma</string>
 	<key>HttpImageurl2</key>
 	<string>115.29.103.36/SM</string>
+	<key>Httpurl3</key>
+	<string>192.168.2.101:8080/sma</string>
+	<key>HttpImageurl3</key>
+	<string>192.168.2.101:8080/SM</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>

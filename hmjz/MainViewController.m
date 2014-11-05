@@ -88,7 +88,8 @@
     if ([Utils isBlankString:flieid]) {
         [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
     }else{
-        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+//        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
     }
 }
 
@@ -182,7 +183,7 @@
         NSString *userid = [userDefaults objectForKey:@"userid"];
         [dic setValue:userid forKey:@"userid"];
     
-        MKNetworkOperation *op = [engine operationWithPath:@"/MationType/findAllList.do" params:dic httpMethod:@"POST"];
+        MKNetworkOperation *op = [engine operationWithPath:@"/MationType/findAllList.do" params:dic httpMethod:@"GET"];
         [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //            NSLog(@"[operation responseData]-->>%@", [operation responseString]);
             NSString *result = [operation responseString];
@@ -244,7 +245,7 @@
     NSString *classid = [class objectForKey:@"classid"];
     [dic setValue:classid forKey:@"classid"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Schedule/findPbyid.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Schedule/findPbyid.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
@@ -323,7 +324,7 @@
     NSString *studentid = [student objectForKey:@"studentid"];
     [dic setValue:studentid forKey:@"studentid"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Pcookbook/findCookList.do" params:dic httpMethod:@"POST"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pcookbook/findCookList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

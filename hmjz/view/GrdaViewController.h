@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GrdaViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface GrdaViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *myimageview;
 @property (weak, nonatomic) IBOutlet UITableView *mytableview;
 

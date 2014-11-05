@@ -10,9 +10,11 @@
 #import "Utils.h"
 #import "UIImageView+AFNetworking.h"
 #import "MKNetworkKit.h"
+#import "MBProgressHUD.h"
 
-@interface GrdaViewController (){
+@interface GrdaViewController ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
+    MBProgressHUD *HUD;
     NSString *name;
     NSNumber *age;
     NSString *sex;
@@ -29,10 +31,19 @@
     [self.navigationController setNavigationBarHidden:NO];
     [self setTitle:@"个人档案"];
     
+    UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateImgAction:)];
+    [self.myimageview addGestureRecognizer:singleTap1];
+    
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     [self loadData];
+    
+    //添加加载等待条
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    HUD.labelText = @"上传中";
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
 }
 
 - (void)loadData{
@@ -56,7 +67,8 @@
     if ([Utils isBlankString:flieid]) {
         [self.myimageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
     }else{
-        [self.myimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+//        [self.myimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [self.myimageview setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
         
 //        [self.myimageview setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
     }
@@ -70,6 +82,8 @@
     self.myimageview.layer.shadowOffset = CGSizeMake(4.0, 4.0);
     self.myimageview.layer.shadowOpacity = 0.5;
     self.myimageview.layer.shadowRadius = 2.0;
+    
+    
     
     if ([self.mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
         [self.mytableview setSeparatorInset:UIEdgeInsetsZero];
@@ -134,6 +148,182 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+//点击头像 修改照片
+- (void)updateImgAction:(UITapGestureRecognizer *)sender{
+    UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"选择图像" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"拍照" otherButtonTitles:@"从相册选择", nil];
+    [actionsheet showInView:self.view];
+}
+
+#pragma mark - UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    switch (buttonIndex) {
+        case 0://照相机
+        {
+            //检查相机模式是否可用
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                NSLog(@"sorry, no camera or camera is unavailable.");
+                return;
+            }
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+//            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
+            imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+            [self presentViewController:imagePicker animated:YES completion:^{
+                                    NSLog(@"completion");
+            }];
+            
+        }
+            break;
+        case 1://本地相簿
+        {
+            UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
+            [self presentViewController:imagePicker animated:YES completion:^{
+                NSLog(@"completion");
+            }];
+        }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - UIImagePickerController Delegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
+        UIImage  *img = [info objectForKey:UIImagePickerControllerEditedImage];
+        NSData *fildData = UIImagePNGRepresentation(img); //UIImageJPEGRepresentation(img, 1.0);
+        [self uploadImg:fildData];
+        //        self.fileData = UIImageJPEGRepresentation(img, 1.0);
+    }
+//    else if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"kUTTypeMovie"]) {
+//        NSString *videoPath = [[info objectForKey:UIImagePickerControllerMediaURL] path];
+//        self.fileData = [NSData dataWithContentsOfFile:videoPath];
+//    }
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [HUD show:YES];
+        NSLog(@"completion");
+    }];
+}
+//上传图片
+-(void)uploadImg:(NSData *)fileData{
+    
+    
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    NSString *documentsDirectory=[paths objectAtIndex:0];
+    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:@"saveFore.png"];
+    [fileData writeToFile:savedImagePath atomically:YES];
+    
+    
+    MKNetworkOperation *op =[engine operationWithURLString:[NSString stringWithFormat:@"http://%@/image/upload.do",[Utils getImageHostname]] params:nil httpMethod:@"POST"];
+    [op addFile:savedImagePath forKey:@"allFile"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        if ([success boolValue]) {
+            [self updateImgData:[resultDict objectForKey:@"data"]];
+            
+        }else{
+            [self alertMsg:@"上传失败"];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    }];
+    [engine enqueueOperation:op];
+}
+//修改数据
+- (void)updateImgData:(NSString *)fileid{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:[userDefaults objectForKey:@"userid"] forKey:@"userid"];
+    [dic setValue:fileid forKey:@"fileid"];
+    [dic setValue:[student objectForKey:@"studentid"] forKey:@"studentid"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Puser/updateimage.do" params:dic httpMethod:@"POST"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        //        NSString *code = [resultDict objectForKey:@"code"];
+        if ([success boolValue]) {
+            [self.myimageview setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+            [HUD hide:YES];
+            [self okMsk:msg];
+        }else{
+            [HUD hide:YES];
+            [self alertMsg:msg];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = @"请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hide:YES afterDelay:2];
+    }];
+    [engine enqueueOperation:op];
+}
+
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        NSLog(@"completion");
+    }];
+
+}
+
+//成功
+- (void)okMsk:(NSString *)msg{
+    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.navigationController.view addSubview:hud];
+    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    hud.mode = MBProgressHUDModeCustomView;
+    hud.delegate = self;
+    hud.labelText = msg;
+    [hud show:YES];
+    [hud hide:YES afterDelay:1];
+}
+
+//提示
+- (void)alertMsg:(NSString *)msg{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = msg;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+}
+
+
 
 
 - (void)didReceiveMemoryWarning {

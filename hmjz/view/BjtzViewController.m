@@ -189,7 +189,7 @@
     hud.delegate = self;
     hud.labelText = msg;
     [hud show:YES];
-    [hud hide:YES afterDelay:0.5];
+    [hud hide:YES afterDelay:1];
 }
 
 
@@ -200,7 +200,7 @@
     hud.labelText = msg;
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:0.5];
+    [hud hide:YES afterDelay:1];
 }
 
 

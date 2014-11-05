@@ -1,57 +1,54 @@
 //
-//  YjfkViewController.m
+//  UpdatePasswordViewController.m
 //  hmjz
-//
+//  修改密码
 //  Created by yons on 14-11-5.
 //  Copyright (c) 2014年 yons. All rights reserved.
 //
 
-#import "YjfkViewController.h"
+#import "UpdatePasswordViewController.h"
 #import "MKNetworkKit.h"
 #import "Utils.h"
 #import "MBProgressHUD.h"
 
-@interface YjfkViewController ()<MBProgressHUDDelegate>{
+@interface UpdatePasswordViewController ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
 }
 
+
 @end
 
-@implementation YjfkViewController
-@synthesize textView = _textView;
+@implementation UpdatePasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    self.title = @"意见反馈";
+    
     //初始化引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    //设置导航栏右侧按钮
-    UIImage* image= [UIImage imageNamed:@"ic_sz_002.png"];
-    CGRect frame= CGRectMake(0, 0, 20, 20);
-    UIButton* someButton= [[UIButton alloc] initWithFrame:frame];
-    [someButton addTarget:self action:@selector(feecback) forControlEvents:UIControlEventTouchUpInside];
-    [someButton setBackgroundImage:image forState:UIControlStateNormal];
-    [someButton setShowsTouchWhenHighlighted:NO];
-    UIBarButtonItem *someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:someButton];
-    [self.navigationItem setRightBarButtonItem:someBarButtonItem];
-    //初始化文本域
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10.0, 80.0, 300.0, 200.0)];
-    _textView.layer.backgroundColor = [[UIColor clearColor] CGColor];
-    _textView.layer.borderColor = [UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1].CGColor;
-    _textView.layer.borderWidth = 1.0;
-    _textView.layer.cornerRadius = 8.0f;
-    _textView.delegate = self;
-    _textView.scrollEnabled = YES;
-    _textView.font = [UIFont fontWithName:@"Helvetica Neue" size:16.0];
-    _textView.returnKeyType = UIReturnKeyDefault;
+    self.title = @"修改密码";
+    //添加按钮
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+                                 initWithTitle:@"提交"
+                                 style:UIBarButtonItemStyleBordered
+                                 target:self
+                                 action:@selector(updatePassword)];
+    self.navigationItem.rightBarButtonItem = rightBtn;
     
-    _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
-    _textView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1];
-    [_textView.layer setMasksToBounds:YES];
-    [self.view addSubview:_textView];
+    
+    //设置文本框高度
+    CGRect rect = self.oldPassword.frame;
+    rect.size.height = 40;
+    self.oldPassword.frame = rect;
+    
+    CGRect rect2 = self.password1.frame;
+    rect2.size.height = 40;
+    self.password1.frame = rect2;
+    
+    CGRect rect3 = self.password2.frame;
+    rect3.size.height = 40;
+    self.password2.frame = rect3;
     
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -59,32 +56,37 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
+    //添加手势，点击输入框其他区域隐藏键盘
+    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    tapGr.cancelsTouchesInView =NO;
+    [self.view addGestureRecognizer:tapGr];
 }
 
-- (void)textViewDidChangeSelection:(UITextView *)textView
-
-{
-//    NSRange range;
-//    range.location = 0;
-//    range.length = 0;
-//    _textView.selectedRange = range;
-}
-
-
-- (void)feecback{
-    [_textView resignFirstResponder];
-    if (_textView.text.length == 0) {
-        [self alertMsg:@"请填写内容"];
-    }else{
+- (void)updatePassword{
+    [self viewTapped:nil];
+    if(self.oldPassword.text.length == 0){
+        [self alertMsg:@"请输入旧密码"];
+        return;
+    }
+    if(self.password1.text.length == 0){
+        [self alertMsg:@"请输入新密码"];
+        return;
+    }
+    if(self.password2.text.length == 0){
+        [self alertMsg:@"请再次输入新密码"];
+        return;
+    }
+    if([self.password1.text isEqualToString:self.password2.text]){
         [HUD show:YES];
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         NSString *userid = [userDefaults objectForKey:@"userid"];
         
         [dic setValue:userid forKey:@"userid"];
-        [dic setValue:_textView.text forKey:@"feedbackcontent"];
+        [dic setValue:self.oldPassword.text forKey:@"oldPassword"];
+        [dic setValue:self.password1.text forKey:@"newPassword"];
         
-        MKNetworkOperation *op = [engine operationWithPath:@"/Feedback/savafback.do" params:dic httpMethod:@"POST"];
+        MKNetworkOperation *op = [engine operationWithPath:@"/User/updatePassword.do" params:dic httpMethod:@"POST"];
         [op addCompletionHandler:^(MKNetworkOperation *operation) {
             //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
             NSString *result = [operation responseString];
@@ -94,24 +96,32 @@
                 NSLog(@"json parse failed \r\n");
             }
             NSNumber *success = [resultDict objectForKey:@"success"];
+            NSString *msg = [resultDict objectForKey:@"msg"];
             if ([success boolValue]) {
                 [HUD hide:YES];
-                [self okMsk:@"提交成功"];
-                _textView.text = @"";
+                [self okMsk:msg];
+                self.oldPassword.text = @"";
+                self.password1.text = @"";
+                self.password2.text = @"";
+                
             }else{
                 [HUD hide:YES];
-                [self alertMsg:@"提交失败"];
+                [self alertMsg:msg];
             }
+            
         }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
             NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
             [HUD hide:YES];
+            [self alertMsg:@"请求失败"];
             
         }];
         [engine enqueueOperation:op];
+    }else{
+        [self alertMsg:@"两次的密码不一致"];
     }
     
-    
 }
+
 //成功
 - (void)okMsk:(NSString *)msg{
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -133,6 +143,26 @@
     hud.margin = 10.f;
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
+}
+
+#pragma mark - 键盘回车
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField.tag ==0 ) {
+        [self.password1 becomeFirstResponder];
+    }else if (textField.tag == 1) {
+        [self.password2 becomeFirstResponder];
+    }else if (textField.tag == 2){
+        [self viewTapped:nil];
+    }
+    return YES;
+}
+
+//隐藏键盘
+-(void)viewTapped:(UITapGestureRecognizer*)tapGr{
+    [self.oldPassword resignFirstResponder];
+    [self.password1 resignFirstResponder];
+    [self.password2 resignFirstResponder];
+    
 }
 
 - (void)didReceiveMemoryWarning {

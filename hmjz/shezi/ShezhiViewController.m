@@ -9,6 +9,7 @@
 #import "ShezhiViewController.h"
 #import "LoginViewController.h"
 #import "YjfkViewController.h"
+#import "UpdatePasswordViewController.h"
 
 @interface ShezhiViewController ()
 
@@ -106,6 +107,9 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             YjfkViewController *vc = [[YjfkViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 1){
+            UpdatePasswordViewController *vc = [[UpdatePasswordViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
         

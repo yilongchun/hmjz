@@ -117,6 +117,8 @@
 		E4C9C8F81A09BCF8002A23E7 /* ic_sz_002.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C9C8F71A09BCF8002A23E7 /* ic_sz_002.png */; };
 		E4C9C8FC1A09BD30002A23E7 /* YjfkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9C8FA1A09BD30002A23E7 /* YjfkViewController.m */; };
 		E4C9C8FD1A09BD30002A23E7 /* YjfkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C9C8FB1A09BD30002A23E7 /* YjfkViewController.xib */; };
+		E4C9C9011A09F1F8002A23E7 /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9C8FF1A09F1F8002A23E7 /* UpdatePasswordViewController.m */; };
+		E4C9C9021A09F1F8002A23E7 /* UpdatePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */; };
 		E4D88C7A19FF321C0095AB3F /* ic_index_012.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D88C7919FF321C0095AB3F /* ic_index_012.png */; };
 		E4D88C7C19FF331B0095AB3F /* ic_index_010.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D88C7B19FF331B0095AB3F /* ic_index_010.png */; };
 		E4D88C7E19FF331F0095AB3F /* ic_index_011.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D88C7D19FF331F0095AB3F /* ic_index_011.png */; };
@@ -322,6 +324,9 @@
 		E4C9C8F91A09BD30002A23E7 /* YjfkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YjfkViewController.h; path = shezi/YjfkViewController.h; sourceTree = "<group>"; };
 		E4C9C8FA1A09BD30002A23E7 /* YjfkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YjfkViewController.m; path = shezi/YjfkViewController.m; sourceTree = "<group>"; };
 		E4C9C8FB1A09BD30002A23E7 /* YjfkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YjfkViewController.xib; path = shezi/YjfkViewController.xib; sourceTree = "<group>"; };
+		E4C9C8FE1A09F1F8002A23E7 /* UpdatePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdatePasswordViewController.h; path = view/UpdatePasswordViewController.h; sourceTree = "<group>"; };
+		E4C9C8FF1A09F1F8002A23E7 /* UpdatePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpdatePasswordViewController.m; path = view/UpdatePasswordViewController.m; sourceTree = "<group>"; };
+		E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdatePasswordViewController.xib; path = view/UpdatePasswordViewController.xib; sourceTree = "<group>"; };
 		E4D88C7919FF321C0095AB3F /* ic_index_012.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_index_012.png; sourceTree = "<group>"; };
 		E4D88C7B19FF331B0095AB3F /* ic_index_010.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_index_010.png; sourceTree = "<group>"; };
 		E4D88C7D19FF331F0095AB3F /* ic_index_011.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_index_011.png; sourceTree = "<group>"; };
@@ -727,6 +732,9 @@
 				E4C9C8F91A09BD30002A23E7 /* YjfkViewController.h */,
 				E4C9C8FA1A09BD30002A23E7 /* YjfkViewController.m */,
 				E4C9C8FB1A09BD30002A23E7 /* YjfkViewController.xib */,
+				E4C9C8FE1A09F1F8002A23E7 /* UpdatePasswordViewController.h */,
+				E4C9C8FF1A09F1F8002A23E7 /* UpdatePasswordViewController.m */,
+				E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */,
 			);
 			name = shezhi;
 			sourceTree = "<group>";
@@ -852,6 +860,7 @@
 				E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */,
 				E4A4588E19FF813600B759FD /* ic_bwrz_003.png in Resources */,
 				E4C777B219F8D7AC00532B09 /* ic_index_002.png in Resources */,
+				E4C9C9021A09F1F8002A23E7 /* UpdatePasswordViewController.xib in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
 				E4C69ABD19FA48A700B0EFEA /* whiteArrow.png in Resources */,
 				E4E700C51A03670900FB4339 /* ic_kcb_bg2.png in Resources */,
@@ -906,6 +915,7 @@
 				E4C7C9C31A009AD3006A0284 /* UIProgressView+AFNetworking.m in Sources */,
 				E4C7C9BE1A009AD3006A0284 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				E48CFB2E1A0710D4002ECF19 /* ChildrenTableViewCell.m in Sources */,
+				E4C9C9011A09F1F8002A23E7 /* UpdatePasswordViewController.m in Sources */,
 				E4C7C9A81A009909006A0284 /* AFURLConnectionOperation.m in Sources */,
 				E4C7779419F8966800532B09 /* NSDictionary+RequestEncoding.m in Sources */,
 				E4E700B61A031FFB00FB4339 /* ContentCell.m in Sources */,

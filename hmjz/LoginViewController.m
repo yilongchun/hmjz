@@ -57,7 +57,13 @@
 //登陆
 -(void)loginTag:(UITapGestureRecognizer *) rapGr{
     
-    
+    if (self.username.text.length == 0) {
+        [self alertMsg:@"请输入账号"];
+        return;
+    }else if (self.password.text.length == 0){
+        [self alertMsg:@"请输入密码"];
+        return;
+    }
     
     
     [self viewTapped:rapGr];
@@ -397,7 +403,7 @@
         [self.password becomeFirstResponder];
     }
     if (textField.tag==1) {
-        [self loginTag:nil];
+        [self viewTapped:nil];
     }
     return YES;
 }
@@ -417,5 +423,14 @@
     [UIView commitAnimations];//设置调整界面的动画效果
 }
 
+//提示
+- (void)alertMsg:(NSString *)msg{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = msg;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+}
 
 @end

@@ -90,11 +90,7 @@
             NSLog(@"json parse failed \r\n");
         }
         NSNumber *success = [resultDict objectForKey:@"success"];
-        //        NSString *msg = [resultDict objectForKey:@"msg"];
-        //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
-            [HUD hide:YES];
-            
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
@@ -106,13 +102,10 @@
                 }else{
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
-//                NSLog(@"%@",totalpage);
-                
             }
+            [HUD hide:YES];
         }else{
             [HUD hide:YES];
-            
-            
         }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
@@ -122,7 +115,6 @@
     [engine enqueueOperation:op];
 }
 
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -130,7 +122,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.dataSource count];;
+    return [self.dataSource count];
 }
 
 

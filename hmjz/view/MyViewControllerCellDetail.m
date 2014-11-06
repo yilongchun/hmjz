@@ -378,18 +378,36 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"PinglunTableViewCell" owner:self options:nil] lastObject];
         }
         NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-        NSString *commentContent = [data objectForKey:@"commentContent"];
+        
         NSString *fileid = [data objectForKey:@"fileid"];
         NSString *userName = [data objectForKey:@"userName"];
         NSString *commentDate = [data objectForKey:@"commentDate"];
-        
+        NSString *commentContent = [data objectForKey:@"commentContent"];
         cell.namelabel.text = userName;
         [cell.namelabel setTextColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
         cell.datelabel.text = commentDate;
+        
+        //评论内容 高度自适应
         cell.commentlabel.text = commentContent;
-//        cell.commentlabel.text = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测";
-        cell.commentlabel.numberOfLines = 0;
-        [cell.commentlabel sizeToFit];
+        //设置自动行数与字符换行
+        [cell.commentlabel setNumberOfLines:0];
+        UIFont *font = [UIFont systemFontOfSize:14];
+        //设置一个行高上限
+        NSLog(@"cell.commentlabel.frame.size.width:%f",cell.commentlabel.frame.size.width);
+        CGSize size = CGSizeMake(self.mytableview.frame.size.width-51-24,2000);
+        //计算实际frame大小，并将label的frame变成实际大小
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+        NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+        CGRect rect = [cell.commentlabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+        CGSize labelsize = rect.size;
+        labelsize.height = ceil(labelsize.height);
+        labelsize.width = ceil(labelsize.width);
+        [cell.commentlabel setFrame:CGRectMake(cell.commentlabel.frame.origin.x, cell.commentlabel.frame.origin.y, labelsize.width, labelsize.height)];
+        
+        
+        
+        
         if ([Utils isBlankString:fileid]) {
             [cell.img setImage:[UIImage imageNamed:@"iOS_42.png"]];
         }else{
@@ -416,7 +434,7 @@
         NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"activityContent"];
 //            NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
         // 計算出顯示完內容需要的最小尺寸
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
+        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
         return size.height+87;
     }else{
         NSInteger row = [indexPath row];
@@ -428,7 +446,7 @@
         NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"commentContent"];
 //        NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测";
         // 計算出顯示完內容需要的最小尺寸
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
+        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
         
         return size.height+60;
     }

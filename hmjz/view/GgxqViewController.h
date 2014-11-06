@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPGrowingTextView.h"
 
-@interface GgxqViewController : UIViewController
+@interface GgxqViewController : UIViewController<HPGrowingTextViewDelegate>{
+    UIView *containerView;
+    HPGrowingTextView *textView;
+}
 
 @property (weak, nonatomic) IBOutlet UITableView *mytableview;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property(nonatomic,copy) NSString *tnid;//公告id
+
+-(void)resignTextView;
 
 @end

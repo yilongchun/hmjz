@@ -171,8 +171,8 @@
             imagePicker.delegate = self;
             imagePicker.allowsEditing = YES;
             imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-//            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
-            imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
+            imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
+//            imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
             [self presentViewController:imagePicker animated:YES completion:^{
                                     NSLog(@"completion");
             }];
@@ -202,7 +202,7 @@
     
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
         UIImage  *img = [info objectForKey:UIImagePickerControllerEditedImage];
-        NSData *fildData = UIImagePNGRepresentation(img); //UIImageJPEGRepresentation(img, 1.0);
+        NSData *fildData = UIImageJPEGRepresentation(img, 1.0);//UIImagePNGRepresentation(img); //
         [self uploadImg:fildData];
         //        self.fileData = UIImageJPEGRepresentation(img, 1.0);
     }
@@ -218,13 +218,13 @@
 //上传图片
 -(void)uploadImg:(NSData *)fileData{
     
-    
+    //将文件保存到本地
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     NSString *documentsDirectory=[paths objectAtIndex:0];
-    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:@"saveFore.png"];
-    [fileData writeToFile:savedImagePath atomically:YES];
+    NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:@"saveFore.jpg"];
+    BOOL saveFlag = [fileData writeToFile:savedImagePath atomically:YES];
     
-    
+    NSLog(@"%@",savedImagePath);
     MKNetworkOperation *op =[engine operationWithURLString:[NSString stringWithFormat:@"http://%@/image/upload.do",[Utils getImageHostname]] params:nil httpMethod:@"POST"];
     [op addFile:savedImagePath forKey:@"allFile"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
@@ -237,15 +237,28 @@
         }
         NSNumber *success = [resultDict objectForKey:@"success"];
         if ([success boolValue]) {
+            //上传成功 删除文件  还有返回的问题
             [self updateImgData:[resultDict objectForKey:@"data"]];
             
         }else{
             [self alertMsg:@"上传失败"];
         }
+        if (saveFlag) {
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            NSError *err;
+            [fileMgr removeItemAtPath:savedImagePath error:&err];
+        }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        if (saveFlag) {
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
+            NSError *err;
+            [fileMgr removeItemAtPath:savedImagePath error:&err];
+        }
     }];
     [engine enqueueOperation:op];
+    
+    
 }
 //修改数据
 - (void)updateImgData:(NSString *)fileid{
@@ -272,9 +285,12 @@
         NSString *msg = [resultDict objectForKey:@"msg"];
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
-            [self.myimageview setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+            [self.myimageview setImageWithURL:[NSURL URLWithString:fileid]];
             [HUD hide:YES];
             [self okMsk:msg];
+            [student setValue:fileid forKey:@"flieid"];
+            [userDefaults setObject:student forKey:@"student"];
+            [userDefaults setObject:@"1" forKey:@"updateImgFlag"];
         }else{
             [HUD hide:YES];
             [self alertMsg:msg];

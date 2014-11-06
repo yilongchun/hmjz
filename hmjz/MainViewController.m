@@ -399,17 +399,21 @@
 - (void)viewDidAppear:(BOOL)animated{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *backflag = [userDefaults objectForKey:@"backflag"];
-//    NSLog(@"%@",backflag);
-    if ([@"1" isEqualToString:backflag]) {
+    if ([@"1" isEqualToString:backflag]) {//选择完班级和宝宝 返回重新加载
         [userDefaults removeObjectForKey:@"backflag"];
         [self loadData];//设置学生信息
         [self loadYezx];//加载育儿资讯分类
         [self loadKcb];//加载课程表
         
     }
-    NSString *loginflag = [userDefaults objectForKey:@"loginflag"];
+    NSString *loginflag = [userDefaults objectForKey:@"loginflag"];//如果是登陆则删除标识符
     if ([@"1" isEqualToString:loginflag]) {
         [userDefaults removeObjectForKey:@"loginflag"];
+    }
+    NSString *updateImgFlag = [userDefaults objectForKey:@"updateImgFlag"];//如果是修改头像返回则重新加载学生信息
+    if ([@"1" isEqualToString:updateImgFlag]) {
+        [userDefaults removeObjectForKey:@"updateImgFlag"];
+        [self loadData];
     }
 }
 @end

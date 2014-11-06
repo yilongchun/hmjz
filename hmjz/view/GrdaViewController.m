@@ -255,6 +255,8 @@
             NSError *err;
             [fileMgr removeItemAtPath:savedImagePath error:&err];
         }
+        [HUD hide:YES];
+        [self alertMsg:[err localizedDescription]];
     }];
     [engine enqueueOperation:op];
     
@@ -298,12 +300,7 @@
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
         [HUD hide:YES];
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请求失败";
-        hud.margin = 10.f;
-        hud.removeFromSuperViewOnHide = YES;
-        [hud hide:YES afterDelay:2];
+        [self alertMsg:[err localizedDescription]];
     }];
     [engine enqueueOperation:op];
 }

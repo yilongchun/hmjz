@@ -51,22 +51,19 @@
         return;
     }
     [HUD show:YES];
-    NSLog(@"%@",textView.text);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *student = [userDefaults objectForKey:@"student"];
     
-    NSString *commentContent = [textView.text stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%@",commentContent);
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.detailid forKey:@"recordId"];
     [dic setValue:[userDefaults objectForKey:@"userid"]  forKey:@"userId"];
-    [dic setValue:commentContent forKey:@"commentContent"];
+    [dic setValue:textView.text forKey:@"commentContent"];
     [dic setValue:activityType forKey:@"type"];
     [dic setValue:[student objectForKey:@"studentid"] forKey:@"commentAttr1"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Comment/sava.do" params:dic httpMethod:@"GET"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Comment/sava.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];

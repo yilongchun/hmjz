@@ -78,6 +78,7 @@
     schoolid = [class objectForKey:@"schoolid"];
     userid = [userDefaults objectForKey:@"userid"];
     
+    self.dataSource = [[NSMutableArray alloc] init];
     
     page = [NSNumber numberWithInt:1];
     rows = [NSNumber numberWithInt:10];
@@ -88,7 +89,6 @@
 
 //加载数据
 - (void)loadData{
-    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
     [dic setValue:userid forKey:@"userid"];
@@ -98,7 +98,6 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -107,15 +106,12 @@
         }
         NSNumber *success = [resultDict objectForKey:@"success"];
         NSString *msg = [resultDict objectForKey:@"msg"];
-        //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [HUD hide:YES];
-//            [self okMsk:@"加载成功"];
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
-                self.dataSource = [NSMutableArray arrayWithArray:arr];
-                
+                [self.dataSource addObjectsFromArray:arr];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
@@ -139,57 +135,10 @@
 }
 
 - (void)loadMore{
-    
-    if (page < totalpage) {
+    if ([page intValue] < [totalpage intValue]) {
         page = [NSNumber numberWithInt:[page intValue] +1];
     }
-    
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    
-    [dic setValue:userid forKey:@"userid"];
-    [dic setValue:page forKey:@"page"];
-    [dic setValue:rows forKey:@"rows"];
-    [dic setValue:schoolid forKey:@"recordId"];
-    
-    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"GET"];
-    [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
-        NSString *result = [operation responseString];
-        NSError *error;
-        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-        if (resultDict == nil) {
-            NSLog(@"json parse failed \r\n");
-        }
-        NSNumber *success = [resultDict objectForKey:@"success"];
-        NSString *msg = [resultDict objectForKey:@"msg"];
-        //        NSString *code = [resultDict objectForKey:@"code"];
-        if ([success boolValue]) {
-            [HUD hide:YES];
-            //[self okMsk:@"加载成功"];
-            NSDictionary *data = [resultDict objectForKey:@"data"];
-            if (data != nil) {
-                NSArray *arr = [data objectForKey:@"rows"];
-                [self.dataSource addObjectsFromArray:arr];
-                [self.mytableView reloadData];
-                NSNumber *total = [data objectForKey:@"total"];
-                if ([total intValue] % [rows intValue] == 0) {
-                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
-                }else{
-                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
-                }
-                
-            }
-        }else{
-            [HUD hide:YES];
-            [self alertMsg:msg];
-            
-        }
-    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
-        [HUD hide:YES];
-        [self alertMsg:@"请求失败"];
-    }];
-    [engine enqueueOperation:op];
+    [self loadData];
 }
 
 //成功

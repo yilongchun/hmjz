@@ -58,7 +58,7 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    
+    self.dataSource = [[NSMutableArray alloc] init];
     
     page = [NSNumber numberWithInt:1];
     rows = [NSNumber numberWithInt:10];
@@ -101,7 +101,7 @@
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
-                self.dataSource = [NSMutableArray arrayWithArray:arr];
+                [self.dataSource addObjectsFromArray:arr];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
@@ -118,67 +118,17 @@
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
         [HUD hide:YES];
-        [self alertMsg:@"请求失败"];
+        [self alertMsg:[err localizedDescription]];
     }];
     [engine enqueueOperation:op];
 }
 
-//- (void)loadMore{
-//    
-//    if (page < totalpage) {
-//        page = [NSNumber numberWithInt:[page intValue] +1];
-//    }
-//    
-//    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-//    NSDictionary *class = [userDefaults objectForKey:@"class"];
-//    NSString *userid = [userDefaults objectForKey:@"userid"];
-//    
-//    [dic setValue:class forKey:@"recordId"];
-//    [dic setValue:page forKey:@"page"];
-//    [dic setValue:rows forKey:@"rows"];
-//    [dic setValue:userid forKey:@"userid"];
-//    
-//    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"GET"];
-//    [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
-//        NSString *result = [operation responseString];
-//        NSError *error;
-//        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-//        if (resultDict == nil) {
-//            NSLog(@"json parse failed \r\n");
-//        }
-//        NSNumber *success = [resultDict objectForKey:@"success"];
-//        NSString *msg = [resultDict objectForKey:@"msg"];
-//        //        NSString *code = [resultDict objectForKey:@"code"];
-//        if ([success boolValue]) {
-//            [HUD hide:YES];
-//            //[self okMsk:@"加载成功"];
-//            NSDictionary *data = [resultDict objectForKey:@"data"];
-//            if (data != nil) {
-//                NSArray *arr = [data objectForKey:@"rows"];
-//                [self.dataSource addObjectsFromArray:arr];
-//                [mytableview reloadData];
-//                NSNumber *total = [data objectForKey:@"total"];
-//                if ([total intValue] % [rows intValue] == 0) {
-//                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
-//                }else{
-//                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
-//                }
-//                NSLog(@"%@",totalpage);
-//            }
-//        }else{
-//            [HUD hide:YES];
-//            [self alertMsg:msg];
-//            
-//        }
-//    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-//        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
-//        [HUD hide:YES];
-//        [self alertMsg:@"请求失败"];
-//    }];
-//    [engine enqueueOperation:op];
-//}
+- (void)loadMore{
+    if ([page intValue] < [totalpage intValue]) {
+        page = [NSNumber numberWithInt:[page intValue] +1];
+    }
+    [self loadData];
+}
 
 //成功
 - (void)okMsk:(NSString *)msg{
@@ -207,26 +157,26 @@
 #pragma mark - UITableViewDatasource Methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-//    if (page != totalpage && [self.dataSource count] != 0) {
-//        return [[self dataSource] count] + 1;
-//    }else{
+    if (page != totalpage && [self.dataSource count] != 0) {
+        return [[self dataSource] count] + 1;
+    }else{
         return [[self dataSource] count];
-//    }
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-//    if ([self.dataSource count] == indexPath.row) {
-//        static NSString *cellIdentifier = @"morecell";
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-//        if (!cell) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-//            cell.textLabel.text = @"点击加载更多";
-//        }
-//        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-//        return cell;
-//        
-//    }else{
+    if ([self.dataSource count] == indexPath.row) {
+        static NSString *cellIdentifier = @"morecell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+            cell.textLabel.text = @"点击加载更多";
+        }
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        return cell;
+        
+    }else{
         static NSString *cellIdentifier = @"ggtzcell";
         GgtzTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
         if (!cell) {
@@ -244,7 +194,7 @@
         if ([Utils isBlankString:teacherfileid]) {
             [cell.imageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
         }else{
-//            [cell.imageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],teacherfileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+            //            [cell.imageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],teacherfileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
             [cell.imageview setImageWithURL:[NSURL URLWithString:teacherfileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
         }
         cell.gdispcription.text = tncontent;
@@ -255,16 +205,15 @@
         cell.gdate.text = tncreatedate;
         cell.gsource.text = [NSString stringWithFormat:@"来自:%@",source];
         return cell;
-//    }
-    
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if ([self.dataSource count] == indexPath.row) {
-//        return 44;
-//    }else{
+    if ([self.dataSource count] == indexPath.row) {
+        return 44;
+    }else{
         return 100;
-//    }
+    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -278,28 +227,23 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-//    if ([self.dataSource count] == indexPath.row) {
-//        if (page == totalpage) {
-//            
-//        }else{
-//            [HUD show:YES];
-////            [self loadMore];
-//        }
-//        
-//    }else{
-        //        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
-        //        NSString *tnid = [info objectForKey:@"tnid"];
-        //        GgxqViewController *ggxq = [[GgxqViewController alloc]init];
-        //        ggxq.title = @"公告详情";
-        //        ggxq.tnid = tnid;
-        //        [self.navigationController pushViewController:ggxq animated:YES];
-//    }
+    if ([self.dataSource count] == indexPath.row) {
+        if (page == totalpage) {
+            
+        }else{
+            [HUD show:YES];
+            [self loadMore];
+        }
+        
+    }else{
+        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+        BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
+        vc.title = @"通知详情";
+        vc.dataSource = [NSMutableArray arrayWithObject:info];
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
-    BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
-    vc.title = @"通知详情";
-    vc.dataSource = [NSMutableArray arrayWithObject:info];
-    [self.navigationController pushViewController:vc animated:YES];
+    
     
 }
 

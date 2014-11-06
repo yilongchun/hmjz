@@ -20,6 +20,7 @@
     NSNumber *totalpage;
     NSNumber *page;
     NSNumber *rows;
+    NSString *tnid;
 }
 
 
@@ -55,9 +56,6 @@
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *student = [userDefaults objectForKey:@"student"];
     
-    NSDictionary *data = [self.dataSource objectAtIndex:0];
-    NSString *tnid = [data objectForKey:@"tnid"];
-    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:tnid forKey:@"recordId"];
     [dic setValue:[userDefaults objectForKey:@"userid"]  forKey:@"userId"];
@@ -79,7 +77,8 @@
         
         if ([success boolValue]) {
             self.dataSource = [NSMutableArray arrayWithObject:[self.dataSource objectAtIndex:0]];
-            [self loadDataPingLun:tnid];
+            page = [NSNumber numberWithInt:1];
+            [self loadDataPingLun];
         }else{
             [HUD hide:YES];
             [self alertMsg:msg];
@@ -245,7 +244,11 @@
     
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    NSDictionary *data = [self.dataSource objectAtIndex:0];
+    tnid = [data objectForKey:@"tnid"];
     
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:10];
     
     [self setTitle:self.title];
     [self loadData];
@@ -253,23 +256,12 @@
 
 - (void)loadData{
     [HUD show:YES];
-    [self.mytableview reloadData];
-    if ([self.dataSource count] > 0) {
-        NSDictionary *data = [self.dataSource objectAtIndex:0];
-        NSString *tnid = [data objectForKey:@"tnid"];
-        NSLog(@"%@",tnid);
-        [self loadDataPingLun:tnid];
-    }
     
-    
-
+    [self loadDataPingLun];
 }
 
 //加载评论
-- (void)loadDataPingLun:(NSString *)tnid{
-    
-    page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:10];
+- (void)loadDataPingLun{
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:tnid forKey:@"recordId"];
@@ -311,6 +303,13 @@
     [engine enqueueOperation:op];
 }
 
+- (void)loadDataPingLunMore{
+    if ([page intValue]< [totalpage intValue]) {
+        page = [NSNumber numberWithInt:[page intValue] +1];
+    }
+    [self loadDataPingLun];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -318,7 +317,11 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.dataSource count];
+    if ([page intValue]!= [totalpage intValue] && [self.dataSource count] != 1) {
+        return [[self dataSource] count] + 1;
+    }else{
+        return [[self dataSource] count];
+    }
 }
 
 
@@ -343,56 +346,64 @@
         return cell;
 
     }else{
-        static NSString *cellIdentifier = @"pingluncell";
-        PinglunTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"PinglunTableViewCell" owner:self options:nil] lastObject];
-        }
-        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-        NSString *commentContent = [data objectForKey:@"commentContent"];
-        NSString *fileid = [data objectForKey:@"fileid"];
-        NSString *userName = [data objectForKey:@"userName"];
-        NSString *commentDate = [data objectForKey:@"commentDate"];
-        
-        cell.namelabel.text = userName;
-        [cell.namelabel setTextColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
-        cell.datelabel.text = commentDate;
-        
-        
-        
-        //评论内容 高度自适应
-        cell.commentlabel.text = commentContent;
-        //设置自动行数与字符换行
-        [cell.commentlabel setNumberOfLines:0];
-        UIFont *font = [UIFont systemFontOfSize:14];
-        //设置一个行高上限
-        NSLog(@"cell.commentlabel.frame.size.width:%f",cell.commentlabel.frame.size.width);
-        CGSize size = CGSizeMake(self.mytableview.frame.size.width-51-24,2000);
-        //计算实际frame大小，并将label的frame变成实际大小
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-        paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
-        NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
-        CGRect rect = [cell.commentlabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
-        CGSize labelsize = rect.size;
-        labelsize.height = ceil(labelsize.height);
-        labelsize.width = ceil(labelsize.width);
-        [cell.commentlabel setFrame:CGRectMake(cell.commentlabel.frame.origin.x, cell.commentlabel.frame.origin.y, labelsize.width, labelsize.height)];
-        
-        
-        
-        
-        
-        
-        if ([Utils isBlankString:fileid]) {
-            [cell.img setImage:[UIImage imageNamed:@"iOS_42.png"]];
+        if ([self.dataSource count] == indexPath.row) {
+            static NSString *cellIdentifier = @"morecell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+                cell.textLabel.text = @"点击加载更多";
+            }
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+            return cell;
+            
         }else{
-//            [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
-            [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+            static NSString *cellIdentifier = @"pingluncell";
+            PinglunTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+            if (!cell) {
+                cell = [[[NSBundle mainBundle] loadNibNamed:@"PinglunTableViewCell" owner:self options:nil] lastObject];
+            }
+            NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+            NSString *commentContent = [data objectForKey:@"commentContent"];
+            NSString *fileid = [data objectForKey:@"fileid"];
+            NSString *userName = [data objectForKey:@"userName"];
+            NSString *commentDate = [data objectForKey:@"commentDate"];
+            
+            cell.namelabel.text = userName;
+            [cell.namelabel setTextColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+            cell.datelabel.text = commentDate;
+            
+            
+            
+            //评论内容 高度自适应
+            cell.commentlabel.text = commentContent;
+            //设置自动行数与字符换行
+            [cell.commentlabel setNumberOfLines:0];
+            UIFont *font = [UIFont systemFontOfSize:14];
+            //设置一个行高上限
+            CGSize size = CGSizeMake(self.mytableview.frame.size.width-51-24,2000);
+            //计算实际frame大小，并将label的frame变成实际大小
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
+            paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
+            NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
+            CGRect rect = [cell.commentlabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+            CGSize labelsize = rect.size;
+            labelsize.height = ceil(labelsize.height);
+            labelsize.width = ceil(labelsize.width);
+            [cell.commentlabel setFrame:CGRectMake(cell.commentlabel.frame.origin.x, cell.commentlabel.frame.origin.y, labelsize.width, labelsize.height)];
+            
+            
+            if ([Utils isBlankString:fileid]) {
+                [cell.img setImage:[UIImage imageNamed:@"iOS_42.png"]];
+            }else{
+                //            [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+                [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+            }
+            
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return cell;
         }
         
-        
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
     }
 }
 
@@ -409,16 +420,20 @@
         CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
         return size.height+86;
     }else{
-        NSInteger row = [indexPath row];
-        // 列寬
-        CGFloat contentWidth = self.mytableview.frame.size.width-51-24;
-        // 用何種字體進行顯示
-        UIFont *font = [UIFont systemFontOfSize:14];
-        // 該行要顯示的內容
-        NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"commentContent"];
-        // 計算出顯示完內容需要的最小尺寸
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
-        return size.height+60;
+        if ([self.dataSource count] == indexPath.row) {
+            return 44;
+        }else{
+            NSInteger row = [indexPath row];
+            // 列寬
+            CGFloat contentWidth = self.mytableview.frame.size.width-51-24;
+            // 用何種字體進行顯示
+            UIFont *font = [UIFont systemFontOfSize:14];
+            // 該行要顯示的內容
+            NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"commentContent"];
+            // 計算出顯示完內容需要的最小尺寸
+            CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByCharWrapping];
+            return size.height+60;
+        }
     }
 }
 
@@ -430,6 +445,23 @@
     //    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
     //        [cell setLayoutMargins:UIEdgeInsetsZero];
     //    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self.dataSource count] != 1) {
+        if ([self.dataSource count] == indexPath.row) {
+            if (page == totalpage) {
+                
+            }else{
+                [HUD show:YES];
+                [self loadDataPingLunMore];
+            }
+        }else{
+            
+        }
+    }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 //提示

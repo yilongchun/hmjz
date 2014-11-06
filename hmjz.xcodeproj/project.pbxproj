@@ -122,12 +122,6 @@
 		E4C80BC61A0B113B0094DA9F /* iOS_42.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA41A0B113B0094DA9F /* iOS_42.png */; };
 		E4C80BC71A0B113B0094DA9F /* MessageEntryBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA51A0B113B0094DA9F /* MessageEntryBackground.png */; };
 		E4C80BC81A0B113B0094DA9F /* MessageEntryBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA61A0B113B0094DA9F /* MessageEntryBackground@2x.png */; };
-		E4C80BC91A0B113B0094DA9F /* MessageEntryInputField.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA71A0B113B0094DA9F /* MessageEntryInputField.png */; };
-		E4C80BCA1A0B113B0094DA9F /* MessageEntryInputField@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA81A0B113B0094DA9F /* MessageEntryInputField@2x.png */; };
-		E4C80BCB1A0B113B0094DA9F /* MessageEntrySendButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BA91A0B113B0094DA9F /* MessageEntrySendButton.png */; };
-		E4C80BCC1A0B113B0094DA9F /* MessageEntrySendButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BAA1A0B113B0094DA9F /* MessageEntrySendButton@2x.png */; };
-		E4C80BCD1A0B113B0094DA9F /* MessageEntrySendButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BAB1A0B113B0094DA9F /* MessageEntrySendButtonPressed.png */; };
-		E4C80BCE1A0B113B0094DA9F /* MessageEntrySendButtonPressed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C80BAC1A0B113B0094DA9F /* MessageEntrySendButtonPressed@2x.png */; };
 		E4C80BD41A0B12510094DA9F /* HPGrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80BD11A0B12510094DA9F /* HPGrowingTextView.m */; };
 		E4C80BD51A0B12510094DA9F /* HPTextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C80BD31A0B12510094DA9F /* HPTextViewInternal.m */; };
 		E4C9C8FC1A09BD30002A23E7 /* YjfkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9C8FA1A09BD30002A23E7 /* YjfkViewController.m */; };
@@ -338,12 +332,6 @@
 		E4C80BA41A0B113B0094DA9F /* iOS_42.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iOS_42.png; path = images/iOS_42.png; sourceTree = "<group>"; };
 		E4C80BA51A0B113B0094DA9F /* MessageEntryBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MessageEntryBackground.png; path = images/MessageEntryBackground.png; sourceTree = "<group>"; };
 		E4C80BA61A0B113B0094DA9F /* MessageEntryBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MessageEntryBackground@2x.png"; path = "images/MessageEntryBackground@2x.png"; sourceTree = "<group>"; };
-		E4C80BA71A0B113B0094DA9F /* MessageEntryInputField.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MessageEntryInputField.png; path = images/MessageEntryInputField.png; sourceTree = "<group>"; };
-		E4C80BA81A0B113B0094DA9F /* MessageEntryInputField@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MessageEntryInputField@2x.png"; path = "images/MessageEntryInputField@2x.png"; sourceTree = "<group>"; };
-		E4C80BA91A0B113B0094DA9F /* MessageEntrySendButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MessageEntrySendButton.png; path = images/MessageEntrySendButton.png; sourceTree = "<group>"; };
-		E4C80BAA1A0B113B0094DA9F /* MessageEntrySendButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MessageEntrySendButton@2x.png"; path = "images/MessageEntrySendButton@2x.png"; sourceTree = "<group>"; };
-		E4C80BAB1A0B113B0094DA9F /* MessageEntrySendButtonPressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MessageEntrySendButtonPressed.png; path = images/MessageEntrySendButtonPressed.png; sourceTree = "<group>"; };
-		E4C80BAC1A0B113B0094DA9F /* MessageEntrySendButtonPressed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "MessageEntrySendButtonPressed@2x.png"; path = "images/MessageEntrySendButtonPressed@2x.png"; sourceTree = "<group>"; };
 		E4C80BD01A0B12510094DA9F /* HPGrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPGrowingTextView.h; sourceTree = "<group>"; };
 		E4C80BD11A0B12510094DA9F /* HPGrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HPGrowingTextView.m; sourceTree = "<group>"; };
 		E4C80BD21A0B12510094DA9F /* HPTextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPTextViewInternal.h; sourceTree = "<group>"; };
@@ -514,12 +502,6 @@
 				E4C80BA41A0B113B0094DA9F /* iOS_42.png */,
 				E4C80BA51A0B113B0094DA9F /* MessageEntryBackground.png */,
 				E4C80BA61A0B113B0094DA9F /* MessageEntryBackground@2x.png */,
-				E4C80BA71A0B113B0094DA9F /* MessageEntryInputField.png */,
-				E4C80BA81A0B113B0094DA9F /* MessageEntryInputField@2x.png */,
-				E4C80BA91A0B113B0094DA9F /* MessageEntrySendButton.png */,
-				E4C80BAA1A0B113B0094DA9F /* MessageEntrySendButton@2x.png */,
-				E4C80BAB1A0B113B0094DA9F /* MessageEntrySendButtonPressed.png */,
-				E4C80BAC1A0B113B0094DA9F /* MessageEntrySendButtonPressed@2x.png */,
 				E4C776F719F88AAB00532B09 /* Default.png */,
 				E4C776F819F88AAB00532B09 /* Default@2x.png */,
 				E4C776F919F88AAB00532B09 /* ic_login_bg.png */,
@@ -877,7 +859,6 @@
 				E4C777B019F8D68300532B09 /* YsdtViewController.xib in Resources */,
 				E4F7B0441A08863700ACE07A /* SpTableViewCell.xib in Resources */,
 				E4C80BBC1A0B113B0094DA9F /* ic_index_009.png in Resources */,
-				E4C80BCC1A0B113B0094DA9F /* MessageEntrySendButton@2x.png in Resources */,
 				E4C80BC81A0B113B0094DA9F /* MessageEntryBackground@2x.png in Resources */,
 				E4C80BB11A0B113B0094DA9F /* ic_bwrz_002.png in Resources */,
 				E4C69ABB19FA48A700B0EFEA /* grayArrow.png in Resources */,
@@ -906,11 +887,8 @@
 				E4F7B0491A08BC0B00ACE07A /* PinglunTableViewCell.xib in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
-				E4C80BCB1A0B113B0094DA9F /* MessageEntrySendButton.png in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
 				E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */,
-				E4C80BCA1A0B113B0094DA9F /* MessageEntryInputField@2x.png in Resources */,
-				E4C80BCE1A0B113B0094DA9F /* MessageEntrySendButtonPressed@2x.png in Resources */,
 				E4C9C9021A09F1F8002A23E7 /* UpdatePasswordViewController.xib in Resources */,
 				E4C777A619F8B4BD00532B09 /* MainViewController.xib in Resources */,
 				E4C69ABD19FA48A700B0EFEA /* whiteArrow.png in Resources */,
@@ -918,7 +896,6 @@
 				E4AE1F1819F775A7003C90B9 /* LoginViewController.xib in Resources */,
 				E4B54BC41A0227E200AC8D86 /* GrdaViewController.xib in Resources */,
 				E4A4588319FF78B600B759FD /* BjjsViewController.xib in Resources */,
-				E4C80BC91A0B113B0094DA9F /* MessageEntryInputField.png in Resources */,
 				E4C69A6A19F9E35400B0EFEA /* GgtzTableViewCell.xib in Resources */,
 				E4C69A6519F9DD5200B0EFEA /* GgtzViewController.xib in Resources */,
 				E4C69A7F19FA34FB00B0EFEA /* GgxqViewController.xib in Resources */,
@@ -929,7 +906,6 @@
 				E4C80BC41A0B113B0094DA9F /* ic_user_bg.png in Resources */,
 				E4C80BC11A0B113B0094DA9F /* ic_kcb_bg.png in Resources */,
 				E4D88C8919FF39410095AB3F /* ChooseChildrenViewController.xib in Resources */,
-				E4C80BCD1A0B113B0094DA9F /* MessageEntrySendButtonPressed.png in Resources */,
 				E4D88C8E19FF3A4F0095AB3F /* ChooseClassViewController.xib in Resources */,
 				E4C69ABE19FA48A700B0EFEA /* whiteArrow@2x.png in Resources */,
 				E4C9C8FD1A09BD30002A23E7 /* YjfkViewController.xib in Resources */,

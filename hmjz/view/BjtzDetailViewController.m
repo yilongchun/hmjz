@@ -170,23 +170,14 @@
     textView.maxNumberOfLines = 6;
     // you can also set the maximum height in points with maxHeight
     // textView.maxHeight = 200.0f;
-    textView.returnKeyType = UIReturnKeyGo; //just as an example
+    textView.returnKeyType = UIReturnKeyDefault; //just as an example
     textView.font = [UIFont systemFontOfSize:15.0f];
     textView.delegate = self;
     textView.internalTextView.scrollIndicatorInsets = UIEdgeInsetsMake(5, 0, 5, 0);
     textView.backgroundColor = [UIColor whiteColor];
     textView.placeholder = @"我也说点什么吧...";
-    
-    // textView.text = @"test\n\ntest";
     // textView.animateHeightChange = NO; //turns off animation
-    
     [self.view addSubview:containerView];
-    
-    UIImage *rawEntryBackground = [UIImage imageNamed:@"MessageEntryInputField.png"];
-    UIImage *entryBackground = [rawEntryBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
-    UIImageView *entryImageView = [[UIImageView alloc] initWithImage:entryBackground];
-    entryImageView.frame = CGRectMake(5, 0, 248, 40);
-    entryImageView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     
     UIImage *rawBackground = [UIImage imageNamed:@"MessageEntryBackground.png"];
     UIImage *background = [rawBackground stretchableImageWithLeftCapWidth:13 topCapHeight:22];
@@ -196,16 +187,14 @@
     
     textView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
+    textView.layer.borderColor = [UIColor colorWithRed:221/255.0 green:223/255.0 blue:226/255.0 alpha:1].CGColor;
+    textView.layer.borderWidth = 1.0;
     // view hierachy
     [containerView addSubview:imageView];
     [containerView addSubview:textView];
-    [containerView addSubview:entryImageView];
-    
-    UIImage *sendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButton.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
-    UIImage *selectedSendBtnBackground = [[UIImage imageNamed:@"MessageEntrySendButtonPressed.png"] stretchableImageWithLeftCapWidth:13 topCapHeight:0];
     
     UIButton *doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 8, 63, 27);
+    doneBtn.frame = CGRectMake(containerView.frame.size.width - 69, 5, 63, 30);
     doneBtn.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleLeftMargin;
     [doneBtn setTitle:@"提交" forState:UIControlStateNormal];
     
@@ -215,8 +204,11 @@
     
     [doneBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [doneBtn addTarget:self action:@selector(resignTextView) forControlEvents:UIControlEventTouchUpInside];
-    [doneBtn setBackgroundImage:sendBtnBackground forState:UIControlStateNormal];
-    [doneBtn setBackgroundImage:selectedSendBtnBackground forState:UIControlStateSelected];
+    
+    [doneBtn setBackgroundColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+    doneBtn.layer.borderColor = [UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1].CGColor;
+    doneBtn.layer.borderWidth = 1.0;
+    doneBtn.layer.cornerRadius = 5.0f;
     [containerView addSubview:doneBtn];
     
     containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;

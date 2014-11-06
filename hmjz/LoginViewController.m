@@ -50,6 +50,7 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
+    self.loginBtn.layer.cornerRadius = 5.0f;
     self.username.text = @"13276367907";
     self.password.text = @"123456";
     

@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HPGrowingTextView.h"
 
-@interface BjtzDetailViewController : UIViewController
+@interface BjtzDetailViewController : UIViewController<HPGrowingTextViewDelegate>{
+    UIView *containerView;
+    HPGrowingTextView *textView;
+}
 @property (weak, nonatomic) IBOutlet UITableView *mytableview;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic,copy) NSString *title;
+
+-(void)resignTextView;
 @end

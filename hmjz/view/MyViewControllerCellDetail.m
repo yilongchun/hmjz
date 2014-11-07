@@ -76,6 +76,7 @@
         if ([success boolValue]) {
             self.dataSource = [NSMutableArray arrayWithObject:[self.dataSource objectAtIndex:0]];
             page = [NSNumber numberWithInt:1];
+//            [self.mytableview scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
             [self loadDataPingLun];
         }else{
             [HUD hide:YES];

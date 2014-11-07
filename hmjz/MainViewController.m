@@ -404,7 +404,6 @@
         [self loadData];//设置学生信息
         [self loadYezx];//加载育儿资讯分类
         [self loadKcb];//加载课程表
-        
     }
     NSString *loginflag = [userDefaults objectForKey:@"loginflag"];//如果是登陆则删除标识符
     if ([@"1" isEqualToString:loginflag]) {

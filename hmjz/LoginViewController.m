@@ -51,8 +51,13 @@
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     self.loginBtn.layer.cornerRadius = 5.0f;
-    self.username.text = @"13276367907";
-    self.password.text = @"123456";
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *loginusername = [userDefaults objectForKey:@"loginusername"];
+    NSString *loginpassword = [userDefaults objectForKey:@"loginpassword"];
+    
+    self.username.text = loginusername;
+    self.password.text = loginpassword;
     
 }
 //登陆
@@ -99,7 +104,8 @@
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:userid forKey:@"userid"];
 //            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
-            
+            [userDefaults setObject:self.username.text forKey:@"loginusername"];
+            [userDefaults setObject:self.password.text forKey:@"loginpassword"];
             [self getParentInfo:userid];//获取家长信息
             
             
@@ -386,14 +392,14 @@
 -(void)textFieldDidBeginEditing:(UITextField *)textField{   //开始编辑时，整体上移
     if(textField.tag == 0){
         if(self.view.frame.origin.y == 0){
-            [self moveView:-40];
+            [self moveView:-60];
         }
         
     }else if(textField.tag == 1){
-        if(self.view.frame.origin.y == -40){
-            [self moveView:-40];
+        if(self.view.frame.origin.y == -60){
+            [self moveView:-60];
         }else if(self.view.frame.origin.y == 0){
-            [self moveView:-80];
+            [self moveView:-120];
         }
     }
 }

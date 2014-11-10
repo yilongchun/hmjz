@@ -23,8 +23,9 @@
 #import "KcbViewController.h"
 #import "BbspViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import "MBProgressHUD.h"
 
-@interface MainViewController (){
+@interface MainViewController ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
     NSArray *typearr;//育儿资讯分类
     NSArray *kcbarr;//课程表
@@ -359,7 +360,10 @@
         NSArray *data = [sparr objectAtIndex:i];
         vc.dataSource = data;
         NSDictionary *info = [data objectAtIndex:0];
-        vc.title = [[info objectForKey:@"occurDate"] substringFromIndex:5];
+        NSString *date = [info objectForKey:@"occurDate"];
+        if (date.length > 5) {
+            vc.title = [[info objectForKey:@"occurDate"] substringFromIndex:5];
+        }
         [vcs addObject:vc];
     }
     
@@ -379,20 +383,27 @@
 //    vc5.title = @"周五";
 //    [vcs addObject:vc5];
     
-    JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+    if (vcs.count > 0) {
+        JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+        
+        slideSegmentController.title = @"食谱";
+        slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
+        slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
+        
+        [self.navigationController setNavigationBarHidden:NO];
+        [self.navigationController pushViewController:slideSegmentController animated:YES];
+    }else{
+        //提示没有信息
+        [self alertMsg:@"暂时没有食谱信息，请稍后再试"];
+    }
     
-    slideSegmentController.title = @"食谱";
-    slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
-    slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
-    
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController pushViewController:slideSegmentController animated:YES];
 }
 //宝宝签到
 - (IBAction)bbqdAction:(UIButton *)sender {
 }
 //小纸条
 - (IBAction)xztAction:(UIButton *)sender {
+    [self alertMsg:@"小纸条开发中，请稍后再试"];
 }
 
 //返回到该页面调用
@@ -403,6 +414,7 @@
         [userDefaults removeObjectForKey:@"backflag"];
         [self loadData];//设置学生信息
         [self loadYezx];//加载育儿资讯分类
+        [self loadBbsp];//加载食谱
         [self loadKcb];//加载课程表
     }
     NSString *loginflag = [userDefaults objectForKey:@"loginflag"];//如果是登陆则删除标识符
@@ -415,4 +427,15 @@
         [self loadData];
     }
 }
+
+//提示
+- (void)alertMsg:(NSString *)msg{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = msg;
+    hud.margin = 10.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:1];
+}
+
 @end

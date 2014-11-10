@@ -206,7 +206,7 @@
         //[cell.gdispcription sizeToFit];
         cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
         cell.gdate.text = tncreatedate;
-        [cell.imageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [cell.imageview setImage:[UIImage imageNamed:@"nopicture.png"]];
         return cell;
     }
     

@@ -103,10 +103,10 @@
     cell.sexlabel.text = [NSString stringWithFormat:@"性别：%@",sex];
     
     if ([Utils isBlankString:fileid]) {
-        [cell.img setImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [cell.img setImage:[UIImage imageNamed:@"nopicture.png"]];
     }else{
-//        [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
-        [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+//        [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
+        [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
     }
     
     // 重用机制，如果选中的行正好要重用

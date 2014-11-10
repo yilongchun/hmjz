@@ -16,10 +16,8 @@
 - (IBAction)ysdtAction:(UIButton *)sender;
 - (IBAction)bwhdAction:(UIButton *)sender;
 - (IBAction)yezxAction:(UIButton *)sender;
-- (IBAction)jzydAction:(UIButton *)sender;
 - (IBAction)kcbAction:(UIButton *)sender;
 - (IBAction)bbspAction:(UIButton *)sender;
-- (IBAction)bbqdAction:(UIButton *)sender;
 - (IBAction)xztAction:(UIButton *)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *studentimg;

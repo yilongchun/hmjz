@@ -65,12 +65,12 @@
     
     //设置头像
     if ([Utils isBlankString:flieid]) {
-        [self.myimageview setImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [self.myimageview setImage:[UIImage imageNamed:@"nopicture.png"]];
     }else{
-//        [self.myimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
-        [self.myimageview setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+//        [self.myimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.myimageview setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
         
-//        [self.myimageview setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"iOS_42.png"] usingEngine:engine animation:YES];
+//        [self.myimageview setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"nopicture.png"] usingEngine:engine animation:YES];
     }
     
     self.myimageview.layer.cornerRadius = self.myimageview.frame.size.height/2;

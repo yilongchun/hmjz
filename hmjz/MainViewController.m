@@ -30,6 +30,7 @@
     NSArray *typearr;//育儿资讯分类
     NSArray *kcbarr;//课程表
     NSArray *sparr;//食谱
+    MBProgressHUD *HUD;
 }
 
 @end
@@ -51,7 +52,11 @@
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    
+    //添加加载等待条
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    HUD.labelText = @"加载中";
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
     
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(grdaAction:)];
     [self.studentimg addGestureRecognizer:singleTap1];
@@ -66,10 +71,16 @@
     self.studentimg.layer.shadowOpacity = 0.5;
     self.studentimg.layer.shadowRadius = 2.0;
     
+    [self initData];
+    
+}
+
+- (void)initData{
     [self loadData];//设置学生信息
     [self loadYezx];//加载育儿资讯分类
     [self loadKcb];//加载课程表
     [self loadBbsp];//加载食谱
+   
 }
 
 //加载信息设置
@@ -87,10 +98,10 @@
     
     //设置头像
     if ([Utils isBlankString:flieid]) {
-        [self.studentimg setImage:[UIImage imageNamed:@"iOS_42.png"]];
+        [self.studentimg setImage:[UIImage imageNamed:@"nopicture.png"]];
     }else{
-//        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
-        [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"iOS_42.png"]];
+//        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
     }
 }
 
@@ -200,6 +211,7 @@
                 NSArray *data = [resultDict objectForKey:@"data"];
                 if (data != nil) {
                     typearr = data;
+                    NSLog(@"loadYezx");
                 }
             }else{
     
@@ -235,9 +247,6 @@
     
    
 }
-//家长园地
-- (IBAction)jzydAction:(UIButton *)sender {
-}
 
 - (void)loadKcb{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -262,6 +271,7 @@
             NSArray *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 kcbarr = data;
+                NSLog(@"loadKcb");
             }
         }else{
             
@@ -339,6 +349,7 @@
             NSArray *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 sparr = data;
+                NSLog(@"loadBbsp");
             }
         }else{
             
@@ -398,9 +409,7 @@
     }
     
 }
-//宝宝签到
-- (IBAction)bbqdAction:(UIButton *)sender {
-}
+
 //小纸条
 - (IBAction)xztAction:(UIButton *)sender {
     [self alertMsg:@"小纸条开发中，请稍后再试"];

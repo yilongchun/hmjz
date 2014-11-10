@@ -140,6 +140,7 @@
 		E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BA1A033F5200FB4339 /* BjtzDetailViewController.xib */; };
 		E4E700C01A035A0600FB4339 /* KcbViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E700BE1A035A0600FB4339 /* KcbViewController.m */; };
 		E4E700C11A035A0600FB4339 /* KcbViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BF1A035A0600FB4339 /* KcbViewController.xib */; };
+		E4F1E1F31A10AECF00B7730F /* nopicture.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1E1F21A10AECF00B7730F /* nopicture.png */; };
 		E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0371A08801D00ACE07A /* BbspViewController.m */; };
 		E4F7B03A1A08801D00ACE07A /* BbspViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0381A08801D00ACE07A /* BbspViewController.xib */; };
 		E4F7B0431A08863700ACE07A /* SpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0411A08863700ACE07A /* SpTableViewCell.m */; };
@@ -371,6 +372,7 @@
 		E4E700BD1A035A0600FB4339 /* KcbViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KcbViewController.h; path = view/KcbViewController.h; sourceTree = "<group>"; };
 		E4E700BE1A035A0600FB4339 /* KcbViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KcbViewController.m; path = view/KcbViewController.m; sourceTree = "<group>"; };
 		E4E700BF1A035A0600FB4339 /* KcbViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KcbViewController.xib; path = view/KcbViewController.xib; sourceTree = "<group>"; };
+		E4F1E1F21A10AECF00B7730F /* nopicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nopicture.png; path = images/nopicture.png; sourceTree = "<group>"; };
 		E4F7B0361A08801D00ACE07A /* BbspViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BbspViewController.h; path = view/BbspViewController.h; sourceTree = "<group>"; };
 		E4F7B0371A08801D00ACE07A /* BbspViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BbspViewController.m; path = view/BbspViewController.m; sourceTree = "<group>"; };
 		E4F7B0381A08801D00ACE07A /* BbspViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BbspViewController.xib; path = view/BbspViewController.xib; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 		E4B2C92619F7641500B0E1DE /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E4F1E1F21A10AECF00B7730F /* nopicture.png */,
 				E4C80B8B1A0B113B0094DA9F /* 37x-Checkmark.png */,
 				E4C80B8C1A0B113B0094DA9F /* 37x-Checkmark@2x.png */,
 				E4C80B8D1A0B113B0094DA9F /* ic_bwrz_001.png */,
@@ -1219,6 +1222,7 @@
 				E4C80BC31A0B113B0094DA9F /* ic_sz_002.png in Resources */,
 				E4C69AB919FA48A700B0EFEA /* blueArrow.png in Resources */,
 				E4F7B0491A08BC0B00ACE07A /* PinglunTableViewCell.xib in Resources */,
+				E4F1E1F31A10AECF00B7730F /* nopicture.png in Resources */,
 				E4B2C90E19F7621900B0E1DE /* Images.xcassets in Resources */,
 				E4C69A6019F9DCCD00B0EFEA /* YqjsViewController.xib in Resources */,
 				E4C7770019F88AAB00532B09 /* ic_login_bg.png in Resources */,
@@ -1473,7 +1477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

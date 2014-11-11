@@ -1457,11 +1457,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Volumes/MAC2,
-					"10.9.4/慧明家长/iOSSDK-20141018/ChatDemo-UI2.0/ChatDemo-UI2.0/3rdparty",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = hmjz/hmjz.pch;
@@ -1485,11 +1481,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					/Volumes/MAC2,
-					"10.9.4/慧明家长/iOSSDK-20141018/ChatDemo-UI2.0/ChatDemo-UI2.0/3rdparty",
-				);
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = hmjz/hmjz.pch;

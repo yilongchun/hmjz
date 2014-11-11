@@ -36,7 +36,7 @@
     rows = [NSNumber numberWithInt:4];
     
     //初始化tableview
-    CGRect cg = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    CGRect cg = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     self.mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];

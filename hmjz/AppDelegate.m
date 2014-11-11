@@ -27,10 +27,39 @@
     
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
         [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
-    }else {
-        
     }
     
+    
+    
+//    [self registerRemoteNotification];
+//    
+//#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
+//    NSString *apnsCertName = nil;
+//#if DEBUG
+//    apnsCertName = @"chatdemoui_dev";
+//#else
+//    apnsCertName = @"chatdemoui";
+//#endif
+//    [[EaseMob sharedInstance] registerSDKWithAppKey:@"whhm918#hmjyt" apnsCertName:apnsCertName];
+//    
+//#if DEBUG
+//    [[EaseMob sharedInstance] enableUncaughtExceptionHandler];
+//#endif
+//    [[[EaseMob sharedInstance] chatManager] setAutoFetchBuddyList:YES];
+//    
+//    //以下一行代码的方法里实现了自动登录，异步登录，需要监听[didLoginWithInfo: error:]
+//    //demo中此监听方法在MainViewController中
+//    [[EaseMob sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+//    
+//    //注册为SDK的ChatManager的delegate (及时监听到申请和通知)
+//    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+//    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+//
+//    
+//    
+//    [self loginStateChange:nil];
+    
+
     
     return YES;
 }
@@ -56,5 +85,97 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+////系统方法
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+//    //SDK调用
+//    [[EaseMob sharedInstance] application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+//}
+//
+////系统方法
+//- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+//{
+//    //SDK方法调用
+//    [[EaseMob sharedInstance] application:application didFailToRegisterForRemoteNotificationsWithError:error];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册推送失败"
+//                                                    message:error.description
+//                                                   delegate:nil
+//                                          cancelButtonTitle:@"确定"
+//                                          otherButtonTitles:nil];
+//    [alert show];
+//}
+//
+////系统方法
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+//{
+//    //SDK方法调用
+//    [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
+//}
+////系统方法
+//- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+//{
+//    //SDK方法调用
+//    [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
+//}
+//
+//
+//- (void)registerRemoteNotification{
+//#if !TARGET_IPHONE_SIMULATOR
+//    UIApplication *application = [UIApplication sharedApplication];
+//    
+//    //iOS8 注册APNS
+//    if ([application respondsToSelector:@selector(registerForRemoteNotifications)]) {
+//        [application registerForRemoteNotifications];
+//        UIUserNotificationType notificationTypes = UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
+//        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:notificationTypes categories:nil];
+//        [application registerUserNotificationSettings:settings];
+//    }else{
+//        UIRemoteNotificationType notificationTypes = UIRemoteNotificationTypeBadge |
+//        UIRemoteNotificationTypeSound |
+//        UIRemoteNotificationTypeAlert;
+//        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
+//    }
+//    
+//#endif
+//}
+//
+//#pragma mark - private
+//
+//-(void)loginStateChange:(NSNotification *)notification
+//{
+//    UINavigationController *nav = nil;
+//    
+//    BOOL isAutoLogin = [[[EaseMob sharedInstance] chatManager] isAutoLoginEnabled];
+//    BOOL loginSuccess = [notification.object boolValue];
+//    
+//    if (isAutoLogin || loginSuccess) {
+//        [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+//        if (_mainController == nil) {
+//            _mainController = [[MainViewController alloc] init];
+//            nav = [[UINavigationController alloc] initWithRootViewController:_mainController];
+//        }else{
+//            nav  = _mainController.navigationController;
+//        }
+//    }else{
+//        _mainController = nil;
+//        LoginViewController *loginController = [[LoginViewController alloc] init];
+//        nav = [[UINavigationController alloc] initWithRootViewController:loginController];
+//        loginController.title = @"环信Demo";
+//    }
+//    
+//    if ([UIDevice currentDevice].systemVersion.floatValue < 7.0){
+//        nav.navigationBar.barStyle = UIBarStyleDefault;
+//        [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"titleBar"]
+//                                forBarMetrics:UIBarMetricsDefault];
+//        
+//        [nav.navigationBar.layer setMasksToBounds:YES];
+//    }
+//    
+//    self.window.rootViewController = nav;
+//    
+//    [nav setNavigationBarHidden:YES];
+//    [nav setNavigationBarHidden:NO];
+//}
+
 
 @end

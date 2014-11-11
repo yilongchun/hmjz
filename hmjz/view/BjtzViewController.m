@@ -35,7 +35,7 @@
     // Do any additional setup after loading the view from its nib.
     
     //初始化tableview
-    CGRect cg = CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height);
+    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50);
     mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
 //    [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
 //    if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {

@@ -435,6 +435,7 @@
         [userDefaults removeObjectForKey:@"updateImgFlag"];
         [self loadData];
     }
+    [super viewDidAppear:animated];
 }
 
 //提示

@@ -37,8 +37,9 @@
     [someButton setShowsTouchWhenHighlighted:NO];
     UIBarButtonItem *someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:someButton];
     [self.navigationItem setRightBarButtonItem:someBarButtonItem];
+    
     //初始化文本域
-    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10.0, 80.0, 300.0, 200.0)];
+    _textView = [[UITextView alloc] initWithFrame:CGRectMake(10.0, 80.0, [[UIScreen mainScreen] bounds].size.width-20, 200.0)];
     _textView.layer.backgroundColor = [[UIColor clearColor] CGColor];
     _textView.layer.borderColor = [UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1].CGColor;
     _textView.layer.borderWidth = 1.0;

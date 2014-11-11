@@ -32,6 +32,8 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
+    [self.mywebview setFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64)];
+    
     HUD.labelText = @"正在加载中";
     [HUD show:YES];
     
@@ -39,6 +41,7 @@
     NSDictionary *student = [userDefaults objectForKey:@"class"];
     NSString *classid = [student objectForKey:@"classid"];
     [self getInfo:classid];
+    
 }
 
 //获取班级介绍

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+//#import "EaseMob.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

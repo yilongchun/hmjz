@@ -102,7 +102,7 @@
         }
         [_unreadLabel setHidden:NO];
         [self.contentView bringSubviewToFront:_unreadLabel];
-        _unreadLabel.text = [NSString stringWithFormat:@"%d",_unreadCount];
+        _unreadLabel.text = [NSString stringWithFormat:@"%ld",(long)_unreadCount];
     }else{
         [_unreadLabel setHidden:YES];
     }

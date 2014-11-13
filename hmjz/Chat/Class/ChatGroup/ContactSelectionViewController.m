@@ -374,7 +374,7 @@
         [_doneButton setTitle:@"确定" forState:UIControlStateNormal];
     }
     else{
-        [_doneButton setTitle:[NSString stringWithFormat:@"确定(%i)", [self.selectedContacts count]] forState:UIControlStateNormal];
+        [_doneButton setTitle:[NSString stringWithFormat:@"确定(%lu)", (unsigned long)[self.selectedContacts count]] forState:UIControlStateNormal];
     }
 }
 

@@ -100,7 +100,7 @@ NSString *const kRouterEventAudioBubbleTapEventName = @"kRouterEventAudioBubbleT
 {
     [super setModel:model];
     
-    _timeLabel.text = [NSString stringWithFormat:@"%d'",self.model.time];
+    _timeLabel.text = [NSString stringWithFormat:@"%ld'",(long)self.model.time];
     
     if (self.model.isSender) {
         [_isReadView setHidden:YES];

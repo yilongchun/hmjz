@@ -539,7 +539,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
             self.unreadlabel.font = [UIFont systemFontOfSize:10];
         }
         [self.unreadlabel setHidden:NO];
-        self.unreadlabel.text = [NSString stringWithFormat:@"%d",unreadCount];
+        self.unreadlabel.text = [NSString stringWithFormat:@"%ld",(long)unreadCount];
     }else{
         [self.unreadlabel setHidden:YES];
     }
@@ -695,7 +695,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
     
     //#warning 去掉注释会显示[本地]开头, 方便在开发中区分是否为本地推送
-    notification.alertBody = [[NSString alloc] initWithFormat:@"[本地]%@", notification.alertBody];
+    //notification.alertBody = [[NSString alloc] initWithFormat:@"[本地]%@", notification.alertBody];
     
     notification.alertAction = @"打开";
     notification.timeZone = [NSTimeZone defaultTimeZone];

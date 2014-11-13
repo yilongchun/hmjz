@@ -78,6 +78,8 @@
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
                 [self.dataSource addObjectsFromArray:arr];
+                [self saveLocal:arr];
+                [self readLocal];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
@@ -96,6 +98,35 @@
     [engine enqueueOperation:op];
 }
 
+- (void)saveLocal:(NSArray *)JsonData{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path=[paths objectAtIndex:0];
+    NSString *Json_path=[path stringByAppendingPathComponent:@"JsonFile.json"];
+    //==写入文件
+    NSLog(@"%@",[JsonData writeToFile:Json_path atomically:YES] ? @"Succeed":@"Failed");
+    
+    
+    
+    
+}
+
+- (void)readLocal{
+    //读取Json
+    //==Json文件路径
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *path=[paths objectAtIndex:0];
+    NSString *Json_path=[path stringByAppendingPathComponent:@"JsonFile.json"];
+    //==Json数据
+    NSData *data=[NSData dataWithContentsOfFile:Json_path];
+    //==JsonObject
+    
+    NSError *error = nil;
+    id JsonObject=[NSJSONSerialization JSONObjectWithData:data
+                                                  options:NSJSONReadingAllowFragments
+                                                    error:&error];
+    NSLog(@"%@",JsonObject);//打印json字典
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -110,7 +141,7 @@
     {
         [self setEdgesForExtendedLayout:UIRectEdgeNone];
     }
-    self.title = @"好友聊天";
+    self.title = @"选择家长";
     self.view.backgroundColor = [UIColor whiteColor];
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {

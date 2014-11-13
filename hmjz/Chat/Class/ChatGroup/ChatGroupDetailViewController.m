@@ -283,7 +283,7 @@
     {
         cell.textLabel.text = @"群组人数";
         cell.accessoryType = UITableViewCellAccessoryNone;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%i / %i", _chatGroup.groupOccupantsCount, _chatGroup.groupSetting.groupMaxUsersCount];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%li / %li", (long)_chatGroup.groupOccupantsCount, (long)_chatGroup.groupSetting.groupMaxUsersCount];
     }
     else if (indexPath.row == 3)
     {

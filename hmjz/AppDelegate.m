@@ -39,12 +39,12 @@
     [self registerRemoteNotification];
     
 //#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
-    NSString *apnsCertName = @"hmjytDevelopPush";
-//#if DEBUG
-//    apnsCertName = @"hmjytDevelopPush";
-//#else
-//    apnsCertName = @"chatdemoui";
-//#endif
+    NSString *apnsCertName = nil;
+#if DEBUG
+    apnsCertName = @"hmjytDevelopPush";
+#else
+    apnsCertName = @"chatdemoui";
+#endif
     
     [[EaseMob sharedInstance] registerSDKWithAppKey:@"whhm918#hmjyt" apnsCertName:apnsCertName];
     

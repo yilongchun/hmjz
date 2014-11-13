@@ -7,11 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "EaseMob.h"
+#import "EaseMob.h"
+#import "MainChatViewController.h"
+#import "ChatListViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,IChatManagerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+//@property (strong, nonatomic) MainChatViewController *mainController;
+//@property (strong, nonatomic) ChatListViewController *chatListController;
 
 
 @end

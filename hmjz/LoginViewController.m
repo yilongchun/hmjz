@@ -13,10 +13,14 @@
 #import "Utils.h"
 #import "ChooseChildrenViewController.h"
 #import "ChooseClassViewController.h"
+#import "EMError.h"
 
-@interface LoginViewController ()<MBProgressHUDDelegate>{
+
+
+@interface LoginViewController ()<MBProgressHUDDelegate,IChatManagerDelegate>{
     MBProgressHUD *HUD;
     MKNetworkEngine *engine;
+    
 }
 
 @end
@@ -25,6 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationController.delegate = self;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
@@ -51,6 +56,8 @@
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     self.loginBtn.layer.cornerRadius = 5.0f;
+    
+    _mainController = [[MainViewController alloc] init];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *loginusername = [userDefaults objectForKey:@"loginusername"];
@@ -100,12 +107,54 @@
 //            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
 //            NSLog(@"%@", [data objectForKey:@"userid"]);
             NSString *userid = [data objectForKey:@"userid"];
+            NSString *hxusercode = [data objectForKey:@"hxusercode"];
+            NSString *hxpassword = [data objectForKey:@"hxpassword"];
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:userid forKey:@"userid"];
 //            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
             [userDefaults setObject:self.username.text forKey:@"loginusername"];
             [userDefaults setObject:self.password.text forKey:@"loginpassword"];
+            
+            
+            
+            [[EaseMob sharedInstance].chatManager asyncLoginWithUsername:hxusercode
+                                                                password:hxpassword
+                                                              completion:
+             ^(NSDictionary *loginInfo, EMError *error) {
+                 
+                 if (loginInfo && !error) {
+                     NSLog(@"登陆成功");
+//                     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
+                     [_mainController setupUnreadMessageCount];
+                     
+                 }else {
+                     
+                     switch (error.errorCode) {
+                         case EMErrorServerNotReachable:
+                             [self alertMsg:@"连接服务器失败!"];
+                             NSLog(@"连接服务器失败!");
+                             break;
+                         case EMErrorServerAuthenticationFailure:
+                             [self alertMsg:@"用户名或密码错误"];
+                             NSLog(@"用户名或密码错误");
+                             break;
+                         case EMErrorServerTimeout:
+                             [self alertMsg:@"连接服务器超时!"];
+                             NSLog(@"连接服务器超时!");
+                             break;
+                         default:
+                             [self alertMsg:@"登录失败"];
+                             NSLog(@"登录失败");
+                             break;
+                     }
+                 }
+             } onQueue:nil];
+            
+            
+            
+            
+            
             [self getParentInfo:userid];//获取家长信息
             
             
@@ -123,7 +172,7 @@
         [HUD hide:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请求失败";
+        hud.labelText = @"连接失败";
         hud.margin = 10.f;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:2];
@@ -175,7 +224,7 @@
         [HUD hide:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请求失败";
+        hud.labelText = @"连接失败";
         hud.margin = 10.f;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:2];
@@ -260,7 +309,7 @@
         [HUD hide:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请求失败";
+        hud.labelText = @"连接失败";
         hud.margin = 10.f;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:2];
@@ -294,21 +343,11 @@
                 
                 [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
                 
-                MainViewController *mvc = [[MainViewController alloc] init];
-//                UINavigationController *nc = [[UINavigationController alloc] initWithRootViewController:mvc];
-                
-//                UIModalTransitionStyleCoverVertical 从下往上
-//                UIModalTransitionStyleCrossDissolve 渐变
-//                UIModalTransitionStyleFlipHorizontal 翻转
-//                UIModalTransitionStylePartialCurl从下往上翻页
-//                mvc.userid = userid;
-//                mvc.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-//                self.navigationController.delegate = self;
-//                [self presentViewController:nc animated:YES completion:^{
-//                    NSLog(@"completion");
-//                }];
+                if (_mainController == nil) {
+                    _mainController = [[MainViewController alloc] init];
+                }
                 [userDefaults setObject:@"1" forKey:@"loginflag"];
-                [self.navigationController pushViewController:mvc animated:YES];
+                [self.navigationController pushViewController:_mainController animated:YES];
                 [HUD hide:YES];
             }else if([array count] > 1){//有多个班级需要用户选择
                 [userDefaults setObject:array forKey:@"classes"];//将多个班级存入userdefaults
@@ -326,9 +365,11 @@
                     }
                 }
                 if (classflag) {//如果选择过班级 直接进入首页
-                    MainViewController *mvc = [[MainViewController alloc] init];
+                    if (_mainController == nil) {
+                        _mainController = [[MainViewController alloc] init];;
+                    }
                     
-                    [self.navigationController pushViewController:mvc animated:YES];
+                    [self.navigationController pushViewController:_mainController animated:YES];
                     
                 }else{//如果没有选择过 跳转选择班级界面
                     ChooseClassViewController *vc = [[ChooseClassViewController alloc] init];//跳转 需要用户选择班级
@@ -351,7 +392,7 @@
         [HUD hide:YES];
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.labelText = @"请求失败";
+        hud.labelText = @"连接失败";
         hud.margin = 10.f;
         hud.removeFromSuperViewOnHide = YES;
         [hud hide:YES afterDelay:2];

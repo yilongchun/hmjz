@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MainChatViewController.h"
+#import "ChatListViewController.h"
 
-@interface MainViewController : UIViewController<UINavigationControllerDelegate>
+@interface MainViewController : UIViewController<UINavigationControllerDelegate,IChatManagerDelegate>{
+    BOOL loginSuccess;
+}
 - (IBAction)chooseChildren:(UIButton *)sender;
 - (IBAction)chooseClass:(UIButton *)sender;
 - (IBAction)setup:(UIButton *)sender;
@@ -23,7 +27,16 @@
 @property (weak, nonatomic) IBOutlet UIImageView *studentimg;
 @property (weak, nonatomic) IBOutlet UILabel *studentname;
 @property (weak, nonatomic) IBOutlet UILabel *studentage;
+@property (weak, nonatomic) IBOutlet UILabel *unreadlabel;
+
+
 
 @property (nonatomic, copy) NSString *flag;
+
+
+//@property (strong, nonatomic) MainChatViewController *mainController;
+@property (strong, nonatomic) ChatListViewController *chatListController;
+
+- (void)setupUnreadMessageCount;
 
 @end

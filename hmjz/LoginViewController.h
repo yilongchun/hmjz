@@ -7,11 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EaseMob.h"
+#import "MainViewController.h"
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (weak, nonatomic) IBOutlet UIImageView *loginBtn;
 
+
+@property (strong, nonatomic) MainViewController *mainController;
 
 @end

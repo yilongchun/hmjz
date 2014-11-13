@@ -24,8 +24,12 @@
 #import "BbspViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "MBProgressHUD.h"
+#import "ApplyViewController.h"
 
-@interface MainViewController ()<MBProgressHUDDelegate>{
+//两次提示的默认间隔
+static const CGFloat kDefaultPlaySoundInterval = 3.0;
+
+@interface MainViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>{
     MKNetworkEngine *engine;
     NSArray *typearr;//育儿资讯分类
     NSArray *kcbarr;//课程表
@@ -33,18 +37,40 @@
     MBProgressHUD *HUD;
 }
 
+@property (strong, nonatomic)NSDate *lastPlaySoundDate;
+
 @end
 
 @implementation MainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.unreadlabel.layer.cornerRadius = self.unreadlabel.frame.size.height/2;
+    self.unreadlabel.layer.masksToBounds = YES;
+    
+    //获取未读消息数，此时并没有把self注册为SDK的delegate，读取出的未读数是上次退出程序时的
+    [self didUnreadMessagesCountChanged];
+    //warning 把self注册为SDK的delegate
+    [self registerNotifications];
+    
+    [[ApplyViewController shareController] loadDataSourceFromLocalDB];
+//    _mainController = [[MainChatViewController alloc] init];
+    _chatListController = [[ChatListViewController alloc] init];
+    _chatListController.title = @"会话";
+//    [_chatListController registerNotifications];
+    
+    [self setupUnreadMessageCount];
+    
+    
     //设置导航栏
     self.navigationController.delegate = self;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];
     
+    
+        
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
@@ -211,7 +237,6 @@
                 NSArray *data = [resultDict objectForKey:@"data"];
                 if (data != nil) {
                     typearr = data;
-                    NSLog(@"loadYezx");
                 }
             }else{
     
@@ -271,7 +296,6 @@
             NSArray *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 kcbarr = data;
-                NSLog(@"loadKcb");
             }
         }else{
             
@@ -349,7 +373,6 @@
             NSArray *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 sparr = data;
-                NSLog(@"loadBbsp");
             }
         }else{
             
@@ -410,9 +433,18 @@
     
 }
 
+
 //小纸条
 - (IBAction)xztAction:(UIButton *)sender {
-    [self alertMsg:@"小纸条开发中，请稍后再试"];
+    
+//    if (_mainController == nil) {
+//        _mainController = [[MainChatViewController alloc] init];
+//    }
+    if (_chatListController == nil) {
+        _chatListController = [[ChatListViewController alloc] init];
+    }
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:_chatListController animated:YES];
 }
 
 //返回到该页面调用
@@ -447,5 +479,321 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
 }
+
+
+- (void)dealloc{
+    [self unregisterNotifications];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 99) {
+        if (buttonIndex != [alertView cancelButtonIndex]) {
+            [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+                [[ApplyViewController shareController] clear];
+                [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+            } onQueue:nil];
+        }
+    }
+    else if (alertView.tag == 100) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+    } else if (alertView.tag == 101) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+    }
+}
+
+#pragma mark - private
+
+-(void)registerNotifications{
+    [self unregisterNotifications];
+    [[EaseMob sharedInstance].chatManager addDelegate:self delegateQueue:nil];
+}
+
+-(void)unregisterNotifications{
+    [[EaseMob sharedInstance].chatManager removeDelegate:self];
+}
+
+//显示该界面 刷新未读消息数
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self setupUnreadMessageCount];
+}
+
+
+//设置未读消息数
+- (void)setupUnreadMessageCount{
+    NSArray *conversations = [[[EaseMob sharedInstance] chatManager] conversations];
+    NSInteger unreadCount = 0;
+    for (EMConversation *conversation in conversations) {
+        unreadCount += conversation.unreadMessagesCount;
+    }
+    if (unreadCount > 0) {
+        if (unreadCount < 9) {
+            self.unreadlabel.font = [UIFont systemFontOfSize:13];
+        }else if(unreadCount > 9 && unreadCount < 99){
+            self.unreadlabel.font = [UIFont systemFontOfSize:12];
+        }else{
+            self.unreadlabel.font = [UIFont systemFontOfSize:10];
+        }
+        [self.unreadlabel setHidden:NO];
+        self.unreadlabel.text = [NSString stringWithFormat:@"%d",unreadCount];
+    }else{
+        [self.unreadlabel setHidden:YES];
+    }
+    UIApplication *application = [UIApplication sharedApplication];
+    [application setApplicationIconBadgeNumber:unreadCount];
+}
+
+#pragma mark - IChatMangerDelegate 消息变化
+- (void)didUpdateConversationList:(NSArray *)conversationList
+{
+    [_chatListController refreshDataSource];
+}
+// 未读消息数量变化回调
+-(void)didUnreadMessagesCountChanged
+{
+    [self setupUnreadMessageCount];
+}
+- (void)didFinishedReceiveOfflineMessages:(NSArray *)offlineMessages{
+    [self setupUnreadMessageCount];
+}
+- (BOOL)needShowNotification:(NSString *)fromChatter
+{
+    BOOL ret = YES;
+    NSArray *igGroupIds = [[EaseMob sharedInstance].chatManager ignoredGroupList];
+    for (NSString *str in igGroupIds) {
+        if ([str isEqualToString:fromChatter]) {
+            ret = NO;
+            break;
+        }
+    }
+    
+    if (ret) {
+        EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
+        
+        do {
+            if (options.noDisturbing) {
+                NSDate *now = [NSDate date];
+                NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitHour | NSCalendarUnitMinute
+                                                                               fromDate:now];
+                
+                NSInteger hour = [components hour];
+                //        NSInteger minute= [components minute];
+                
+                NSUInteger startH = options.noDisturbingStartH;
+                NSUInteger endH = options.noDisturbingEndH;
+                if (startH>endH) {
+                    endH += 24;
+                }
+                
+                if (hour>=startH && hour<=endH) {
+                    ret = NO;
+                    break;
+                }
+            }
+        } while (0);
+    }
+    
+    return ret;
+}
+// 收到消息回调
+-(void)didReceiveMessage:(EMMessage *)message
+{
+    BOOL needShowNotification = message.isGroup ? [self needShowNotification:message.conversation.chatter] : YES;
+    if (needShowNotification) {
+#if !TARGET_IPHONE_SIMULATOR
+        [self playSoundAndVibration];
+        
+        BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
+        if (!isAppActivity) {
+            NSLog(@"isAppActivity is false");
+            [self showNotificationWithMessage:message];
+        }else{
+            NSLog(@"isAppActivity is true");
+        }
+        
+#endif
+    }
+    [self setupUnreadMessageCount];
+}
+
+- (void)playSoundAndVibration{
+    
+    //如果距离上次响铃和震动时间太短, 则跳过响铃
+    NSLog(@"%@, %@", [NSDate date], self.lastPlaySoundDate);
+    NSTimeInterval timeInterval = [[NSDate date]
+                                   timeIntervalSinceDate:self.lastPlaySoundDate];
+    if (timeInterval < kDefaultPlaySoundInterval) {
+        return;
+    }
+    //保存最后一次响铃时间
+    self.lastPlaySoundDate = [NSDate date];
+    
+    // 收到消息时，播放音频
+    [[EaseMob sharedInstance].deviceManager asyncPlayNewMessageSound];
+    // 收到消息时，震动
+    [[EaseMob sharedInstance].deviceManager asyncPlayVibration];
+}
+
+- (void)showNotificationWithMessage:(EMMessage *)message
+{
+    EMPushNotificationOptions *options = [[EaseMob sharedInstance].chatManager pushNotificationOptions];
+    //发送本地推送
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.fireDate = [NSDate date]; //触发通知的时间
+    
+    if (options.displayStyle == ePushNotificationDisplayStyle_messageSummary) {
+        id<IEMMessageBody> messageBody = [message.messageBodies firstObject];
+        NSString *messageStr = nil;
+        switch (messageBody.messageBodyType) {
+            case eMessageBodyType_Text:
+            {
+                messageStr = ((EMTextMessageBody *)messageBody).text;
+            }
+                break;
+            case eMessageBodyType_Image:
+            {
+                messageStr = @"[图片]";
+            }
+                break;
+            case eMessageBodyType_Location:
+            {
+                messageStr = @"[位置]";
+            }
+                break;
+            case eMessageBodyType_Voice:
+            {
+                messageStr = @"[音频]";
+            }
+                break;
+            case eMessageBodyType_Video:{
+                messageStr = @"[视频]";
+            }
+                break;
+            default:
+                break;
+        }
+        
+        NSString *title = message.from;
+        if (message.isGroup) {
+            NSArray *groupArray = [[EaseMob sharedInstance].chatManager groupList];
+            for (EMGroup *group in groupArray) {
+                if ([group.groupId isEqualToString:message.conversation.chatter]) {
+                    title = [NSString stringWithFormat:@"%@(%@)", message.groupSenderName, group.groupSubject];
+                    break;
+                }
+            }
+        }
+        
+        notification.alertBody = [NSString stringWithFormat:@"%@:%@", title, messageStr];
+    }
+    else{
+        notification.alertBody = @"您有一条新消息";
+    }
+    
+    //#warning 去掉注释会显示[本地]开头, 方便在开发中区分是否为本地推送
+    notification.alertBody = [[NSString alloc] initWithFormat:@"[本地]%@", notification.alertBody];
+    
+    notification.alertAction = @"打开";
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    //发送通知
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+    //    UIApplication *application = [UIApplication sharedApplication];
+    //    application.applicationIconBadgeNumber += 1;
+}
+
+#pragma mark - IChatManagerDelegate 登陆回调（主要用于监听自动登录是否成功）
+- (void)didLoginWithInfo:(NSDictionary *)loginInfo error:(EMError *)error
+{
+    if (error) {
+        /*NSString *hintText = @"";
+         if (error.errorCode != EMErrorServerMaxRetryCountExceeded) {
+         if (![[[EaseMob sharedInstance] chatManager] isAutoLoginEnabled]) {
+         hintText = @"你的账号登录失败，请重新登陆";
+         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+         message:hintText
+         delegate:self
+         cancelButtonTitle:@"确定"
+         otherButtonTitles:nil,
+         nil];
+         alertView.tag = 99;
+         [alertView show];
+         }
+         } else {
+         hintText = @"已达到最大登陆重试次数，请重新登陆";
+         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+         message:hintText
+         delegate:self
+         cancelButtonTitle:@"确定"
+         otherButtonTitles:nil,
+         nil];
+         alertView.tag = 99;
+         [alertView show];
+         }*/
+        NSString *hintText = @"你的账号登录失败，正在重试中... \n点击 '登出' 按钮跳转到登录页面 \n点击 '继续等待' 按钮等待重连成功";
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:hintText
+                                                           delegate:self
+                                                  cancelButtonTitle:@"继续等待"
+                                                  otherButtonTitles:@"登出",
+                                  nil];
+        alertView.tag = 99;
+        [alertView show];
+    }
+}
+
+#pragma mark - IChatManagerDelegate 登录状态变化
+
+- (void)didLoginFromOtherDevice
+{
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:@"你的账号已在其他地方登录"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil,
+                                  nil];
+        alertView.tag = 100;
+        [alertView show];
+    } onQueue:nil];
+}
+
+- (void)didRemovedFromServer {
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                            message:@"你的账号已被从服务器端移除"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确定"
+                                                  otherButtonTitles:nil,
+                                  nil];
+        alertView.tag = 101;
+        [alertView show];
+    } onQueue:nil];
+}
+
+- (void)didConnectionStateChanged:(EMConnectionState)connectionState
+{
+    [_chatListController networkChanged:connectionState];
+}
+
+#pragma mark -
+
+- (void)willAutoReconnect{
+    [self hideHud];
+    [self showHudInView:self.view hint:@"正在重连中..."];
+}
+
+- (void)didAutoReconnectFinishedWithError:(NSError *)error{
+    [self hideHud];
+    if (error) {
+        [self showHint:@"重连失败，稍候将继续重连"];
+    }else{
+        [self showHint:@"重连成功！"];
+    }
+}
+
 
 @end

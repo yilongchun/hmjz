@@ -13,5 +13,15 @@
 
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+    #import "ChatDefine.h"
+    #import "WCAlertView.h"
+    #import "TTGlobalUICommon.h"
+    #import "UIViewController+HUD.h"
+    #import "UIViewController+DismissKeyboard.h"
+    #import "NSString+Valid.h"
 
+    #define MR_SHORTHAND
+    #import "CoreData+MagicalRecord.h"
+
+    #import "EaseMob.h"
 #endif

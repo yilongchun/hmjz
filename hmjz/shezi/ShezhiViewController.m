@@ -10,6 +10,8 @@
 #import "LoginViewController.h"
 #import "YjfkViewController.h"
 #import "UpdatePasswordViewController.h"
+#import "EaseMob.h"
+#import "ApplyViewController.h"
 
 @interface ShezhiViewController ()
 
@@ -130,11 +132,28 @@
         
 //        [self.navigationController popToRootViewControllerAnimated:YES];
         
+        [self logoutAction];
+        
         LoginViewController *loginCtrl = [[LoginViewController alloc] init];
         UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:loginCtrl];
         [navCtrl setNavigationBarHidden:YES];
         self.view.window.rootViewController = navCtrl;
     }
+}
+
+- (void)logoutAction
+{
+    
+    [self showHudInView:self.view hint:@"正在退出..."];
+    [[EaseMob sharedInstance].chatManager asyncLogoffWithCompletion:^(NSDictionary *info, EMError *error) {
+        if (error) {
+            
+        }
+        else{
+            [[ApplyViewController shareController] clear];
+            [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@NO];
+        }
+    } onQueue:nil];
 }
 
 /*

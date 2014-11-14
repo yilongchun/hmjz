@@ -349,7 +349,8 @@
                 break;
             }
         }
-        cell.placeholderImage = [UIImage imageNamed:imageName];
+        
+        cell.imageView.image = [UIImage imageNamed:imageName];
     }
     cell.detailMsg = [self subTitleMessageByConversation:conversation];
     cell.time = [self lastMessageTimeByConversation:conversation];

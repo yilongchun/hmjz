@@ -65,10 +65,10 @@
     
     //设置头像
     if ([Utils isBlankString:flieid]) {
-        [self.myimageview setImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.myimageview setImage:[UIImage imageNamed:@"chatListCellHead.png"]];
     }else{
 //        [self.myimageview setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
-        [self.myimageview setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.myimageview setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
         
 //        [self.myimageview setImageFromURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getHostname],flieid]] placeHolderImage:[UIImage imageNamed:@"nopicture.png"] usingEngine:engine animation:YES];
     }
@@ -289,10 +289,13 @@
         if ([success boolValue]) {
             [self.myimageview setImageWithURL:[NSURL URLWithString:fileid]];
             [HUD hide:YES];
-            [self okMsk:msg];
-            [student setValue:fileid forKey:@"flieid"];
-            [userDefaults setObject:student forKey:@"student"];
+            
+            NSMutableDictionary *updatestudent = [[NSMutableDictionary alloc] initWithDictionary:[userDefaults objectForKey:@"student"]];
+            [updatestudent setValue:fileid forKey:@"flieid"];
+//            [userDefaults removeObjectForKey:@"student"];
+            [userDefaults setObject:updatestudent forKey:@"student"];
             [userDefaults setObject:@"1" forKey:@"updateImgFlag"];
+            [self okMsk:msg];
         }else{
             [HUD hide:YES];
             [self alertMsg:msg];

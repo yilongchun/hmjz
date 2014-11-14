@@ -124,10 +124,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     //设置头像
     if ([Utils isBlankString:flieid]) {
-        [self.studentimg setImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.studentimg setImage:[UIImage imageNamed:@"chatListCellHead.png"]];
     }else{
 //        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
-        [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
+        [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
     }
 }
 

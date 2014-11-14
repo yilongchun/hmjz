@@ -20,6 +20,7 @@
 #import "EMSearchDisplayController.h"
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "AddFriendViewController.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ChatListViewController ()<UITableViewDelegate,UITableViewDataSource, UISearchDisplayDelegate,SRRefreshDelegate, UISearchBarDelegate, IChatManagerDelegate>{
     UIBarButtonItem *_addFriendItem;
@@ -306,9 +307,37 @@
         cell = [[ChatListCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:identify];
     }
     EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
-    cell.name = conversation.chatter;
+    
+    
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray *friendarr = [userDefaults objectForKey:@"friendarr"];
+    NSLog(@"%@",friendarr);
+    
+    NSString *name = conversation.chatter;
+    NSString *fileid = nil;
+    if (friendarr != nil) {
+        for (int i = 0 ; i < friendarr.count; i++) {
+            NSDictionary *friend = [friendarr objectAtIndex:i];
+            NSString *hxusercode = [friend objectForKey:@"hxusercode"];
+            NSString *parentname = [friend objectForKey:@"parentname"];
+            NSString *tempfileid = [friend objectForKey:@"fileid"];
+            if ([conversation.chatter isEqualToString:hxusercode]) {
+                name = parentname;
+                fileid = tempfileid;
+                break;
+            }
+        }
+    }
+    cell.name = name;
+    
     if (!conversation.isGroup) {
-        cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
+//        if (fileid == nil) {
+//            cell.placeholderImage = [UIImage imageNamed:@"chatListCellHead.png"];
+//        }else{
+//            cell.placeholderImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:fileid]]];
+//        }
+        [cell.imageView setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
     }
     else{
         NSString *imageName = @"groupPublicHeader";

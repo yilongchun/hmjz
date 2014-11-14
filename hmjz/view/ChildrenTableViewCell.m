@@ -36,4 +36,10 @@
     
 }
 
+- (void)layoutSubviews{
+    [super layoutSubviews];
+    self.img.layer.cornerRadius = 5;
+    self.img.layer.masksToBounds = YES;
+}
+
 @end

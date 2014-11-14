@@ -31,7 +31,9 @@
     [super viewDidLoad];
     
     self.navigationController.delegate = self;
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
     self.navigationItem.backBarButtonItem = backItem;
@@ -256,6 +258,9 @@
                 NSDictionary *data = [array objectAtIndex:0];
                 NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:data forKey:@"student"];//将默认的一个宝宝存入userdefaults
+                
+                [userDefaults setObject:array forKey:@"students"];
+                
                 NSString *studentid = [data objectForKey:@"studentid"];//学生id
                 [self getClassInfo:studentid];//获取班级信息
                 
@@ -342,7 +347,7 @@
                 
                 
                 [userDefaults setObject:data forKey:@"class"];//讲班级存入userdefaults
-                
+                [userDefaults setObject:array forKey:@"classes"];
                 if (_mainController == nil) {
                     _mainController = [[MainViewController alloc] init];
                 }

@@ -24,6 +24,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.edgesForExtendedLayout =  UIRectEdgeNone;
+    }
+    
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     

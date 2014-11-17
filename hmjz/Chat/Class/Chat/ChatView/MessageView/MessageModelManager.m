@@ -14,8 +14,45 @@
 #import "ConvertToCommonEmoticonsHelper.h"
 #import "MessageModel.h"
 #import "EaseMob.h"
+#import "Utils.h"
 
 @implementation MessageModelManager
+
++ (NSDictionary *)getRealName:(NSString *)chatter{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray *friendarr = [userDefaults objectForKey:@"friendarr"];
+    
+    NSString *name = chatter;
+    NSString *fileid = nil;
+    NSMutableDictionary *resultDic = [[NSMutableDictionary alloc] init];
+    BOOL flag = false;
+    if (friendarr != nil) {
+        for (int i = 0 ; i < friendarr.count; i++) {
+            NSDictionary *friend = [friendarr objectAtIndex:i];
+            NSString *hxusercode = [friend objectForKey:@"hxusercode"];
+            NSString *parentname = [friend objectForKey:@"parentname"];
+            NSString *tempfileid = [friend objectForKey:@"fileid"];
+            if ([chatter isEqualToString:hxusercode]) {
+                name = parentname;
+                fileid = tempfileid;
+                [resultDic setObject:hxusercode forKey:@"hxusercode"];
+                [resultDic setObject:parentname forKey:@"parentname"];
+                [resultDic setObject:tempfileid forKey:@"fileid"];
+                flag = true;
+                break;
+            }
+        }
+    }
+    
+    if (!flag) {
+        [resultDic setObject:chatter forKey:@"hxusercode"];
+        [resultDic setObject:chatter forKey:@"parentname"];
+        [resultDic setObject:@"" forKey:@"fileid"];
+    }
+    
+    return resultDic;
+    
+}
 
 + (id)modelWithMessage:(EMMessage *)message
 {
@@ -38,14 +75,31 @@
     }
     else{
         model.username = message.from;
+        NSLog(@"username:%@",message.from);
     }
     
     if (isSender) {
-        model.headImageURL = nil;
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *student = [userDefaults objectForKey:@"student"];
+        NSString *flieid = [student objectForKey:@"flieid"];
+        if ([Utils isBlankString:flieid]) {
+            model.headImageURL = nil;
+        }else{
+            model.headImageURL = [NSURL URLWithString:flieid];
+        }
+        
         model.status = message.deliveryState;
     }
     else{
-        model.headImageURL = nil;
+        NSString *name = message.from;
+        NSDictionary *userinfo = [self getRealName:name];
+        NSString *fileid = [userinfo objectForKey:@"fileid"];
+        if ([Utils isBlankString:fileid]) {
+            model.headImageURL = nil;
+        }else{
+            model.headImageURL = [NSURL URLWithString:fileid];
+        }
+    
         model.status = eMessageDeliveryState_Delivered;
     }
     

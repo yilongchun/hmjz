@@ -24,9 +24,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
-        self.edgesForExtendedLayout =  UIRectEdgeNone;
-    }
+//    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+//        self.edgesForExtendedLayout =  UIRectEdgeNone;
+//    }
     
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
@@ -69,7 +69,14 @@
             if ([array count] > 0) {
                 NSDictionary *data = [array objectAtIndex:0];
                 NSString *introduce = [data objectForKey:@"introduce"];
-                [self.mywebview loadHTMLString:introduce baseURL:[NSURL URLWithString:[Utils getHostname]]];
+                NSString* fileid = [data objectForKey:@"fileid"];
+                NSMutableString* htmlStr = [NSMutableString string];
+                if (![Utils isBlankString:fileid]) {
+                    [htmlStr appendFormat:@"<head></head><p><img src='%@' width='%f'  /></p>",fileid,[[UIScreen mainScreen] bounds].size.width-20];
+                    
+                }
+                [htmlStr appendString:introduce];
+                [self.mywebview loadHTMLString:htmlStr baseURL:[NSURL URLWithString:[Utils getHostname]]];
             }
             
         }else{

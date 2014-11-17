@@ -543,6 +543,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }else{
         [self.unreadlabel setHidden:YES];
     }
+    
     UIApplication *application = [UIApplication sharedApplication];
     [application setApplicationIconBadgeNumber:unreadCount];
 }

@@ -51,7 +51,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Pclass/classfindbyid.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -67,7 +67,14 @@
             if ([array count] > 0) {
                 NSDictionary *data = [array objectAtIndex:0];
                 NSString *introduce = [data objectForKey:@"introduce"];
-                [self.mywebview loadHTMLString:introduce baseURL:[NSURL URLWithString:[Utils getHostname]]];
+                NSString* fileid = [data objectForKey:@"fileid"];
+                NSMutableString* htmlStr = [NSMutableString string];
+                if (![Utils isBlankString:fileid]) {
+                    [htmlStr appendFormat:@"<head></head><p><img src='%@' width='%f'  /></p>",fileid,[[UIScreen mainScreen] bounds].size.width-20];
+                    
+                }
+                [htmlStr appendString:introduce];
+                [self.mywebview loadHTMLString:htmlStr baseURL:[NSURL URLWithString:[Utils getHostname]]];
             }
         }else{
             [HUD hide:YES];

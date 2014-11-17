@@ -625,7 +625,7 @@
 {
     [self reloadTableViewDataWithMessage:message];
 }
-
+//加载数据
 - (void)reloadTableViewDataWithMessage:(EMMessage *)message{
     __weak ChatViewController *weakSelf = self;
     dispatch_async(_messageQueue, ^{

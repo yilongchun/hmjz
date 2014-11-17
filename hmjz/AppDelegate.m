@@ -131,7 +131,7 @@
 
 
 - (void)registerRemoteNotification{
-#if !TARGET_IPHONE_SIMULATOR
+    #if !TARGET_IPHONE_SIMULATOR
     UIApplication *application = [UIApplication sharedApplication];
     
     //iOS8 注册APNS
@@ -147,7 +147,8 @@
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:notificationTypes];
     }
     
-#endif
+    #endif
+    
 }
 
 #pragma mark - push

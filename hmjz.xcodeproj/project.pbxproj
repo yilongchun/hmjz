@@ -139,6 +139,8 @@
 		E4E700BC1A033F5200FB4339 /* BjtzDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BA1A033F5200FB4339 /* BjtzDetailViewController.xib */; };
 		E4E700C01A035A0600FB4339 /* KcbViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4E700BE1A035A0600FB4339 /* KcbViewController.m */; };
 		E4E700C11A035A0600FB4339 /* KcbViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4E700BF1A035A0600FB4339 /* KcbViewController.xib */; };
+		E4EFAAF21A1B28AA000CF20E /* ImgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFAAEF1A1B28AA000CF20E /* ImgScrollView.m */; };
+		E4EFAAF31A1B28AA000CF20E /* TapImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFAAF11A1B28AA000CF20E /* TapImageView.m */; };
 		E4EFB8971A12F24D007D8CB1 /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB72F1A12F24D007D8CB1 /* Emoji.m */; };
 		E4EFB8981A12F24D007D8CB1 /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7311A12F24D007D8CB1 /* EmojiEmoticons.m */; };
 		E4EFB8991A12F24D007D8CB1 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7351A12F24D007D8CB1 /* MBProgressHUD+Add.m */; };
@@ -672,6 +674,10 @@
 		E4E700BD1A035A0600FB4339 /* KcbViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KcbViewController.h; path = view/KcbViewController.h; sourceTree = "<group>"; };
 		E4E700BE1A035A0600FB4339 /* KcbViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KcbViewController.m; path = view/KcbViewController.m; sourceTree = "<group>"; };
 		E4E700BF1A035A0600FB4339 /* KcbViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KcbViewController.xib; path = view/KcbViewController.xib; sourceTree = "<group>"; };
+		E4EFAAEE1A1B28AA000CF20E /* ImgScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImgScrollView.h; path = view/ImgScrollView.h; sourceTree = "<group>"; };
+		E4EFAAEF1A1B28AA000CF20E /* ImgScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImgScrollView.m; path = view/ImgScrollView.m; sourceTree = "<group>"; };
+		E4EFAAF01A1B28AA000CF20E /* TapImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapImageView.h; path = view/TapImageView.h; sourceTree = "<group>"; };
+		E4EFAAF11A1B28AA000CF20E /* TapImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TapImageView.m; path = view/TapImageView.m; sourceTree = "<group>"; };
 		E4EFB7141A12EC60007D8CB1 /* ChatDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDefine.h; sourceTree = "<group>"; };
 		E4EFB72E1A12F24D007D8CB1 /* Emoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Emoji.h; sourceTree = "<group>"; };
 		E4EFB72F1A12F24D007D8CB1 /* Emoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Emoji.m; sourceTree = "<group>"; };
@@ -1475,6 +1481,10 @@
 		E4C777C119F8E48300532B09 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				E4EFAAEE1A1B28AA000CF20E /* ImgScrollView.h */,
+				E4EFAAEF1A1B28AA000CF20E /* ImgScrollView.m */,
+				E4EFAAF01A1B28AA000CF20E /* TapImageView.h */,
+				E4EFAAF11A1B28AA000CF20E /* TapImageView.m */,
 				E4B54BAA1A01E1BD00AC8D86 /* JYSlideSegmentController.h */,
 				E4B54BAB1A01E1BD00AC8D86 /* JYSlideSegmentController.m */,
 				E4C69A7019FA18F200B0EFEA /* FHSegmentedViewController.h */,
@@ -3108,6 +3118,7 @@
 				E4EFB8A71A12F24D007D8CB1 /* PSTCollectionViewController.m in Sources */,
 				E4EFB8D31A12F24D007D8CB1 /* DXMessageToolBar.m in Sources */,
 				E4EFB8D41A12F24D007D8CB1 /* DXFaceView.m in Sources */,
+				E4EFAAF31A1B28AA000CF20E /* TapImageView.m in Sources */,
 				E4EFB8A61A12F24D007D8CB1 /* PSTCollectionViewCell.m in Sources */,
 				E4EFB9411A12F24E007D8CB1 /* MagicalRecord+ShorthandSupport.m in Sources */,
 				E4C7C9A91A009909006A0284 /* AFURLRequestSerialization.m in Sources */,
@@ -3180,6 +3191,7 @@
 				E4EFB9131A12F24D007D8CB1 /* CreateGroupViewController.m in Sources */,
 				E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */,
 				E4EFB8D01A12F24D007D8CB1 /* ConvertToCommonEmoticonsHelper.m in Sources */,
+				E4EFAAF21A1B28AA000CF20E /* ImgScrollView.m in Sources */,
 				E4EFB9361A12F24E007D8CB1 /* NSManagedObjectContext+MagicalRecord.m in Sources */,
 				E4EFB9231A12F24D007D8CB1 /* AddFriendViewController.m in Sources */,
 				E4EFB8CE1A12F24D007D8CB1 /* ChatSendHelper.m in Sources */,

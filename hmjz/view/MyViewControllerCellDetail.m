@@ -14,9 +14,11 @@
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
 #import "CustomMoviePlayerViewController.h"
+#import "TapImageView.h"
+#import "ImgScrollView.h"
 
 
-@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate>{
+@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UIScrollViewDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
     NSNumber *totalpage;
@@ -24,6 +26,11 @@
     NSNumber *rows;
     NSNumber *activityType;
     
+    UIScrollView *myScrollView;
+    NSInteger currentIndex;
+    UIView *markView;
+    UIView *scrollPanel;
+    ContentCell *tapCell;
 }
 
 @property (strong, nonatomic)UIButton *videoPlayButton;
@@ -250,7 +257,24 @@
     page = [NSNumber numberWithInt:1];
     rows = [NSNumber numberWithInt:10];
     
+    scrollPanel = [[UIView alloc] initWithFrame:self.view.bounds];
+    scrollPanel.backgroundColor = [UIColor clearColor];
+    scrollPanel.alpha = 0;
+    [self.view addSubview:scrollPanel];
     
+    markView = [[UIView alloc] initWithFrame:scrollPanel.bounds];
+    markView.backgroundColor = [UIColor blackColor];
+    markView.alpha = 0.0;
+    [scrollPanel addSubview:markView];
+    
+    myScrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    [scrollPanel addSubview:myScrollView];
+    myScrollView.pagingEnabled = YES;
+    myScrollView.delegate = self;
+    CGSize contentSize = myScrollView.contentSize;
+    contentSize.height = self.view.bounds.size.height;
+    contentSize.width = self.view.bounds.size.width * 3;
+    myScrollView.contentSize = contentSize;
     
     
     
@@ -399,11 +423,16 @@
                     }else{
                         x = 5+ 105*i;
                     }
-                    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
-                    [imageview setImageWithURL:[file objectForKey:@"fileId"]];
-                    [cell addSubview:imageview];
+                    TapImageView *tmpView = [[TapImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
+                    tmpView.t_delegate = self;
+                    [tmpView setImageWithURL:[file objectForKey:@"fileId"]];
+                    tmpView.tag = 10 + i;
+                    [cell.contentView addSubview:tmpView];
                     
+                    tmpView = (TapImageView *)[cell.contentView viewWithTag:10+i];
+                    tmpView.identifier = cell;
                 }
+                
                 
                 
                 
@@ -573,6 +602,7 @@
     [hud hide:YES afterDelay:1];
 }
 
+#pragma mark - video
 
 /**
  @method 播放视频
@@ -598,6 +628,97 @@
 }
 
 
+#pragma mark -
+#pragma mark - custom method
+- (void) addSubImgView
+{
+    for (UIView *tmpView in myScrollView.subviews)
+    {
+        [tmpView removeFromSuperview];
+    }
+    
+    for (int i = 0; i < 3; i ++)
+    {
+        if (i == currentIndex)
+        {
+            continue;
+        }
+        
+        TapImageView *tmpView = (TapImageView *)[tapCell viewWithTag:10 + i];
+        
+        //转换后的rect
+        CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
+        
+        ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
+        [tmpImgScrollView setContentWithFrame:convertRect];
+        [tmpImgScrollView setImage:tmpView.image];
+        [myScrollView addSubview:tmpImgScrollView];
+        tmpImgScrollView.i_delegate = self;
+        
+        [tmpImgScrollView setAnimationRect];
+    }
+}
+
+- (void) setOriginFrame:(ImgScrollView *) sender
+{
+    [UIView animateWithDuration:0.2 animations:^{
+        [sender setAnimationRect];
+        markView.alpha = 1.0;
+    }];
+}
+
+#pragma mark -
+#pragma mark - custom delegate
+- (void) tappedWithObject:(id)sender
+{
+    [self.view bringSubviewToFront:scrollPanel];
+    scrollPanel.alpha = 1.0;
+    
+    TapImageView *tmpView = sender;
+    currentIndex = tmpView.tag - 10;
+    
+    tapCell = tmpView.identifier;
+    
+    //转换后的rect
+    CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
+    
+    CGPoint contentOffset = myScrollView.contentOffset;
+    contentOffset.x = currentIndex*self.view.frame.size.width;
+    myScrollView.contentOffset = contentOffset;
+    
+    //添加
+    [self addSubImgView];
+    
+    ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){contentOffset,myScrollView.bounds.size}];
+    [tmpImgScrollView setContentWithFrame:convertRect];
+    [tmpImgScrollView setImage:tmpView.image];
+    [myScrollView addSubview:tmpImgScrollView];
+    tmpImgScrollView.i_delegate = self;
+    
+    [self performSelector:@selector(setOriginFrame:) withObject:tmpImgScrollView afterDelay:0.1];
+}
+
+- (void) tapImageViewTappedWithObject:(id)sender
+{
+    
+    ImgScrollView *tmpImgView = sender;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        markView.alpha = 0;
+        [tmpImgView rechangeInitRdct];
+    } completion:^(BOOL finished) {
+        scrollPanel.alpha = 0;
+    }];
+    
+}
+
+#pragma mark -
+#pragma mark - scroll delegate
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    currentIndex = floor((scrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

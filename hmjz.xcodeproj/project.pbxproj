@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E47D2AB81A19DF880020DD67 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */; };
+		E47D2ABB1A19E7DB0020DD67 /* CustomMoviePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E47D2ABA1A19E7DB0020DD67 /* CustomMoviePlayerViewController.m */; };
 		E48CFB2E1A0710D4002ECF19 /* ChildrenTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */; };
 		E48CFB2F1A0710D4002ECF19 /* ChildrenTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */; };
 		E4A4588219FF78B600B759FD /* BjjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4A4588019FF78B600B759FD /* BjjsViewController.m */; };
@@ -470,6 +472,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		E47D2AB91A19E7DB0020DD67 /* CustomMoviePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomMoviePlayerViewController.h; path = view/CustomMoviePlayerViewController.h; sourceTree = "<group>"; };
+		E47D2ABA1A19E7DB0020DD67 /* CustomMoviePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomMoviePlayerViewController.m; path = view/CustomMoviePlayerViewController.m; sourceTree = "<group>"; };
 		E48CFB2B1A0710D4002ECF19 /* ChildrenTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChildrenTableViewCell.h; path = view/ChildrenTableViewCell.h; sourceTree = "<group>"; };
 		E48CFB2C1A0710D4002ECF19 /* ChildrenTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChildrenTableViewCell.m; path = view/ChildrenTableViewCell.m; sourceTree = "<group>"; };
 		E48CFB2D1A0710D4002ECF19 /* ChildrenTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ChildrenTableViewCell.xib; path = view/ChildrenTableViewCell.xib; sourceTree = "<group>"; };
@@ -1204,6 +1209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E47D2AB81A19DF880020DD67 /* MediaPlayer.framework in Frameworks */,
 				E4FBAD981A0C5CBD005758FD /* MobileCoreServices.framework in Frameworks */,
 				E4FBAD961A0C5CB0005758FD /* libresolv.dylib in Frameworks */,
 				E4FBAD941A0C5C9C005758FD /* libstdc++.dylib in Frameworks */,
@@ -1403,6 +1409,7 @@
 		E4C7772D19F88B8B00532B09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */,
 				E4FBAD971A0C5CBD005758FD /* MobileCoreServices.framework */,
 				E4FBAD951A0C5CB0005758FD /* libresolv.dylib */,
 				E4FBAD931A0C5C9C005758FD /* libstdc++.dylib */,
@@ -1535,6 +1542,8 @@
 				E4F7B0451A08BC0B00ACE07A /* PinglunTableViewCell.h */,
 				E4F7B0461A08BC0B00ACE07A /* PinglunTableViewCell.m */,
 				E4F7B0471A08BC0B00ACE07A /* PinglunTableViewCell.xib */,
+				E47D2AB91A19E7DB0020DD67 /* CustomMoviePlayerViewController.h */,
+				E47D2ABA1A19E7DB0020DD67 /* CustomMoviePlayerViewController.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -3194,6 +3203,7 @@
 				E4EFB8D71A12F24D007D8CB1 /* FacialView.m in Sources */,
 				E4EFB8A91A12F24D007D8CB1 /* PSTCollectionViewFlowLayout.m in Sources */,
 				E4EFB9301A12F24D007D8CB1 /* NSManagedObject+MagicalAggregation.m in Sources */,
+				E47D2ABB1A19E7DB0020DD67 /* CustomMoviePlayerViewController.m in Sources */,
 				E4EFB8D81A12F24D007D8CB1 /* DXChatBarMoreView.m in Sources */,
 				E4EFB9101A12F24D007D8CB1 /* MessageReadManager.m in Sources */,
 				E4C7C9C21A009AD3006A0284 /* UIImageView+AFNetworking.m in Sources */,

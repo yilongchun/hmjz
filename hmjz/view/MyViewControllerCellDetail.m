@@ -13,6 +13,8 @@
 #import "MBProgressHUD.h"
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
+#import "CustomMoviePlayerViewController.h"
+
 
 @interface MyViewControllerCellDetail ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
@@ -21,11 +23,15 @@
     NSNumber *page;
     NSNumber *rows;
     NSNumber *activityType;
+    
 }
+
+@property (strong, nonatomic)UIButton *videoPlayButton;
 
 @end
 
 @implementation MyViewControllerCellDetail
+
 
 - (id)init{
     self = [super init];
@@ -244,6 +250,10 @@
     page = [NSNumber numberWithInt:1];
     rows = [NSNumber numberWithInt:10];
     
+    
+    
+    
+    
     [self setTitle:self.title];
     [self loadData];
 }
@@ -258,7 +268,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findbyid.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -366,6 +376,7 @@
         NSString *title = [data objectForKey:@"activityTitle"];
         NSString *date = [data objectForKey:@"createDate"];
         NSString *content = [data objectForKey:@"activityContent"];
+        NSArray *filelist = [data objectForKey:@"filelist"];
         cell.contentTitle.text = title;
         cell.contentDate.text = date;
         cell.content.text = content;
@@ -373,6 +384,21 @@
         cell.content.numberOfLines = 0;
         [cell.content sizeToFit];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        if ([filelist count] > 0) {
+            NSDictionary *file = [filelist objectAtIndex:0];
+            NSString *type = [file objectForKey:@"type"];
+            if ([type isEqualToString:@"t_activity_image"]) {//显示图片
+                
+            }else if ([type isEqualToString:@"t_activity_video"]){//显示视频
+                self.videoPlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
+                UIImage *backgroundImage = [UIImage imageNamed:@"chat_video_play.png"];
+                [self.videoPlayButton setBackgroundImage:backgroundImage forState:UIControlStateNormal];
+                [self.videoPlayButton addTarget:self action:@selector(playVideoAction) forControlEvents:UIControlEventTouchUpInside];
+                [self.videoPlayButton setFrame:CGRectMake(10, cell.content.frame.origin.y+10+cell.content.frame.size.height, 50, 50)];
+                [cell addSubview:self.videoPlayButton];
+            }
+        }
         return cell;
     }else{
         if ([self.dataSource count] == indexPath.row) {
@@ -448,7 +474,19 @@
 //            NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
         // 計算出顯示完內容需要的最小尺寸
         CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
-        return size.height+87;
+        size.height = size.height + 87;
+        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+        NSArray *filelist = [data objectForKey:@"filelist"];
+        if ([filelist count] > 0) {
+            NSDictionary *file = [filelist objectAtIndex:0];
+            NSString *type = [file objectForKey:@"type"];
+            if ([type isEqualToString:@"t_activity_image"]) {//显示图片
+                
+            }else if ([type isEqualToString:@"t_activity_video"]){//显示视频
+                size.height = size.height + 70;
+            }
+        }
+        return size.height;
     }else{
         if ([self.dataSource count] == indexPath.row) {
             return 44;
@@ -507,6 +545,28 @@
     hud.removeFromSuperViewOnHide = YES;
     [hud hide:YES afterDelay:1];
 }
+
+
+/**
+ @method 播放视频
+ */
+-(void)playVideoAction{
+    NSDictionary *data = [self.dataSource objectAtIndex:0];
+    NSArray *filelist = [data objectForKey:@"filelist"];
+    if ([filelist count] > 0) {
+        NSDictionary *video = [filelist objectAtIndex:0];
+        NSString *fileId = [video objectForKey:@"fileId"];
+        CustomMoviePlayerViewController *moviePlayer = [[CustomMoviePlayerViewController alloc] init];
+        //将视频地址传过去
+        moviePlayer.movieURL = [NSURL URLWithString:fileId];
+        //然后播放就OK了
+        [moviePlayer readyPlayer];
+        [self presentViewController:moviePlayer animated:YES completion:^{
+        }];
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

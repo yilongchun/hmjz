@@ -389,6 +389,33 @@
             NSDictionary *file = [filelist objectAtIndex:0];
             NSString *type = [file objectForKey:@"type"];
             if ([type isEqualToString:@"t_activity_image"]) {//显示图片
+                CGFloat x = 0;
+                CGFloat y = cell.content.frame.origin.y+10+cell.content.frame.size.height;
+                for (int i = 0 ; i < [filelist count]; i++) {
+                    file = [filelist objectAtIndex:i];
+                    if ((i % 3 == 0) && i != 0) {
+                        y += 105;
+                        x = 5+(105 * (i % 3));
+                    }else{
+                        x = 5+ 105*i;
+                    }
+                    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
+                    [imageview setImageWithURL:[file objectForKey:@"fileId"]];
+                    [cell addSubview:imageview];
+                    
+                }
+                
+                
+                
+//                for (int i = 0; i < 3; i ++)
+//                {
+//                    TapImageView *tmpView = [[TapImageView alloc] initWithFrame:CGRectMake(5+105*i, 10, 100, 100)];
+//                    tmpView.t_delegate = self;
+//                    tmpView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg",i+1]];
+//                    tmpView.tag = 10 + i;
+//                    [cell.contentView addSubview:tmpView];
+//                }
+                
                 
             }else if ([type isEqualToString:@"t_activity_video"]){//显示视频
                 self.videoPlayButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -443,18 +470,12 @@
             labelsize.height = ceil(labelsize.height);
             labelsize.width = ceil(labelsize.width);
             [cell.commentlabel setFrame:CGRectMake(cell.commentlabel.frame.origin.x, cell.commentlabel.frame.origin.y, labelsize.width, labelsize.height)];
-            
-            
-            
-            
             if ([Utils isBlankString:fileid]) {
                 [cell.img setImage:[UIImage imageNamed:@"chatListCellHead.png"]];
             }else{
                 //            [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
                 [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
             }
-            
-            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
@@ -481,7 +502,13 @@
             NSDictionary *file = [filelist objectAtIndex:0];
             NSString *type = [file objectForKey:@"type"];
             if ([type isEqualToString:@"t_activity_image"]) {//显示图片
-                
+                int count = 0;
+                if ([filelist count] % 3 == 0) {
+                    count = [filelist count] / 2;
+                }else{
+                    count = [filelist count] / 2 + 1;
+                }
+                size.height = size.height + 100 * count + 5;
             }else if ([type isEqualToString:@"t_activity_video"]){//显示视频
                 size.height = size.height + 70;
             }
@@ -556,6 +583,10 @@
     if ([filelist count] > 0) {
         NSDictionary *video = [filelist objectAtIndex:0];
         NSString *fileId = [video objectForKey:@"fileId"];
+        if ([Utils isBlankString:fileId]) {
+            [self alertMsg:@"视频地址错误，播放失败"];
+            return;
+        }
         CustomMoviePlayerViewController *moviePlayer = [[CustomMoviePlayerViewController alloc] init];
         //将视频地址传过去
         moviePlayer.movieURL = [NSURL URLWithString:fileId];

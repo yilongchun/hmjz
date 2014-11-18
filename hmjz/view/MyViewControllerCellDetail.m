@@ -28,6 +28,7 @@
     
     UIScrollView *myScrollView;
     NSInteger currentIndex;
+    int imgCount;
     UIView *markView;
     UIView *scrollPanel;
     ContentCell *tapCell;
@@ -271,12 +272,9 @@
     [scrollPanel addSubview:myScrollView];
     myScrollView.pagingEnabled = YES;
     myScrollView.delegate = self;
-    CGSize contentSize = myScrollView.contentSize;
-    contentSize.height = self.view.bounds.size.height;
-    contentSize.width = self.view.bounds.size.width * 3;
-    myScrollView.contentSize = contentSize;
     
     
+    imgCount = 0;
     
     [self setTitle:self.title];
     [self loadData];
@@ -306,6 +304,17 @@
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 self.dataSource = [NSMutableArray arrayWithObject:data];
+                
+                
+                NSArray *filelist = [data objectForKey:@"filelist"];
+                if ([filelist count] > 0) {
+                    CGSize contentSize = myScrollView.contentSize;
+                    contentSize.height = self.view.bounds.size.height;
+                    contentSize.width = self.view.bounds.size.width * [filelist count];
+                    myScrollView.contentSize = contentSize;
+                    imgCount = [filelist count];
+                }
+                
                 activityType = [data objectForKey:@"activityType"];
                 [self loadDataPingLun];
                 [self.mytableview reloadData];
@@ -637,7 +646,7 @@
         [tmpView removeFromSuperview];
     }
     
-    for (int i = 0; i < 3; i ++)
+    for (int i = 0; i < imgCount; i ++)
     {
         if (i == currentIndex)
         {
@@ -664,6 +673,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         [sender setAnimationRect];
         markView.alpha = 1.0;
+        [self.navigationController setNavigationBarHidden:YES];
     }];
 }
 
@@ -671,6 +681,7 @@
 #pragma mark - custom delegate
 - (void) tappedWithObject:(id)sender
 {
+    
     [self.view bringSubviewToFront:scrollPanel];
     scrollPanel.alpha = 1.0;
     
@@ -696,11 +707,12 @@
     tmpImgScrollView.i_delegate = self;
     
     [self performSelector:@selector(setOriginFrame:) withObject:tmpImgScrollView afterDelay:0.1];
+    
 }
 
 - (void) tapImageViewTappedWithObject:(id)sender
 {
-    
+    [self.navigationController setNavigationBarHidden:NO];
     ImgScrollView *tmpImgView = sender;
     
     [UIView animateWithDuration:0.2 animations:^{

@@ -37,6 +37,19 @@
     return [self sendMessage:username messageBody:body isChatGroup:isChatGroup requireEncryption:requireEncryption];
 }
 
++(EMMessage *)sendTextMessageWithString:(NSString *)str
+                             toUsername:(NSString *)username
+                            isChatGroup:(BOOL)isChatGroup
+                      requireEncryption:(BOOL)requireEncryption
+                                    ext:(NSDictionary *)ext{
+    // 表情映射。
+    NSString *willSendText = [ConvertToCommonEmoticonsHelper convertToCommonEmoticons:str];
+    EMChatText *text = [[EMChatText alloc] initWithText:willSendText];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithChatObject:text];
+    return [self sendMessage:username messageBody:body isChatGroup:isChatGroup requireEncryption:requireEncryption ext:ext];
+    
+}
+
 +(EMMessage *)sendImageMessageWithImage:(UIImage *)image
                              toUsername:(NSString *)username
                             isChatGroup:(BOOL)isChatGroup
@@ -89,6 +102,24 @@
     EMMessage *retureMsg = [[EMMessage alloc] initWithReceiver:username bodies:[NSArray arrayWithObject:body]];
     retureMsg.requireEncryption = requireEncryption;
     retureMsg.isGroup = isChatGroup;
+    
+    
+    EMMessage *message = [[EaseMob sharedInstance].chatManager asyncSendMessage:retureMsg progress:nil];
+    
+    return message;
+}
+
+// 发送消息
++(EMMessage *)sendMessage:(NSString *)username
+              messageBody:(id<IEMMessageBody>)body
+              isChatGroup:(BOOL)isChatGroup
+        requireEncryption:(BOOL)requireEncryption
+                      ext:(NSDictionary *)ext
+{
+    EMMessage *retureMsg = [[EMMessage alloc] initWithReceiver:username bodies:[NSArray arrayWithObject:body]];
+    retureMsg.requireEncryption = requireEncryption;
+    retureMsg.isGroup = isChatGroup;
+    retureMsg.ext = ext;
     
     EMMessage *message = [[EaseMob sharedInstance].chatManager asyncSendMessage:retureMsg progress:nil];
     

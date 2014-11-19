@@ -40,11 +40,11 @@
     
 //#warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
-#if DEBUG
-    apnsCertName = @"hmjytDevelopPush";
-#else
-    apnsCertName = @"chatdemoui";
-#endif
+//#if DEBUG
+//    apnsCertName = @"hmjytDevelopPush";
+//#else
+    apnsCertName = @"hmjytProductPush";
+//#endif
     
     [[EaseMob sharedInstance] registerSDKWithAppKey:@"whhm918#hmjyt" apnsCertName:apnsCertName];
     
@@ -117,14 +117,14 @@
 //系统方法
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-    NSLog(@"didReceiveRemoteNotification");
+//    NSLog(@"didReceiveRemoteNotification");
     //SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
 }
 //系统方法
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    NSLog(@"didReceiveLocalNotification");
+//    NSLog(@"didReceiveLocalNotification");
     //SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
 }

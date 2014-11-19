@@ -65,7 +65,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Parentfield/findPageList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -81,7 +81,7 @@
                 
                 
                 
-                [userDefaults setObject:arr forKey:@"friendarr"];
+//                [userDefaults setObject:arr forKey:@"friendarr"];
                 
                 
                 NSNumber *total = [data objectForKey:@"total"];

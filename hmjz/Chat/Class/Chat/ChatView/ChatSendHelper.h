@@ -29,6 +29,12 @@
                             isChatGroup:(BOOL)isChatGroup
                       requireEncryption:(BOOL)requireEncryption;
 
++(EMMessage *)sendTextMessageWithString:(NSString *)str
+                             toUsername:(NSString *)username
+                            isChatGroup:(BOOL)isChatGroup
+                      requireEncryption:(BOOL)requireEncryption
+                                    ext:(NSDictionary *)ext;
+
 /**
  *  发送图片消息
  *

@@ -1172,6 +1172,12 @@
 
 -(void)sendImageMessage:(UIImage *)imageMessage
 {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *student = [userDefaults objectForKey:@"student"];
+    NSString *flieid = [student objectForKey:@"flieid"];
+    
+    
+    
     EMMessage *tempMessage = [ChatSendHelper sendImageMessageWithImage:imageMessage toUsername:_conversation.chatter isChatGroup:_isChatGroup requireEncryption:NO];
     [self addChatDataToMessage:tempMessage];
 }

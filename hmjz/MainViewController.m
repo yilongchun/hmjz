@@ -106,6 +106,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self loadYezx];//加载育儿资讯分类
     [self loadKcb];//加载课程表
     [self loadBbsp];//加载食谱
+    [self loadData2];
    
 }
 
@@ -129,6 +130,42 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //        [self.studentimg setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],flieid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
         [self.studentimg setImageWithURL:[NSURL URLWithString:flieid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
     }
+}
+//家长列表
+- (void)loadData2{
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *class = [userDefaults objectForKey:@"class"];
+    NSString *classid = [class objectForKey:@"classid"];
+    [dic setValue:classid forKey:@"classId"];
+    [dic setValue:@"1" forKey:@"page"];
+    [dic setValue:@"10" forKey:@"rows"];
+    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Parentfield/findPageList.do" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        if ([success boolValue]) {
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                
+                [userDefaults setObject:arr forKey:@"friendarr"];
+            }
+        }else{
+            
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    }];
+    [engine enqueueOperation:op];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -199,35 +199,68 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.dataSource count];
+//    if (section == 0) {
+//        return [self.dataSource count];
+//    }else{
+        return [self.dataSource count];
+//    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"friendcell";
-    
-    FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-//    AddFriendCell *cell = (AddFriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    // Configure the cell...
-    if (cell == nil) {
-//        cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-//        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell = [[[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:self options:nil] lastObject];
+    if (indexPath.section == 0) {
+        static NSString *CellIdentifier = @"friendcell";
+        
+        FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        //    AddFriendCell *cell = (AddFriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            //        cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:self options:nil] lastObject];
+        }
+        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+        NSString *name = [data objectForKey:@"parentname"];
+        NSString *relationname = [data objectForKey:@"relationname"];
+        NSString *fileid = [data objectForKey:@"fileid"];
+        [cell.myimageview setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
+        //    [cell.imageView setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
+        cell.namelabel.text = name;
+        //    cell.textLabel.text = name;
+        cell.detaillabel.text = relationname;
+        //    cell.detailTextLabel.text = relationname;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }else{
+        static NSString *CellIdentifier = @"friendcell";
+        
+        FriendCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        //    AddFriendCell *cell = (AddFriendCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            //        cell = [[AddFriendCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            //        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"FriendCell" owner:self options:nil] lastObject];
+        }
+        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+        NSString *name = [data objectForKey:@"parentname"];
+        NSString *relationname = [data objectForKey:@"relationname"];
+        NSString *fileid = [data objectForKey:@"fileid"];
+        [cell.myimageview setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
+        //    [cell.imageView setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
+        cell.namelabel.text = name;
+        //    cell.textLabel.text = name;
+        cell.detaillabel.text = relationname;
+        //    cell.detailTextLabel.text = relationname;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
     }
-    NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-    NSString *name = [data objectForKey:@"parentname"];
-    NSString *relationname = [data objectForKey:@"relationname"];
-    NSString *fileid = [data objectForKey:@"fileid"];
-    [cell.myimageview setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
-//    [cell.imageView setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
-    cell.namelabel.text = name;
-//    cell.textLabel.text = name;
-    cell.detaillabel.text = relationname;
-//    cell.detailTextLabel.text = relationname;
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    return cell;
+    
 }
 
 #pragma mark - Table view delegate
@@ -303,6 +336,23 @@
 //        [self showMessageAlertView];
 //    }
 }
+
+//- (NSString *)tableView:(UITableView *)tableView
+//
+//titleForHeaderInSection:(NSInteger)section {
+//    
+//    NSString *key = @"A";
+//    
+//    return key;
+//    
+//}
+
+//- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+//    
+//    NSArray *arr = [NSArray arrayWithObjects:@"A",@"B",@"C", nil];
+//    return arr;
+//    
+//}
 
 #pragma mark - UITextFieldDelegate
 

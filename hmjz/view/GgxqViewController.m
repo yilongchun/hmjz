@@ -14,6 +14,7 @@
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
 
+
 @interface GgxqViewController ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
@@ -238,8 +239,12 @@
     
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+   
+    
     [self loadData];
 }
+
+
 
 - (void)loadData{
     [HUD show:YES];
@@ -501,6 +506,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 
 /*
 #pragma mark - Navigation

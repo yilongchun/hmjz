@@ -1172,9 +1172,9 @@
 
 -(void)sendImageMessage:(UIImage *)imageMessage
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *student = [userDefaults objectForKey:@"student"];
-    NSString *flieid = [student objectForKey:@"flieid"];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSDictionary *student = [userDefaults objectForKey:@"student"];
+//    NSString *flieid = [student objectForKey:@"flieid"];
     
     
     

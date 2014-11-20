@@ -14,15 +14,16 @@
 #import "AFNetworking.h"
 #import "UIImageView+AFNetworking.h"
 #import "BjtzDetailViewController.h"
+#import "SRRefreshView.h"
 
-@interface BjtzViewController ()<MBProgressHUDDelegate>{
+@interface BjtzViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MBProgressHUD *HUD;
     MKNetworkEngine *engine;
     NSNumber *totalpage;
     NSNumber *page;
     NSNumber *rows;
 }
-
+@property (nonatomic, strong) SRRefreshView         *slimeView;
 
 @end
 
@@ -35,7 +36,7 @@
     // Do any additional setup after loading the view from its nib.
     
     //初始化tableview
-    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50);
+    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50-64);
     mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
 //    [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
 //    if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -48,7 +49,7 @@
     mytableview.dataSource = self;
     mytableview.delegate = self;
     [self.view addSubview:mytableview];
-    
+    [mytableview addSubview:self.slimeView];
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.labelText = @"加载中";
@@ -60,29 +61,47 @@
     
     self.dataSource = [[NSMutableArray alloc] init];
     
-    page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:10];
+    
     //初始化数据
     [self loadData];
 
 }
 
+#pragma mark - getter
+
+- (SRRefreshView *)slimeView
+{
+    if (!_slimeView) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+        _slimeView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return _slimeView;
+}
+
 //加载数据
 - (void)loadData{
     
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:10];
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
     NSDictionary *class = [userDefaults objectForKey:@"class"];
-    
     NSString *classid = [class objectForKey:@"classid"];
     NSString *userid = [userDefaults objectForKey:@"userid"];
-    
     [dic setValue:classid forKey:@"recordId"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:userid forKey:@"userid"];
-    
     MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
@@ -101,7 +120,7 @@
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
-                [self.dataSource addObjectsFromArray:arr];
+                self.dataSource = [NSMutableArray arrayWithArray:arr];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
@@ -127,7 +146,53 @@
     if ([page intValue] < [totalpage intValue]) {
         page = [NSNumber numberWithInt:[page intValue] +1];
     }
-    [self loadData];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *class = [userDefaults objectForKey:@"class"];
+    NSString *classid = [class objectForKey:@"classid"];
+    NSString *userid = [userDefaults objectForKey:@"userid"];
+    [dic setValue:classid forKey:@"recordId"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
+    [dic setValue:userid forKey:@"userid"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidclass.do" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        //        NSString *code = [resultDict objectForKey:@"code"];
+        if ([success boolValue]) {
+            [HUD hide:YES];
+            //            [self okMsk:@"加载成功"];
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                [self.dataSource addObjectsFromArray:arr];
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                [mytableview reloadData];
+            }
+        }else{
+            [HUD hide:YES];
+            [self alertMsg:msg];
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        [self alertMsg:[err localizedDescription]];
+    }];
+    [engine enqueueOperation:op];
 }
 
 //成功
@@ -250,6 +315,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - scrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - slimeRefresh delegate
+//刷新消息列表
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    [self loadData];
+    [_slimeView endRefresh];
 }
 
 /*

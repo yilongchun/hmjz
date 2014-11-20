@@ -25,6 +25,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "MBProgressHUD.h"
 #import "ApplyViewController.h"
+#import "MyTabbarController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -228,28 +229,34 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (IBAction)bwhdAction:(UIButton *)sender {
     
     //    初始化第一个视图控制器
-    BwhdViewController *vc1 = [[BwhdViewController alloc] init];
-    vc1.tabBarItem =[[UITabBarItem alloc] initWithTitle:@"班务活动" image:[UIImage imageNamed:@"ic_bwrz_002.png"] tag:0];
+//    BwhdViewController *vc1 = [[BwhdViewController alloc] init];
+//    vc1.tabBarItem =[[UITabBarItem alloc] initWithTitle:@"班务活动" image:[UIImage imageNamed:@"ic_bwrz_002.png"] tag:0];
+//    
+//    
+//    //    初始化第二个视图控制器
+//    BjtzViewController *vc2 = [[BjtzViewController alloc] init];
+//    vc2.tabBarItem =[[UITabBarItem alloc] initWithTitle:@"班级通知" image:[UIImage imageNamed:@"ic_bwrz_003.png"] tag:1];
+//
+//    //    把导航控制器加入到数组
+//    NSMutableArray *viewArr_ = [NSMutableArray arrayWithObjects:vc1,vc2, nil];
     
-    //    初始化第二个视图控制器
-    BjtzViewController *vc2 = [[BjtzViewController alloc] init];
-    vc2.tabBarItem =[[UITabBarItem alloc] initWithTitle:@"班级通知" image:[UIImage imageNamed:@"ic_bwrz_003.png"] tag:1];
-
-    //    把导航控制器加入到数组
-    NSMutableArray *viewArr_ = [NSMutableArray arrayWithObjects:vc1,vc2, nil];
+    
+    MyTabbarController *tabBarCtl = [[MyTabbarController alloc] init];
     
     //    把视图数组放到tabbarcontroller 里面
-    UITabBarController *tabBarCtl = [[UITabBarController alloc] init];
-    tabBarCtl.title = @"班务活动";
-    tabBarCtl.viewControllers = viewArr_;
-    
-    tabBarCtl.selectedIndex = 0;
-    [[tabBarCtl tabBar] setSelectedImageTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
+//    UITabBarController *tabBarCtl = [[UITabBarController alloc] init];
+//    [tabBarCtl.view setFrame:CGRectMake(0, 100, self.view.frame.size.width, self.view.frame.size.height)];
+//    tabBarCtl.title = @"班务活动";
+//    tabBarCtl.viewControllers = viewArr_;
+//    
+//    tabBarCtl.selectedIndex = 0;
+//    [[tabBarCtl tabBar] setSelectedImageTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     
     
     
     [self.navigationController pushViewController:tabBarCtl animated:YES];
-    [tabBarCtl.navigationController setNavigationBarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO];
+    
 }
 
 - (void)loadYezx{

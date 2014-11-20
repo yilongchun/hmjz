@@ -12,10 +12,10 @@
 #import "Utils.h"
 #import "MBProgressHUD.h"
 #import "GgxqViewController.h"
+#import "SRRefreshView.h"
 
 
-
-@interface GgtzViewController ()<MBProgressHUDDelegate>{
+@interface GgtzViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MBProgressHUD *HUD;
     MKNetworkEngine *engine;
     NSNumber *totalpage;
@@ -26,7 +26,7 @@
     NSString *userid;
 }
     
-
+@property (nonatomic, strong) SRRefreshView         *slimeView;
 
 @end
 
@@ -52,6 +52,8 @@
     mytableView.dataSource = self;
     mytableView.delegate = self;
     [self.view addSubview:mytableView];
+    
+    [mytableView addSubview:self.slimeView];
     
     //添加下拉刷新
 //    if (_refreshHeaderView == nil) {
@@ -80,22 +82,89 @@
     
     self.dataSource = [[NSMutableArray alloc] init];
     
-    page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:10];
+    
     //初始化数据
     [self loadData];
     
 }
 
+#pragma mark - getter
+
+- (SRRefreshView *)slimeView
+{
+    if (!_slimeView) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+        _slimeView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return _slimeView;
+}
+
 //加载数据
 - (void)loadData{
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:10];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:userid forKey:@"userid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
     [dic setValue:schoolid forKey:@"recordId"];
-    
+    MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        if ([success boolValue]) {
+            [HUD hide:YES];
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                self.dataSource = [NSMutableArray arrayWithArray:arr];
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                [self.mytableView reloadData];
+            }
+        }else{
+            [HUD hide:YES];
+            [self alertMsg:msg];
+            
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        [self alertMsg:@"连接失败"];
+    }];
+    [engine enqueueOperation:op];
+}
+
+- (void)loadMore{
+    if ([page intValue] < [totalpage intValue]) {
+        page = [NSNumber numberWithInt:[page intValue] +1];
+    }
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:userid forKey:@"userid"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
+    [dic setValue:schoolid forKey:@"recordId"];
     MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSString *result = [operation responseString];
@@ -119,7 +188,6 @@
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
                 [self.mytableView reloadData];
-                
             }
         }else{
             [HUD hide:YES];
@@ -132,13 +200,6 @@
         [self alertMsg:@"连接失败"];
     }];
     [engine enqueueOperation:op];
-}
-
-- (void)loadMore{
-    if ([page intValue] < [totalpage intValue]) {
-        page = [NSNumber numberWithInt:[page intValue] +1];
-    }
-    [self loadData];
 }
 
 //成功
@@ -250,74 +311,26 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-#pragma mark -
-#pragma mark Data Source Loading / Reloading Methods
+#pragma mark - scrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_slimeView scrollViewDidScroll];
+}
 
-//- (void)reloadTableViewDataSource{
-//    page = [NSNumber numberWithInt:1];
-//    [HUD show:YES];
-//    [self loadData];
-//    //  should be calling your tableviews data source model to reload
-//    //  put here just for demo
-//    _reloading = YES;
-//}
-//
-//- (void)doneLoadingTableViewData{
-//    //  model should call this when its done loading
-//    _reloading = NO;
-//    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:mytableView];
-//    
-//}
-//
-//#pragma mark -
-//#pragma mark UIScrollViewDelegate Methods
-//
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-//    
-//}
-//
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-//    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-//    
-//}
-//
-//
-//#pragma mark -
-//#pragma mark EGORefreshTableHeaderDelegate Methods
-//
-//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-//    
-//    [self reloadTableViewDataSource];
-//    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.5];
-//    
-//}
-//
-//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-//    return _reloading; // should return if data source model is reloading
-//    
-//}
-//
-//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-//    return [NSDate date]; // should return date data source was last changed
-//    
-//}
-//
-//#pragma mark -
-//#pragma mark Memory Management
-//
-//- (void)didReceiveMemoryWarning {
-//    [super didReceiveMemoryWarning];
-//}
-//
-//- (void)viewDidUnload {
-//    _refreshHeaderView=nil;
-//    [super viewDidUnload];
-//}
-//
-//- (void)dealloc {
-//    _refreshHeaderView = nil;
-//}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - slimeRefresh delegate
+//刷新消息列表
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    [self loadData];
+    [_slimeView endRefresh];
+}
+
+
 
 
 @end

@@ -132,7 +132,7 @@
         [_tableView registerClass:[ChatListCell class] forCellReuseIdentifier:@"chatListCell"];
     }
     
-    
+                                  
     return _tableView;
 }
 

@@ -444,6 +444,7 @@
 		E4F168AD1A14566F00E3DDA0 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F168AB1A14566F00E3DDA0 /* FriendCell.m */; };
 		E4F168AE1A14566F00E3DDA0 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F168AC1A14566F00E3DDA0 /* FriendCell.xib */; };
 		E4F1E1F31A10AECF00B7730F /* nopicture.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1E1F21A10AECF00B7730F /* nopicture.png */; };
+		E4F3A7011A1D9BBD00A60C4E /* MyTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F3A7001A1D9BBD00A60C4E /* MyTabbarController.m */; };
 		E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0371A08801D00ACE07A /* BbspViewController.m */; };
 		E4F7B03A1A08801D00ACE07A /* BbspViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F7B0381A08801D00ACE07A /* BbspViewController.xib */; };
 		E4F7B0431A08863700ACE07A /* SpTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0411A08863700ACE07A /* SpTableViewCell.m */; };
@@ -1110,6 +1111,8 @@
 		E4F168AB1A14566F00E3DDA0 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		E4F168AC1A14566F00E3DDA0 /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
 		E4F1E1F21A10AECF00B7730F /* nopicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nopicture.png; path = images/nopicture.png; sourceTree = "<group>"; };
+		E4F3A6FF1A1D9BBD00A60C4E /* MyTabbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTabbarController.h; path = view/MyTabbarController.h; sourceTree = "<group>"; };
+		E4F3A7001A1D9BBD00A60C4E /* MyTabbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTabbarController.m; path = view/MyTabbarController.m; sourceTree = "<group>"; };
 		E4F7B0361A08801D00ACE07A /* BbspViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BbspViewController.h; path = view/BbspViewController.h; sourceTree = "<group>"; };
 		E4F7B0371A08801D00ACE07A /* BbspViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BbspViewController.m; path = view/BbspViewController.m; sourceTree = "<group>"; };
 		E4F7B0381A08801D00ACE07A /* BbspViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BbspViewController.xib; path = view/BbspViewController.xib; sourceTree = "<group>"; };
@@ -1507,6 +1510,8 @@
 				E4C69A7B19FA34FB00B0EFEA /* GgxqViewController.h */,
 				E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */,
 				E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */,
+				E4F3A6FF1A1D9BBD00A60C4E /* MyTabbarController.h */,
+				E4F3A7001A1D9BBD00A60C4E /* MyTabbarController.m */,
 				E4C777C219F8E4DE00532B09 /* BwhdViewController.h */,
 				E4C777C319F8E4DE00532B09 /* BwhdViewController.m */,
 				E4C777C419F8E4DE00532B09 /* BwhdViewController.xib */,
@@ -3083,6 +3088,7 @@
 				E4C7C9C51A009AD3006A0284 /* UIWebView+AFNetworking.m in Sources */,
 				E4EFB8B01A12F24D007D8CB1 /* PSTGridLayoutSection.m in Sources */,
 				E4E700C01A035A0600FB4339 /* KcbViewController.m in Sources */,
+				E4F3A7011A1D9BBD00A60C4E /* MyTabbarController.m in Sources */,
 				E4D88C8819FF39410095AB3F /* ChooseChildrenViewController.m in Sources */,
 				E4C7C9C31A009AD3006A0284 /* UIProgressView+AFNetworking.m in Sources */,
 				E4C7C9BE1A009AD3006A0284 /* AFNetworkActivityIndicatorManager.m in Sources */,

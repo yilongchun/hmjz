@@ -26,6 +26,7 @@
 //        _addLabel.textColor = [UIColor whiteColor];
 //        _addLabel.font = [UIFont systemFontOfSize:14.0];
 //        [self.contentView addSubview:_addLabel];
+       
     }
     return self;
 }

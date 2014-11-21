@@ -7,20 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "EGORefreshTableHeaderView.h"
 
-@interface BwhdViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
-    
-//    EGORefreshTableHeaderView *_refreshHeaderView;
-//    BOOL _reloading;
-    
-}
+
+@interface BwhdViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 
 @property (nonatomic, strong) UITableView *mytableview;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 
-//- (void)reloadTableViewDataSource;
-//- (void)doneLoadingTableViewData;
 
 @end

@@ -229,7 +229,7 @@
     }
     
     [self initTextView];
-//    NSLog(@"公告id:%@",self.tnid);
+
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     //添加加载等待条
@@ -420,7 +420,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
         }
         NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-//        NSLog(@"%@",self.dataSource);
+
         NSString *title = [data objectForKey:@"tntitle"];
         NSString *date = [data objectForKey:@"tnmoddate"];
         NSString *content = [data objectForKey:@"tncontent"];

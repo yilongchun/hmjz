@@ -75,7 +75,6 @@
     }
     else{
         model.username = message.from;
-        NSLog(@"username:%@",message.from);
     }
     
     if (isSender) {

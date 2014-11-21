@@ -121,7 +121,6 @@
     }else{
         //退出登陆
 //        for (UIViewController *temp in self.navigationController.viewControllers) {
-//            NSLog(@"%@",temp);
 //            if ([temp isKindOfClass:[LoginViewController class]]) {
 //                [self.navigationController setNavigationBarHidden:YES];
 //                [self.navigationController popToViewController:temp animated:YES];

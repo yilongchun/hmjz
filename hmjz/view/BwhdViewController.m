@@ -53,15 +53,7 @@
     [self.view addSubview:mytableview];
     
     [mytableview addSubview:self.slimeView];
-    //添加下拉刷新
-//    if (_refreshHeaderView == nil) {
-//        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - self.mytableview.bounds.size.height, self.view.frame.size.width, self.mytableview.bounds.size.height)];
-//        view.delegate = self;
-//        [mytableview addSubview:view];
-//        _refreshHeaderView = view;
-//    }
-//    //  update the last update date
-//    [_refreshHeaderView refreshLastUpdatedDate];
+
 
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -319,73 +311,6 @@
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
-
-#pragma mark -
-#pragma mark Data Source Loading / Reloading Methods
-
-//- (void)reloadTableViewDataSource{
-//    page = [NSNumber numberWithInt:1];
-//    [HUD show:YES];
-//    [self loadData];
-//    //  should be calling your tableviews data source model to reload
-//    //  put here just for demo
-//    _reloading = YES;
-//}
-//
-//- (void)doneLoadingTableViewData{
-//    //  model should call this when its done loading
-//    _reloading = NO;
-//    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:mytableview];
-//    
-//}
-//
-//#pragma mark -
-//#pragma mark UIScrollViewDelegate Methods
-//
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-//    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-//    
-//}
-//
-//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-//    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
-//    
-//}
-//
-//
-//#pragma mark -
-//#pragma mark EGORefreshTableHeaderDelegate Methods
-//
-//- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{
-//    
-//    [self reloadTableViewDataSource];
-//    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.5];
-//    
-//}
-//
-//- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{
-//    return _reloading; // should return if data source model is reloading
-//    
-//}
-//
-//- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{
-//    return [NSDate date]; // should return date data source was last changed
-//    
-//}
-//
-//#pragma mark -
-//#pragma mark Memory Management
-//
-//
-//
-//- (void)viewDidUnload {
-//    _refreshHeaderView=nil;
-//}
-//
-//- (void)dealloc {
-//    _refreshHeaderView = nil;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

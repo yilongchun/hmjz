@@ -91,7 +91,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/app/Plogin.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -101,20 +101,16 @@
         
         NSNumber *success = [resultDict objectForKey:@"success"];
         NSString *msg = [resultDict objectForKey:@"msg"];
-//        NSString *code = [resultDict objectForKey:@"code"];
+
         if ([success boolValue]) {
-            //[HUD hide:YES];
-//            NSLog(@"%@",msg);
             NSDictionary *data = [resultDict objectForKey:@"data"];
-//            NSLog(@"%@", [data objectForKey:@"hxusercode"]);
-//            NSLog(@"%@", [data objectForKey:@"userid"]);
             NSString *userid = [data objectForKey:@"userid"];
             NSString *hxusercode = [data objectForKey:@"hxusercode"];
             NSString *hxpassword = [data objectForKey:@"hxpassword"];
             
             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
             [userDefaults setObject:userid forKey:@"userid"];
-//            NSLog(@"%@", [data objectForKey:@"hxpassword"]);
+
             [userDefaults setObject:self.username.text forKey:@"loginusername"];
             [userDefaults setObject:self.password.text forKey:@"loginpassword"];
             
@@ -126,7 +122,7 @@
              ^(NSDictionary *loginInfo, EMError *error) {
                  
                  if (loginInfo && !error) {
-                     NSLog(@"登陆成功");
+                     
 //                     [[NSNotificationCenter defaultCenter] postNotificationName:KNOTIFICATION_LOGINCHANGE object:@YES];
                      [_mainController setupUnreadMessageCount];
                      
@@ -413,7 +409,6 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-//    NSLog(@"%@",viewController);
     if ([viewController isKindOfClass:[LoginViewController class]]) {
         [self.navigationController setNavigationBarHidden:YES];
     }

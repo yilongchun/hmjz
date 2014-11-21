@@ -117,14 +117,12 @@
 //系统方法
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-//    NSLog(@"didReceiveRemoteNotification");
     //SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveRemoteNotification:userInfo];
 }
 //系统方法
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-//    NSLog(@"didReceiveLocalNotification");
     //SDK方法调用
     [[EaseMob sharedInstance] application:application didReceiveLocalNotification:notification];
 }

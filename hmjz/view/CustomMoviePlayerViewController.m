@@ -66,10 +66,6 @@
 
 - (void) moviePlayBackDidFinish:(NSNotification*)notification
 {
-    
-//    [loadingAni stopAnimating];
-//    [label removeFromSuperview];
-    NSLog(@"moviePlayBackDidFinish");
     //[[UIApplication sharedApplication] setStatusBarHidden:YES];
     //还原状态栏为默认状态
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];

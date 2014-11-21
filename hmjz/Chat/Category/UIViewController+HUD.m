@@ -36,7 +36,7 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
 
 - (void)showHint:(NSString *)hint {
     if ([hint isEqualToString:@"录音没有开始"]) {
-        NSLog(@"dd");
+
     }
     
     //显示提示信息

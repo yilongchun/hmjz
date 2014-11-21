@@ -174,7 +174,7 @@
             imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
 //            imagePicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:imagePicker.sourceType];
             [self presentViewController:imagePicker animated:YES completion:^{
-                                    NSLog(@"completion");
+                
             }];
             
         }
@@ -187,7 +187,7 @@
             imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
             imagePicker.mediaTypes =  [[NSArray alloc] initWithObjects:@"public.image", nil];
             [self presentViewController:imagePicker animated:YES completion:^{
-                NSLog(@"completion");
+                
             }];
         }
             break;
@@ -212,7 +212,7 @@
 //    }
     [picker dismissViewControllerAnimated:YES completion:^{
         [HUD show:YES];
-        NSLog(@"completion");
+        
     }];
 }
 //上传图片
@@ -224,11 +224,11 @@
     NSString *savedImagePath=[documentsDirectory stringByAppendingPathComponent:@"saveFore.jpg"];
     BOOL saveFlag = [fileData writeToFile:savedImagePath atomically:YES];
     
-    NSLog(@"%@",savedImagePath);
+    
     MKNetworkOperation *op =[engine operationWithURLString:[NSString stringWithFormat:@"http://%@/image/upload.do",[Utils getImageHostname]] params:nil httpMethod:@"POST"];
     [op addFile:savedImagePath forKey:@"allFile"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -275,7 +275,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Puser/updateimage.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -312,7 +312,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [picker dismissViewControllerAnimated:YES completion:^{
-        NSLog(@"completion");
+        
     }];
 
 }

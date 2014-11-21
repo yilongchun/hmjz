@@ -267,7 +267,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
         MKNetworkOperation *op = [engine operationWithPath:@"/MationType/findAllList.do" params:dic httpMethod:@"GET"];
         [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//            NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+
             NSString *result = [operation responseString];
             NSError *error;
             NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -275,8 +275,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                 NSLog(@"json parse failed \r\n");
             }
             NSNumber *success = [resultDict objectForKey:@"success"];
-//            NSString *msg = [resultDict objectForKey:@"msg"];
-            //        NSString *code = [resultDict objectForKey:@"code"];
             if ([success boolValue]) {
                 NSArray *data = [resultDict objectForKey:@"data"];
                 if (data != nil) {
@@ -654,10 +652,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         
         BOOL isAppActivity = [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive;
         if (!isAppActivity) {
-            NSLog(@"isAppActivity is false");
             [self showNotificationWithMessage:message];
         }else{
-            NSLog(@"isAppActivity is true");
         }
         
 #endif

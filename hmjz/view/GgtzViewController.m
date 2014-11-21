@@ -56,15 +56,7 @@
     
     [mytableView addSubview:self.slimeView];
     
-    //添加下拉刷新
-//    if (_refreshHeaderView == nil) {
-//        EGORefreshTableHeaderView *view = [[EGORefreshTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f - mytableView.bounds.size.height, [[UIScreen mainScreen] bounds].size.width, mytableView.bounds.size.height)];
-//        view.delegate = self;
-//        [mytableView addSubview:view];
-//        _refreshHeaderView = view;
-//    }
-//    //  update the last update date
-//    [_refreshHeaderView refreshLastUpdatedDate];
+
     
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];

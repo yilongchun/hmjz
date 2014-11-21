@@ -16,9 +16,9 @@
 #import "CustomMoviePlayerViewController.h"
 #import "TapImageView.h"
 #import "ImgScrollView.h"
+#import "SRRefreshView.h"
 
-
-@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UIScrollViewDelegate>{
+@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UIScrollViewDelegate,SRRefreshDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
     NSNumber *totalpage;
@@ -35,7 +35,7 @@
 }
 
 @property (strong, nonatomic)UIButton *videoPlayButton;
-
+@property (nonatomic, strong) SRRefreshView         *slimeView;
 @end
 
 @implementation MyViewControllerCellDetail
@@ -236,6 +236,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [self initTextView];
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
@@ -255,8 +259,9 @@
 //        [self.mytableview setLayoutMargins:UIEdgeInsetsZero];
 //    }
     
-    page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:10];
+    [self.mytableview addSubview:self.slimeView];
+    
+    
     
     scrollPanel = [[UIView alloc] initWithFrame:self.view.bounds];
     scrollPanel.backgroundColor = [UIColor clearColor];
@@ -278,6 +283,26 @@
     
     [self setTitle:self.title];
     [self loadData];
+}
+
+#pragma mark - getter
+
+- (SRRefreshView *)slimeView
+{
+    if (!_slimeView) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+        _slimeView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return _slimeView;
 }
 
 //加载内容
@@ -334,6 +359,9 @@
 //加载评论
 - (void)loadDataPingLun{
     
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:10];
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.detailid forKey:@"recordId"];
     [dic setValue:page forKey:@"page"];
@@ -380,7 +408,46 @@
     if ([page intValue]< [totalpage intValue]) {
         page = [NSNumber numberWithInt:[page intValue] +1];
     }
-    [self loadDataPingLun];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:self.detailid forKey:@"recordId"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
+    [dic setValue:activityType forKey:@"type"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Comment/findPageList.do" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        NSString *msg = [resultDict objectForKey:@"msg"];
+        if ([success boolValue]) {
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                [self.dataSource addObjectsFromArray:arr];
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                [self.mytableview reloadData];
+            }
+            [HUD hide:YES];
+        }else{
+            [HUD hide:YES];
+            [self alertMsg:msg];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        [self alertMsg:[err localizedDescription]];
+    }];
+    [engine enqueueOperation:op];
 }
 
 #pragma mark - Table view data source
@@ -725,7 +792,7 @@
 }
 
 #pragma mark -
-#pragma mark - scroll delegate
+#pragma mark - scrollView delegate
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     CGFloat pageWidth = scrollView.frame.size.width;
@@ -735,6 +802,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_slimeView scrollViewDidScroll];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - slimeRefresh delegate
+//刷新消息列表
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    
+    [self loadData];
+    [_slimeView endRefresh];
 }
 
 /*

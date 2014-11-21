@@ -19,6 +19,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     // Do any additional setup after loading the view from its nib.
     [self.navigationController setNavigationBarHidden:NO];
     

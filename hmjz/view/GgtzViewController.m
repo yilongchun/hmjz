@@ -37,6 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
 
     //初始化tableview
     CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64);

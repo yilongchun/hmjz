@@ -13,9 +13,9 @@
 #import "MBProgressHUD.h"
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
+#import "SRRefreshView.h"
 
-
-@interface GgxqViewController ()<MBProgressHUDDelegate>{
+@interface GgxqViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
     NSNumber *totalpage;
@@ -23,7 +23,7 @@
     NSNumber *rows;
 }
 
-
+@property (nonatomic, strong) SRRefreshView         *slimeView;
 @end
 
 @implementation GgxqViewController
@@ -224,6 +224,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+    
     [self initTextView];
 //    NSLog(@"公告id:%@",self.tnid);
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
@@ -234,17 +238,34 @@
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
-    page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:10];
+    
     
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-   
+   [self.mytableview addSubview:self.slimeView];
     
     [self loadData];
 }
 
+#pragma mark - getter
 
+- (SRRefreshView *)slimeView
+{
+    if (!_slimeView) {
+        _slimeView = [[SRRefreshView alloc] init];
+        _slimeView.delegate = self;
+        _slimeView.upInset = 0;
+        _slimeView.slimeMissWhenGoingBack = YES;
+        _slimeView.slime.bodyColor = [UIColor grayColor];
+        _slimeView.slime.skinColor = [UIColor grayColor];
+        _slimeView.slime.lineWith = 1;
+        _slimeView.slime.shadowBlur = 4;
+        _slimeView.slime.shadowColor = [UIColor grayColor];
+        _slimeView.backgroundColor = [UIColor whiteColor];
+    }
+    
+    return _slimeView;
+}
 
 - (void)loadData{
     [HUD show:YES];
@@ -285,6 +306,9 @@
 
 //加载评论
 - (void)loadDataPingLun{
+    
+    page = [NSNumber numberWithInt:1];
+    rows = [NSNumber numberWithInt:10];
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.tnid forKey:@"recordId"];
@@ -330,7 +354,44 @@
     if ([page intValue]< [totalpage intValue]) {
         page = [NSNumber numberWithInt:[page intValue] +1];
     }
-    [self loadDataPingLun];
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:self.tnid forKey:@"recordId"];
+    [dic setValue:page forKey:@"page"];
+    [dic setValue:rows forKey:@"rows"];
+    [dic setValue:[NSNumber numberWithInt:4] forKey:@"type"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Comment/findPageList.do" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (resultDict == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        NSNumber *success = [resultDict objectForKey:@"success"];
+        if ([success boolValue]) {
+            NSDictionary *data = [resultDict objectForKey:@"data"];
+            if (data != nil) {
+                NSArray *arr = [data objectForKey:@"rows"];
+                [self.dataSource addObjectsFromArray:arr];
+                NSNumber *total = [data objectForKey:@"total"];
+                if ([total intValue] % [rows intValue] == 0) {
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                }else{
+                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                }
+                [self.mytableview reloadData];
+            }
+            [HUD hide:YES];
+        }else{
+            [HUD hide:YES];
+        }
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [HUD hide:YES];
+        
+    }];
+    [engine enqueueOperation:op];
 }
 
 
@@ -507,7 +568,24 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_slimeView scrollViewDidScroll];
+}
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_slimeView scrollViewDidEndDraging];
+}
+
+#pragma mark - slimeRefresh delegate
+//刷新消息列表
+- (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
+{
+    
+    [self loadData];
+    [_slimeView endRefresh];
+}
 /*
 #pragma mark - Navigation
 

@@ -47,6 +47,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    
     self.unreadlabel.layer.cornerRadius = self.unreadlabel.frame.size.height/2;
     self.unreadlabel.layer.masksToBounds = YES;
     
@@ -66,8 +68,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     //设置导航栏
     self.navigationController.delegate = self;
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];
     
     

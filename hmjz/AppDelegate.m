@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "ApplyViewController.h"
+#import "Utils.h"
 
 @interface AppDelegate ()
 
@@ -65,9 +66,22 @@
     
 //    [self loginStateChange:nil];
     
-    UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
-    [vc setNavigationBarHidden:YES];
-    self.window.rootViewController = vc;
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    NSString *loginusername = [userDefaults objectForKey:@"loginusername"];
+//    NSString *loginpassword = [userDefaults objectForKey:@"loginpassword"];
+//    
+//    
+//    if (![Utils isBlankString:loginusername] && ![Utils isBlankString:loginpassword]) {
+//        UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:[[MainViewController alloc] init]];
+//        [vc setNavigationBarHidden:YES];
+//        self.window.rootViewController = vc;
+//    }else{
+        UINavigationController *vc = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
+        [vc setNavigationBarHidden:YES];
+        self.window.rootViewController = vc;
+//    }
+    
+    
 
     [self.window makeKeyAndVisible];
     return YES;

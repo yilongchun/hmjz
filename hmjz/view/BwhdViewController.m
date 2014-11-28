@@ -106,10 +106,10 @@
     [dic setValue:classid forKey:@"classId"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    [dic setValue:@"t_activity_title" forKey:@"type"];
-    MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findPageList.do" params:dic httpMethod:@"GET"];
+//    [dic setValue:@"t_activity_title" forKey:@"type"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/pactivity/classfindPageList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
@@ -157,8 +157,8 @@
     [dic setValue:classid forKey:@"classId"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    [dic setValue:@"t_activity_title" forKey:@"type"];
-    MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findPageList.do" params:dic httpMethod:@"GET"];
+//    [dic setValue:@"t_activity_title" forKey:@"type"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/pactivity/classfindPageList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

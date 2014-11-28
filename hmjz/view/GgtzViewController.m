@@ -40,7 +40,7 @@
     
 
     //初始化tableview
-    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64);
+    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-50);
     mytableView = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
     mytableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [mytableView setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
@@ -115,6 +115,7 @@
     MKNetworkOperation *op = [engine operationWithPath:@"/Pnotice/findbyidList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSString *result = [operation responseString];
+        NSLog(@"operation responseString:%@",result);
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
         if (resultDict == nil) {
@@ -253,6 +254,7 @@
         NSString *tncontent = [info objectForKey:@"tncontent"];
         NSNumber *noticecount = [info objectForKey:@"noticecount"];
         NSString *tncreatedate = [info objectForKey:@"tncreatedate"];
+        NSString *source = [info objectForKey:@"noticename"];
         cell.gtitle.text = tntitle;
         cell.gdispcription.text = tncontent;
         cell.gdispcription.numberOfLines = 2;// 不可少Label属性之一
@@ -260,6 +262,7 @@
         //[cell.gdispcription sizeToFit];
         cell.gpinglun.text = [NSString stringWithFormat:@"评论(%@)",noticecount];
         cell.gdate.text = tncreatedate;
+        cell.gsource.text = [NSString stringWithFormat:@"来自:%@",source];
         [cell.imageview setImage:[UIImage imageNamed:@"nopicture.png"]];
         return cell;
     }

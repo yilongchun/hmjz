@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view from its nib.
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
 }
 
 #pragma mark - UITableViewDatasource Methods
@@ -53,6 +53,7 @@
         [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
         
     }
+    cell.backgroundColor = [UIColor clearColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
     

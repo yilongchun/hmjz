@@ -28,7 +28,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"选择班级";
     [self.navigationController setNavigationBarHidden:NO];
-    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];

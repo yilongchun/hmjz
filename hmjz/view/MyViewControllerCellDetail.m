@@ -313,7 +313,7 @@
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.detailid forKey:@"activityId"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/classActivity/findbyid.do" params:dic httpMethod:@"GET"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/pactivity/findbyid.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "MKNetworkKit.h"
 #import "Utils.h"
-#import "YsdtViewController.h"
+//#import "YsdtViewController.h"
 #import "BwhdViewController.h"
 #import "GgtzViewController.h"
 #import "ShezhiViewController.h"
@@ -26,6 +26,7 @@
 #import "MBProgressHUD.h"
 #import "ApplyViewController.h"
 #import "MyTabbarController.h"
+#import "BbxxTarbarViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -71,7 +72,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];
-    
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
     
         
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -223,9 +224,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //园所动态
 - (IBAction)ysdtAction:(UIButton *)sender {
     
+    BbxxTarbarViewController *vc = [[BbxxTarbarViewController alloc] init];
     
-    YsdtViewController *ysdt = [[YsdtViewController alloc] init];
-    [self.navigationController pushViewController:ysdt animated:YES];
+//    YsdtViewController *ysdt = [[YsdtViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+    [self.navigationController setNavigationBarHidden:NO];
 }
 //班务活动
 - (IBAction)bwhdAction:(UIButton *)sender {
@@ -440,7 +443,30 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         NSDictionary *info = [data objectAtIndex:0];
         NSString *date = [info objectForKey:@"occurDate"];
         if (date.length > 5) {
-            vc.title = [[info objectForKey:@"occurDate"] substringFromIndex:5];
+            switch (i) {
+                case 0:
+                    vc.title = @"周一";
+                    break;
+                case 1:
+                    vc.title = @"周二";
+                    break;
+                case 2:
+                    vc.title = @"周三";
+                    break;
+                case 3:
+                    vc.title = @"周四";
+                    break;
+                case 4:
+                    vc.title = @"周五";
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            
+            
+//            vc.title = [[info objectForKey:@"occurDate"] substringFromIndex:5];
         }
         [vcs addObject:vc];
     }
@@ -463,6 +489,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     if (vcs.count > 0) {
         JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+        
+        //设置背景图片
+        UIImage *image = [UIImage imageNamed:@"ic_sp_001.png"];
+        slideSegmentController.view.layer.contents = (id)image.CGImage;
+
         
         slideSegmentController.title = @"食谱";
         slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);

@@ -80,7 +80,7 @@ NSString * const segmentBarItemID = @"JYSegmentBarItem";
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-
+    
   [self setupSubviews];
   [self reset];
 }

@@ -31,6 +31,7 @@
     self.title = @"切换宝宝";
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController setNavigationBarHidden:NO];
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
     
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];

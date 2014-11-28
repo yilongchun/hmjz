@@ -33,10 +33,10 @@
     // Do any additional setup after loading the view from its nib.
     
     page = [NSNumber numberWithInt:1];
-    rows = [NSNumber numberWithInt:4];
+    rows = [NSNumber numberWithInt:10];
     
     //初始化tableview
-    CGRect cg = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    CGRect cg = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-64-44);
     self.mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
 //    [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
@@ -82,7 +82,7 @@
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Mation/findPageList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
-//        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
         NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];

@@ -29,30 +29,21 @@
     
     //    初始化第一个视图控制器
     YqjsViewController *vc1 = [[YqjsViewController alloc] init];
-    UITabBarItem *item1 = [[UITabBarItem alloc] init];
-    [item1 setFinishedSelectedImage:[UIImage imageNamed:@"xxjs_high.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"xxjs.png"]];
-    item1.title = @"学校介绍";
+    
+    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"学校介绍" image:[[UIImage imageNamed:@"xxjs.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxjs_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [item1 setTag:0];
     vc1.tabBarItem = item1;
-    
-
     
     //    初始化第二个视图控制器
     GgtzViewController *vc2 = [[GgtzViewController alloc] init];
     
-    UITabBarItem *item2 = [[UITabBarItem alloc] init];
-    [item2 setFinishedSelectedImage:[UIImage imageNamed:@"xxgg_high.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"xxgg.png"]];
-    item2.title = @"学校公告";
+    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"学校公告" image:[[UIImage imageNamed:@"xxgg.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxgg_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [item2 setTag:1];
     vc2.tabBarItem = item2;
     
-
-
     //    初始化第三个视图控制器
     XxhdViewController *vc3 = [[XxhdViewController alloc] init];
-    UITabBarItem *item3 = [[UITabBarItem alloc] init];
-    [item3 setFinishedSelectedImage:[UIImage imageNamed:@"xxhd_high.png"] withFinishedUnselectedImage:[UIImage imageNamed:@"xxhd.png"]];
-    item3.title = @"学校活动";
+    UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"学校活动" image:[[UIImage imageNamed:@"xxhd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxhd_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
     [item3 setTag:2];
     vc3.tabBarItem = item3;
     
@@ -61,7 +52,6 @@
     
     self.title = @"学校介绍";
     self.viewControllers = viewArr_;
-    
     self.selectedIndex = 0;
     [[self tabBar] setSelectedImageTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     

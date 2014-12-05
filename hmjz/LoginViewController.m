@@ -87,9 +87,14 @@
     HUD.labelText = @"正在加载中";
     [HUD show:YES];
     
+    NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.username.text forKey:@"userId"];
     [dic setValue:self.password.text forKey:@"password"];
+    [dic setValue:@"2" forKey:@"clientType"];
+    [dic setValue:app_Version forKey:@"clientVersion"];
+
     
     MKNetworkOperation *op = [engine operationWithPath:@"/app/Plogin.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {

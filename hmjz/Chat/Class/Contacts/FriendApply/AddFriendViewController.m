@@ -116,7 +116,7 @@
 //    {
 //        [self setEdgesForExtendedLayout:UIRectEdgeNone];
 //    }
-    self.title = @"选择家长";
+    self.title = @"小纸条";
     self.view.backgroundColor = [UIColor whiteColor];
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {

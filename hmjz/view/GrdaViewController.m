@@ -54,9 +54,9 @@
     age = [student objectForKey:@"age"];
     NSNumber *sexnum = [student objectForKey:@"studentsex"];
     if ([sexnum intValue]== 0) {
-        sex = @"男";
-    }else if ([sexnum intValue]== 1){
         sex = @"女";
+    }else if ([sexnum intValue]== 1){
+        sex = @"男";
     }
     
     NSDictionary *class= [userDefaults objectForKey:@"class"];

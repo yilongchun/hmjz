@@ -132,11 +132,13 @@
 //        [self.navigationController popToRootViewControllerAnimated:YES];
         
         [self logoutAction];
+        [self.navigationController setNavigationBarHidden:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
         
-        LoginViewController *loginCtrl = [[LoginViewController alloc] init];
-        UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:loginCtrl];
-        [navCtrl setNavigationBarHidden:YES];
-        self.view.window.rootViewController = navCtrl;
+//        LoginViewController *loginCtrl = [[LoginViewController alloc] init];
+//        UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:loginCtrl];
+//        [navCtrl setNavigationBarHidden:YES];
+//        self.view.window.rootViewController = navCtrl;
     }
 }
 

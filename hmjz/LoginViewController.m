@@ -71,6 +71,14 @@
     self.password.text = loginpassword;
     
 }
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    if ([self.logintype isEqualToString:@"login"] && ![Utils isBlankString:self.username.text] && ![Utils isBlankString:self.password.text]) {
+        [self loginTag:nil];
+    }
+}
+
 //登陆
 -(void)loginTag:(UITapGestureRecognizer *) rapGr{
     
@@ -84,7 +92,7 @@
     
     
     [self viewTapped:rapGr];
-    HUD.labelText = @"正在加载中";
+    HUD.labelText = @"登陆中";
     [HUD show:YES];
     
     NSString *app_Version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];

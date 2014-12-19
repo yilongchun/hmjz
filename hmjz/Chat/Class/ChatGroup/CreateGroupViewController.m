@@ -1,19 +1,20 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
 #import "CreateGroupViewController.h"
 
 #import "ContactSelectionViewController.h"
 #import "EMTextView.h"
+#import "Friend.h"
 
 @interface CreateGroupViewController ()<UITextFieldDelegate, UITextViewDelegate, EMChooseViewDelegate>
 
@@ -59,21 +60,21 @@
     UIButton *addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     addButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
     [addButton setTitle:@"添加成员" forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateNormal];
-    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    [addButton setTitleColor:[UIColor colorWithRed:32 / 255.0 green:134 / 255.0 blue:158 / 255.0 alpha:1.0] forState:UIControlStateHighlighted];
+    [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addContacts:) forControlEvents:UIControlEventTouchUpInside];
     _rightItem = [[UIBarButtonItem alloc] initWithCustomView:addButton];
     [self.navigationItem setRightBarButtonItem:_rightItem];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backItem];
+    //    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    //    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    //    [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    //    [self.navigationItem setLeftBarButtonItem:backItem];
     
     [self.view addSubview:self.textField];
     [self.view addSubview:self.textView];
-    [self.view addSubview:self.switchView];
+    //    [self.view addSubview:self.switchView];
 }
 
 - (void)didReceiveMemoryWarning
@@ -197,8 +198,11 @@
     [self showHudInView:self.view hint:@"创建群组..."];
     
     NSMutableArray *source = [NSMutableArray array];
-    for (EMBuddy *buddy in selectedSources) {
-        [source addObject:buddy.username];
+    //    for (EMBuddy *buddy in selectedSources) {
+    //        [source addObject:buddy.username];
+    //    }
+    for (Friend *f in selectedSources) {
+        [source addObject:f.usercode];
     }
     
     EMGroupStyleSetting *setting = [[EMGroupStyleSetting alloc] init];
@@ -221,7 +225,7 @@
         }
     }
     
-//    setting.groupMaxUsersCount = 4;
+    //    setting.groupMaxUsersCount = 4;
     __weak CreateGroupViewController *weakSelf = self;
     NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
     NSString *username = [loginInfo objectForKey:kSDKUsername];

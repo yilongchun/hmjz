@@ -449,6 +449,7 @@
 		E4EFBA491A133487007D8CB1 /* default4.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EFBA481A133487007D8CB1 /* default4.png */; };
 		E4F168AD1A14566F00E3DDA0 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F168AB1A14566F00E3DDA0 /* FriendCell.m */; };
 		E4F168AE1A14566F00E3DDA0 /* FriendCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4F168AC1A14566F00E3DDA0 /* FriendCell.xib */; };
+		E4F19D5B1A448697001781DE /* Friend.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F19D5A1A448697001781DE /* Friend.m */; };
 		E4F1E1F31A10AECF00B7730F /* nopicture.png in Resources */ = {isa = PBXBuildFile; fileRef = E4F1E1F21A10AECF00B7730F /* nopicture.png */; };
 		E4F3A7011A1D9BBD00A60C4E /* MyTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F3A7001A1D9BBD00A60C4E /* MyTabbarController.m */; };
 		E4F7B0391A08801D00ACE07A /* BbspViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4F7B0371A08801D00ACE07A /* BbspViewController.m */; };
@@ -1124,6 +1125,8 @@
 		E4F168AA1A14566F00E3DDA0 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
 		E4F168AB1A14566F00E3DDA0 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		E4F168AC1A14566F00E3DDA0 /* FriendCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FriendCell.xib; sourceTree = "<group>"; };
+		E4F19D591A448697001781DE /* Friend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Friend.h; sourceTree = "<group>"; };
+		E4F19D5A1A448697001781DE /* Friend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Friend.m; sourceTree = "<group>"; };
 		E4F1E1F21A10AECF00B7730F /* nopicture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nopicture.png; path = images/nopicture.png; sourceTree = "<group>"; };
 		E4F3A6FF1A1D9BBD00A60C4E /* MyTabbarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyTabbarController.h; path = view/MyTabbarController.h; sourceTree = "<group>"; };
 		E4F3A7001A1D9BBD00A60C4E /* MyTabbarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyTabbarController.m; path = view/MyTabbarController.m; sourceTree = "<group>"; };
@@ -2104,6 +2107,8 @@
 				E4EFB81D1A12F24D007D8CB1 /* PublicGroupDetailViewController.m */,
 				E4EFB81E1A12F24D007D8CB1 /* PublicGroupListViewController.h */,
 				E4EFB81F1A12F24D007D8CB1 /* PublicGroupListViewController.m */,
+				E4F19D591A448697001781DE /* Friend.h */,
+				E4F19D5A1A448697001781DE /* Friend.m */,
 			);
 			path = ChatGroup;
 			sourceTree = "<group>";
@@ -3225,6 +3230,7 @@
 				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,
 				E4C69A5F19F9DCCD00B0EFEA /* YqjsViewController.m in Sources */,
 				E4EFB9061A12F24D007D8CB1 /* EMChatLocationBubbleView.m in Sources */,
+				E4F19D5B1A448697001781DE /* Friend.m in Sources */,
 				E4EFB9531A12F24E007D8CB1 /* XHMessageTextView.m in Sources */,
 				E4EFB92A1A12F24D007D8CB1 /* NSAttributeDescription+MagicalDataImport.m in Sources */,
 				E4C7C9A51A009909006A0284 /* AFHTTPSessionManager.m in Sources */,

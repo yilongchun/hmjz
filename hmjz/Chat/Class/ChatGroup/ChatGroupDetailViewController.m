@@ -1,19 +1,20 @@
 /************************************************************
-  *  * EaseMob CONFIDENTIAL 
-  * __________________ 
-  * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved. 
-  *  
-  * NOTICE: All information contained herein is, and remains 
-  * the property of EaseMob Technologies.
-  * Dissemination of this information or reproduction of this material 
-  * is strictly forbidden unless prior written permission is obtained
-  * from EaseMob Technologies.
-  */
+ *  * EaseMob CONFIDENTIAL
+ * __________________
+ * Copyright (C) 2013-2014 EaseMob Technologies. All rights reserved.
+ *
+ * NOTICE: All information contained herein is, and remains
+ * the property of EaseMob Technologies.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from EaseMob Technologies.
+ */
 
 #import "ChatGroupDetailViewController.h"
 #import "ContactSelectionViewController.h"
 #import "GroupSettingViewController.h"
 #import "EMGroup.h"
+#import "Friend.h"
 
 #pragma mark - ChatGroupContactView
 
@@ -136,12 +137,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.title = @"群设置";
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
-    [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [self.navigationItem setLeftBarButtonItem:backItem];
+    //    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    //    [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
+    //    [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
+    //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    //    [self.navigationItem setLeftBarButtonItem:backItem];
     
     self.tableView.tableFooterView = self.footerView;
     
@@ -149,12 +151,12 @@
     tap.cancelsTouchesInView = NO;
     [self.view addGestureRecognizer:tap];
     
-//    [[EaseMob sharedInstance].chatManager asyncChangeGroupSubject:@"xieyajie test345678" forGroup:@"1409903855656" completion:^(EMGroup *group, EMError *error) {
-//        NSLog(@"%@", group.groupSubject);
-//        if (!error) {
-//            [self fetchGroupInfo];
-//        }
-//    } onQueue:nil];
+    //    [[EaseMob sharedInstance].chatManager asyncChangeGroupSubject:@"xieyajie test345678" forGroup:@"1409903855656" completion:^(EMGroup *group, EMError *error) {
+    //        NSLog(@"%@", group.groupSubject);
+    //        if (!error) {
+    //            [self fetchGroupInfo];
+    //        }
+    //    } onQueue:nil];
     
     [self fetchGroupInfo];
 }
@@ -325,8 +327,11 @@
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSMutableArray *source = [NSMutableArray array];
-        for (EMBuddy *buddy in selectedSources) {
-            [source addObject:buddy.username];
+        //        for (EMBuddy *buddy in selectedSources) {
+        //            [source addObject:buddy.username];
+        //        }
+        for (Friend *f in selectedSources) {
+            [source addObject:f.usercode];
         }
         
         NSDictionary *loginInfo = [[[EaseMob sharedInstance] chatManager] loginInfo];
@@ -352,32 +357,32 @@
                 weakSelf.chatGroup = group;
                 [weakSelf reloadDataSource];
                 
-//                NSString *tmp = [group.members objectAtIndex:0];
-//                NSString *tmp = @"zxcvbn";
-//                [[EaseMob sharedInstance].chatManager asyncBlockOccupants:@[tmp] fromGroup:group.groupId completion:^(EMGroup *group, EMError *error){
-//                    if (!error) {
-//                        //
-//                    }
-//                    
-//                } onQueue:nil];
+                //                NSString *tmp = [group.members objectAtIndex:0];
+                //                NSString *tmp = @"zxcvbn";
+                //                [[EaseMob sharedInstance].chatManager asyncBlockOccupants:@[tmp] fromGroup:group.groupId completion:^(EMGroup *group, EMError *error){
+                //                    if (!error) {
+                //                        //
+                //                    }
+                //
+                //                } onQueue:nil];
                 
-//                [[EaseMob sharedInstance].chatManager asyncUnblockOccupants:@[tmp] forGroup:group.groupId completion:^(EMGroup *group, EMError *error) {
-//                    if (!error) {
-//                        //
-//                    }
-//                } onQueue:nil];
+                //                [[EaseMob sharedInstance].chatManager asyncUnblockOccupants:@[tmp] forGroup:group.groupId completion:^(EMGroup *group, EMError *error) {
+                //                    if (!error) {
+                //                        //
+                //                    }
+                //                } onQueue:nil];
                 
-//                [[EaseMob sharedInstance].chatManager asyncFetchGroupBansList:group.groupId completion:^(NSArray *groupBans, EMError *error) {
-//                    if (!error) {
-//                        //
-//                    }
-//                } onQueue:nil];
+                //                [[EaseMob sharedInstance].chatManager asyncFetchGroupBansList:group.groupId completion:^(NSArray *groupBans, EMError *error) {
+                //                    if (!error) {
+                //                        //
+                //                    }
+                //                } onQueue:nil];
                 
-//                [[EaseMob sharedInstance].chatManager asyncLeaveGroup:@"1413452243774" completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
-//                    if (!error) {
-//                        //
-//                    }
-//                } onQueue:nil];
+                //                [[EaseMob sharedInstance].chatManager asyncLeaveGroup:@"1413452243774" completion:^(EMGroup *group, EMGroupLeaveReason reason, EMError *error) {
+                //                    if (!error) {
+                //                        //
+                //                    }
+                //                } onQueue:nil];
             }
             else{
                 [weakSelf hideHud];
@@ -455,8 +460,22 @@
                 NSString *username = [self.dataSource objectAtIndex:index];
                 ChatGroupContactView *contactView = [[ChatGroupContactView alloc] initWithFrame:CGRectMake(j * kContactSize, i * kContactSize, kContactSize, kContactSize)];
                 contactView.index = i * kColOfRow + j;
-                contactView.image = [UIImage imageNamed:@"chatListCellHead.png"];
-                contactView.remark = username;
+                
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                NSDictionary *data = [userDefaults objectForKey:username];
+                
+                NSString *realname = [data objectForKey:@"parentname"];
+                NSString *userimage = [data objectForKey:@"fileid"];
+                
+                if (userimage.length > 0) {
+                    contactView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:userimage]]];
+                }else{
+                    contactView.image = [UIImage imageNamed:@"chatListCellHead.png"];
+                }
+                contactView.remark = realname;
+                
+                
+                //                contactView.remark = username;
                 if (![username isEqualToString:loginUsername]) {
                     contactView.editing = isEditing;
                 }
@@ -585,18 +604,18 @@
         }
     } onQueue:nil];
     
-//    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
+    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
 }
 
 //设置群组
 - (void)configureAction {
-// todo
+    // todo
     [[[EaseMob sharedInstance] chatManager] asyncIgnoreGroupPushNotification:_chatGroup.groupId
                                                                     isIgnore:_chatGroup.isPushNotificationEnabled];
-
+    
     return;
-//    UIViewController *viewController = [[UIViewController alloc] init];
-//    [self.navigationController pushViewController:viewController animated:YES];
+    //    UIViewController *viewController = [[UIViewController alloc] init];
+    //    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 //退出群组
@@ -614,7 +633,7 @@
         }
     } onQueue:nil];
     
-//    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
+    //    [[EaseMob sharedInstance].chatManager asyncLeaveGroup:_chatGroup.groupId];
 }
 
 //- (void)group:(EMGroup *)group didLeave:(EMGroupLeaveReason)reason error:(EMError *)error {
@@ -630,8 +649,10 @@
 //}
 
 - (void)didIgnoreGroupPushNotification:(NSArray *)ignoredGroupList error:(EMError *)error {
-// todo
+    // todo
     NSLog(@"ignored group list:%@.", ignoredGroupList);
 }
+
+
 
 @end

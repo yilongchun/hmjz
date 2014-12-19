@@ -295,43 +295,6 @@
     return ret;
 }
 
-
-- (NSDictionary *)getRealName:(NSString *)chatter{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSArray *friendarr = [userDefaults objectForKey:@"friendarr"];
-    
-    NSString *name = chatter;
-    NSString *fileid = nil;
-    NSMutableDictionary *resultDic = [[NSMutableDictionary alloc] init];
-    BOOL flag = false;
-    if (friendarr != nil) {
-        for (int i = 0 ; i < friendarr.count; i++) {
-            NSDictionary *friend = [friendarr objectAtIndex:i];
-            NSString *hxusercode = [friend objectForKey:@"hxusercode"];
-            NSString *parentname = [friend objectForKey:@"parentname"];
-            NSString *tempfileid = [friend objectForKey:@"fileid"];
-            if ([chatter isEqualToString:hxusercode]) {
-                name = parentname;
-                fileid = tempfileid;
-                [resultDic setObject:hxusercode forKey:@"hxusercode"];
-                [resultDic setObject:parentname forKey:@"parentname"];
-                [resultDic setObject:tempfileid forKey:@"fileid"];
-                flag = true;
-                break;
-            }
-        }
-    }
-    
-    if (!flag) {
-        [resultDic setObject:chatter forKey:@"hxusercode"];
-        [resultDic setObject:chatter forKey:@"parentname"];
-        [resultDic setObject:@"" forKey:@"fileid"];
-    }
-    
-    return resultDic;
-    
-}
-
 #pragma mark - TableViewDelegate & TableViewDatasource
 
 -(UITableViewCell *)tableView:(UITableView *)tableView
@@ -345,10 +308,13 @@
     }
     EMConversation *conversation = [self.dataSource objectAtIndex:indexPath.row];
     
-    NSDictionary *userinfo = [self getRealName:conversation.chatter];
-    
-    
-    cell.name = [userinfo objectForKey:@"parentname"];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *userinfo = [userDefaults objectForKey:conversation.chatter];
+    if (userinfo != nil) {
+        cell.name = [userinfo objectForKey:@"parentname"];
+    }else{
+        cell.name = conversation.chatter;
+    }
     
     if (!conversation.isGroup) {
 //        if (fileid == nil) {
@@ -411,10 +377,16 @@
     chatController = [[ChatViewController alloc] initWithChatter:chatter isGroup:conversation.isGroup];
     
     if (conversation.isGroup) {
-        chatController.title = conversation.chatter;
+        chatController.title = title;
     }else{
-        NSDictionary *userinfo = [self getRealName:conversation.chatter];
-        chatController.title = [userinfo objectForKey:@"parentname"];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSDictionary *userinfo = [userDefaults objectForKey:conversation.chatter];
+        if (userinfo != nil) {
+            chatController.title = [userinfo objectForKey:@"parentname"];
+        }else{
+            chatController.title = conversation.chatter;
+        }
+        
     }
     
     [conversation markMessagesAsRead:YES];

@@ -379,6 +379,14 @@
                 cell.backgroundColor = [UIColor clearColor];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
+            
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSDictionary *data = [userDefaults objectForKey:model.username];
+            if (data != nil) {
+                model.username = [data objectForKey:@"parentname"];
+                model.headImageURL = [data objectForKey:@"fileid"];
+            }
+            
             cell.messageModel = model;
             
             return cell;

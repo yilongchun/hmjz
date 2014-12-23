@@ -11,5 +11,6 @@
 @interface GrdaViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *myimageview;
 @property (weak, nonatomic) IBOutlet UITableView *mytableview;
+@property (weak, nonatomic) IBOutlet UIImageView *headbackgroundimg;
 
 @end

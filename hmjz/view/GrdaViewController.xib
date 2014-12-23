@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GrdaViewController">
             <connections>
+                <outlet property="headbackgroundimg" destination="w9F-1A-uEQ" id="jV3-wi-3Zj"/>
                 <outlet property="myimageview" destination="DkJ-5M-dUh" id="ghI-Bv-ecF"/>
                 <outlet property="mytableview" destination="NC0-zw-pCQ" id="cCv-E3-n5q"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

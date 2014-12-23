@@ -32,7 +32,7 @@
                                                  name:KNOTIFICATION_LOGINCHANGE
                                                object:nil];
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
         [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
     }
     

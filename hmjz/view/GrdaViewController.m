@@ -34,6 +34,13 @@
     UITapGestureRecognizer *singleTap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateImgAction:)];
     [self.myimageview addGestureRecognizer:singleTap1];
     
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+    }else{
+        [self.myimageview setFrame:CGRectMake(self.myimageview.frame.origin.x, self.myimageview.frame.origin.y-64, self.myimageview.frame.size.width, self.myimageview.frame.size.height)];
+        [self.mytableview setFrame:CGRectMake(self.mytableview.frame.origin.x, self.mytableview.frame.origin.y-64, self.mytableview.frame.size.width, self.mytableview.frame.size.height)];
+        [self.headbackgroundimg setFrame:CGRectMake(self.headbackgroundimg.frame.origin.x, self.headbackgroundimg.frame.origin.y-64, self.headbackgroundimg.frame.size.width, self.headbackgroundimg.frame.size.height)];
+    }
+    
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
     [self.mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
@@ -202,7 +209,7 @@
     
     if ([[info objectForKey:UIImagePickerControllerMediaType] isEqualToString:@"public.image"]) {
         UIImage  *img = [info objectForKey:UIImagePickerControllerEditedImage];
-        NSData *fildData = UIImageJPEGRepresentation(img, 1.0);//UIImagePNGRepresentation(img); //
+        NSData *fildData = UIImageJPEGRepresentation(img, 0.5);//UIImagePNGRepresentation(img); //
         [self uploadImg:fildData];
         //        self.fileData = UIImageJPEGRepresentation(img, 1.0);
     }

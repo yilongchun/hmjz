@@ -22,7 +22,10 @@
     // Do any additional setup after loading the view from its nib.
     self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
 }
 
 #pragma mark - UITableViewDatasource Methods

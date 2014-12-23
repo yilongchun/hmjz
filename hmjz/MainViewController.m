@@ -70,10 +70,16 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     
     //设置导航栏
     self.navigationController.delegate = self;
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
+    
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
     
         
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -215,7 +221,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                             break;
                     }
                     
-                    if ([menuStr isEqualToString:@"2_singleChat"]) {//2_singleChat">小纸条
+                    if ([menuStr isEqualToString:@"26_singleChat"]) {//2_singleChat">小纸条
                         UIButton *btn4 = [[UIButton alloc] init];
                         [btn4 setFrame:btnr];
                         [btn4 setBackgroundImage:[UIImage imageNamed:@"ic_index_009.png"] forState:UIControlStateNormal];
@@ -226,7 +232,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label4.text = @"小纸条";
                         label4.textAlignment = NSTextAlignmentCenter;
                         [label4 setFont:[UIFont systemFontOfSize:16]];
-                        
+                        [label4 setBackgroundColor:[UIColor clearColor]];
                         [unreadlabel setFrame:CGRectMake(btn4.frame.origin.x + btn4.frame.size.width - 20, btn4.frame.origin.y, 20, 20)];
                         unreadlabel.layer.cornerRadius = unreadlabel.frame.size.height/2;
                         unreadlabel.layer.masksToBounds = YES;
@@ -253,7 +259,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //                        [label2 setFont:[UIFont systemFontOfSize:16]];
 //                        [mainScrollView addSubview:btn2];
 //                        [mainScrollView addSubview:label2];
-                    }else if([menuStr isEqualToString:@"2_school"]){//2_school">宝宝学校
+                    }else if([menuStr isEqualToString:@"21_school"]){//2_school">宝宝学校
                         UIButton *btn2 = [[UIButton alloc] init];
                         [btn2 setFrame:btnr];
                         [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_002.png"] forState:UIControlStateNormal];
@@ -264,11 +270,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label2.text = @"宝宝学校";
                         label2.textAlignment = NSTextAlignmentCenter;
                         [label2 setFont:[UIFont systemFontOfSize:16]];
+                        [label2 setBackgroundColor:[UIColor clearColor]];
 //                        [mainScrollView addSubview:btn2];
 //                        [mainScrollView addSubview:label2];
                         [self.view addSubview:btn2];
                         [self.view addSubview:label2];
-                    }else if([menuStr isEqualToString:@"2_class"]){//2_class">宝宝班级
+                    }else if([menuStr isEqualToString:@"22_class"]){//2_class">宝宝班级
                         UIButton *btn1 = [[UIButton alloc] init];
                         [btn1 setFrame:btnr];
                         [btn1 setBackgroundImage:[UIImage imageNamed:@"ic_index_003.png"] forState:UIControlStateNormal];
@@ -279,11 +286,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label1.text = @"宝宝班级";
                         label1.textAlignment = NSTextAlignmentCenter;
                         [label1 setFont:[UIFont systemFontOfSize:16]];
+                        [label1 setBackgroundColor:[UIColor clearColor]];
 //                        [mainScrollView addSubview:btn1];
 //                        [mainScrollView addSubview:label1];
                         [self.view addSubview:btn1];
                         [self.view addSubview:label1];
-                    }else if([menuStr isEqualToString:@"2_cookbook"]){//2_cookbook">宝宝食谱
+                    }else if([menuStr isEqualToString:@"24_cookbook"]){//2_cookbook">宝宝食谱
                         UIButton *btn3 = [[UIButton alloc] init];
                         [btn3 setFrame:btnr];
                         [btn3 setBackgroundImage:[UIImage imageNamed:@"ic_index_007.png"] forState:UIControlStateNormal];
@@ -294,11 +302,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label3.text = @"宝宝食谱";
                         label3.textAlignment = NSTextAlignmentCenter;
                         [label3 setFont:[UIFont systemFontOfSize:16]];
+                        [label3 setBackgroundColor:[UIColor clearColor]];
 //                        [mainScrollView addSubview:btn3];
 //                        [mainScrollView addSubview:label3];
                         [self.view addSubview:btn3];
                         [self.view addSubview:label3];
-                    }else if([menuStr isEqualToString:@"2_information"]){//2_information">育儿资讯
+                    }else if([menuStr isEqualToString:@"25_information"]){//2_information">育儿资讯
                         UIButton *btn5 = [[UIButton alloc] init];
                         [btn5 setFrame:btnr];
                         [btn5 setBackgroundImage:[UIImage imageNamed:@"ic_index_004.png"] forState:UIControlStateNormal];
@@ -309,11 +318,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label5.text = @"育儿资讯";
                         label5.textAlignment = NSTextAlignmentCenter;
                         [label5 setFont:[UIFont systemFontOfSize:16]];
+                        [label5 setBackgroundColor:[UIColor clearColor]];
 //                        [mainScrollView addSubview:btn5];
 //                        [mainScrollView addSubview:label5];
                         [self.view addSubview:btn5];
                         [self.view addSubview:label5];
-                    }else if([menuStr isEqualToString:@"2_course"]){//2_course">课程表
+                    }else if([menuStr isEqualToString:@"23_course"]){//2_course">课程表
                         UIButton *btn6 = [[UIButton alloc] init];
                         [btn6 setFrame:btnr];
                         [btn6 setBackgroundImage:[UIImage imageNamed:@"ic_index_006.png"] forState:UIControlStateNormal];
@@ -324,6 +334,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label6.text = @"课程表";
                         label6.textAlignment = NSTextAlignmentCenter;
                         [label6 setFont:[UIFont systemFontOfSize:16]];
+                        [label6 setBackgroundColor:[UIColor clearColor]];
 //                        [mainScrollView addSubview:btn6];
 //                        [mainScrollView addSubview:label6];
                         [self.view addSubview:btn6];

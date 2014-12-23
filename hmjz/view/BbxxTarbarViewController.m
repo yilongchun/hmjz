@@ -21,31 +21,62 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
-    self.navigationController.interactivePopGestureRecognizer.enabled = NO ;
+    // 禁用 iOS7 返回手势
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
     
-    //    初始化第一个视图控制器
+    
+    UIImage *img1 = [UIImage imageNamed:@"xxjs.png"];
+    UIImage *img1_h = [UIImage imageNamed:@"xxjs_high.png"];
+    
+    UIImage *img2 = [UIImage imageNamed:@"xxgg.png"];
+    UIImage *img2_h = [UIImage imageNamed:@"xxgg_high.png"];
+    
+    UIImage *img3 = [UIImage imageNamed:@"xxhd.png"];
+    UIImage *img3_h = [UIImage imageNamed:@"xxhd_high.png"];
+    
     YqjsViewController *vc1 = [[YqjsViewController alloc] init];
-    
-    UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"学校介绍" image:[[UIImage imageNamed:@"xxjs.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxjs_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [item1 setTag:0];
-    vc1.tabBarItem = item1;
-    
-    //    初始化第二个视图控制器
     GgtzViewController *vc2 = [[GgtzViewController alloc] init];
-    
-    UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"学校公告" image:[[UIImage imageNamed:@"xxgg.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxgg_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [item2 setTag:1];
-    vc2.tabBarItem = item2;
-    
-    //    初始化第三个视图控制器
     XxhdViewController *vc3 = [[XxhdViewController alloc] init];
-    UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"学校活动" image:[[UIImage imageNamed:@"xxhd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:@"xxhd_high.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-    [item3 setTag:2];
-    vc3.tabBarItem = item3;
+    
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+        img1 = [img1 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        img1_h = [img1_h imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        img2 = [img2 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        img2_h = [img2_h imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        img3 = [img3 imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        img3_h = [img3_h imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        
+        UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"学校介绍" image:img1 selectedImage:img1_h];
+        [item1 setTag:0];
+        vc1.tabBarItem = item1;
+        
+        UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"学校公告" image:img2 selectedImage:img2_h];
+        [item2 setTag:1];
+        vc2.tabBarItem = item2;
+        
+        UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"学校活动" image:img3 selectedImage:img3_h];
+        [item3 setTag:2];
+        vc3.tabBarItem = item3;
+    }else{
+        UITabBarItem *item1 = [[UITabBarItem alloc] initWithTitle:@"学校介绍" image:img1 tag:0];
+        vc1.tabBarItem = item1;
+        
+        UITabBarItem *item2 = [[UITabBarItem alloc] initWithTitle:@"学校公告" image:img2 tag:1];
+        vc2.tabBarItem = item2;
+        
+        UITabBarItem *item3 = [[UITabBarItem alloc] initWithTitle:@"学校活动" image:img3 tag:2];
+        vc3.tabBarItem = item3;
+    }
+    
+    
     
     //    把导航控制器加入到数组
     NSMutableArray *viewArr_ = [NSMutableArray arrayWithObjects:vc1,vc2,vc3, nil];

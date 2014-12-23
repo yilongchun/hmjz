@@ -224,8 +224,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
         self.automaticallyAdjustsScrollViewInsets = NO;
+    }else{
+        [self.mytableview setFrame:CGRectMake(0, 0, self.mytableview.frame.size.width,self.mytableview.frame.size.height+64)];
     }
     
     [self initTextView];
@@ -270,6 +272,9 @@
 - (void)loadData{
     [HUD show:YES];
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userid = [userDefaults objectForKey:@"userid"];
+    [dic setValue:userid forKey:@"userId"];
     [dic setValue:self.tnid forKey:@"tnid"];
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Notice/findbyid.do" params:dic httpMethod:@"GET"];
@@ -449,6 +454,7 @@
             PinglunTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
                 cell = [[[NSBundle mainBundle] loadNibNamed:@"PinglunTableViewCell" owner:self options:nil] lastObject];
+                NSLog(@"新建cell");
             }
             NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
             NSString *commentContent = [data objectForKey:@"commentContent"];
@@ -473,7 +479,18 @@
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc]init];
             paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
             NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle.copy};
-            CGRect rect = [cell.commentlabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+            CGRect rect;
+            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+                rect = [cell.commentlabel.text boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
+            }else{
+                NSMutableAttributedString *attributedStr = [[NSMutableAttributedString alloc] initWithString:cell.commentlabel.text attributes:attributes];
+                NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+                [paragraphStyle setLineSpacing:10];
+                [attributedStr addAttribute:NSParagraphStyleAttributeName
+                                      value:paragraphStyle
+                                      range:NSMakeRange(0, [cell.commentlabel.text length])];
+                rect = [attributedStr boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin context:nil];
+            }
             CGSize labelsize = rect.size;
             labelsize.height = ceil(labelsize.height);
             labelsize.width = ceil(labelsize.width);
@@ -484,11 +501,8 @@
             if ([Utils isBlankString:fileid]) {
                 [cell.img setImage:[UIImage imageNamed:@"chatListCellHead.png"]];
             }else{
-                //            [cell.img setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@/image/show.do?id=%@",[Utils getImageHostname],fileid]] placeholderImage:[UIImage imageNamed:@"nopicture.png"]];
                 [cell.img setImageWithURL:[NSURL URLWithString:fileid] placeholderImage:[UIImage imageNamed:@"chatListCellHead.png"]];
             }
-            
-            
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }

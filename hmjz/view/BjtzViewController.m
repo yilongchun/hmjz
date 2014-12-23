@@ -36,7 +36,12 @@
     // Do any additional setup after loading the view from its nib.
     
     //初始化tableview
-    CGRect cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50-64);
+    CGRect cg;
+    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+        cg = CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50-64);
+    }else{
+        cg = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height-50-64);
+    }
     mytableview = [[UITableView alloc] initWithFrame:cg style:UITableViewStylePlain];
 //    [mytableview setSeparatorColor:[UIColor colorWithRed:42/255.0 green:173/255.0 blue:128/255.0 alpha:1]];
 //    if ([mytableview respondsToSelector:@selector(setSeparatorInset:)]) {
@@ -303,7 +308,7 @@
     }else{
         NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
         BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
-        vc.title = @"通知详情";
+        vc.title = @"公告详情";
         vc.dataSource = [NSMutableArray arrayWithObject:info];
         [self.navigationController pushViewController:vc animated:YES];
     }

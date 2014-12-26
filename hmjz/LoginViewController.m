@@ -110,7 +110,13 @@
                 //NSString *parentname = [data objectForKey:@"parentname"];
                 [self getChildrenInfo:parentid];//获取宝宝信息
             }else{
-                
+                [HUD hide:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"没有获取到个人信息";
+                hud.margin = 10.f;
+                hud.removeFromSuperViewOnHide = YES;
+                [hud hide:YES afterDelay:1];
             }
         }else{
             [HUD hide:YES];
@@ -199,6 +205,14 @@
                     [HUD hide:YES];
                 }
                 
+            }else{
+                [HUD hide:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"没有获取到宝宝信息";
+                hud.margin = 10.f;
+                hud.removeFromSuperViewOnHide = YES;
+                [hud hide:YES afterDelay:1];
             }
         }else{
             [HUD hide:YES];
@@ -281,8 +295,15 @@
                     [self.navigationController pushViewController:vc animated:YES];
                 }
                 [HUD hide:YES];
+            }else{
+                [HUD hide:YES];
+                MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                hud.mode = MBProgressHUDModeText;
+                hud.labelText = @"没有获取到班级信息";
+                hud.margin = 10.f;
+                hud.removeFromSuperViewOnHide = YES;
+                [hud hide:YES afterDelay:1];
             }
-            
         }else{
             [HUD hide:YES];
             MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -468,12 +489,7 @@
                  }
              } onQueue:nil];
             
-            
-            
-            
-            
             [self getParentInfo:userid];//获取家长信息
-            
             
         }else{
             [HUD hide:YES];

@@ -71,7 +71,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //设置导航栏
     self.navigationController.delegate = self;
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     }
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     [self.navigationController setNavigationBarHidden:YES];

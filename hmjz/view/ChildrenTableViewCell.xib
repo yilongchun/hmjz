@@ -31,7 +31,7 @@
                     </label>
                 </subviews>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="img" destination="axC-IL-sGH" id="0zu-kX-A2t"/>
                 <outlet property="namelabel" destination="naU-cu-9w9" id="i3V-YH-2o0"/>

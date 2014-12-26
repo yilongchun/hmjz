@@ -31,16 +31,16 @@
 -(void)drawTableView{
     
     UITableView *tview = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, self.view.frame.size.height) style:UITableViewStyleGrouped];
-    [tview setBackgroundColor:[UIColor whiteColor]];
+    [tview setBackgroundColor:[UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1]];
     [tview setDelegate:self];
     [tview setDataSource:self];
-    [tview setScrollEnabled:NO];
-    if ([tview respondsToSelector:@selector(setSeparatorInset:)]) {
-        [tview setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([tview respondsToSelector:@selector(setLayoutMargins:)]) {
-        [tview setLayoutMargins:UIEdgeInsetsZero];
-    }
+    [tview setScrollEnabled:YES];
+//    if ([tview respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [tview setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([tview respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [tview setLayoutMargins:UIEdgeInsetsZero];
+//    }
     [self.view addSubview:tview];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -73,7 +73,7 @@
                     cell.textLabel.text =  @"修改密码";
                 }
 //                else if(row == 2){
-//                    cell.textLabel.text =  @"版本自动更新";
+//                    cell.textLabel.text =  @"版本更新";
 //                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
@@ -99,12 +99,12 @@
 #pragma mark - UITableViewDatasource Methods
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
-        [cell setSeparatorInset:UIEdgeInsetsZero];
-    }
-    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
-        [cell setLayoutMargins:UIEdgeInsetsZero];
-    }
+//    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+//        [cell setSeparatorInset:UIEdgeInsetsZero];
+//    }
+//    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+//        [cell setLayoutMargins:UIEdgeInsetsZero];
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -130,16 +130,29 @@
 //        }
         
 //        [self.navigationController popToRootViewControllerAnimated:YES];
-        
-        [self logoutAction];
-        [self.navigationController setNavigationBarHidden:YES];
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:@"提示" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil];
+        actionsheet.tag = 100;
+        [actionsheet showInView:self.view];
         
 //        LoginViewController *loginCtrl = [[LoginViewController alloc] init];
 //        UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:loginCtrl];
 //        [navCtrl setNavigationBarHidden:YES];
 //        self.view.window.rootViewController = navCtrl;
     }
+}
+
+#pragma mark - UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (actionSheet.tag == 100) {
+        if (buttonIndex == 0) {
+            //退出登陆
+            [self logoutAction];
+            [self.navigationController setNavigationBarHidden:YES];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+    }
+    
 }
 
 - (void)logoutAction

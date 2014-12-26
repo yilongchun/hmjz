@@ -38,6 +38,9 @@
     self.navigationController.delegate = self;
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }else{
+        [self.loginBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.loginBtn setBackgroundColor:[UIColor clearColor]];
     }
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor, nil]];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];

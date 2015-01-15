@@ -29,7 +29,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.title = @"切换宝宝";
-    self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController setNavigationBarHidden:NO];
     // 禁用 iOS7 返回手势
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {

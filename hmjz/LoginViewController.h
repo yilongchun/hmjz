@@ -16,7 +16,8 @@
 
 @property (nonatomic,copy) NSString *logintype;
 @property (strong, nonatomic) MainViewController *mainController;
-@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-- (IBAction)login:(id)sender;
+//@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *loginImageView;
+
 
 @end

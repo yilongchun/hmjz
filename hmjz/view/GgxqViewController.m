@@ -14,6 +14,7 @@
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
 #import "SRRefreshView.h"
+#import "IQKeyboardManager.h"
 
 @interface GgxqViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MKNetworkEngine *engine;
@@ -223,7 +224,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
+    [IQKeyboardManager sharedManager].enable = NO;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
         self.automaticallyAdjustsScrollViewInsets = NO;
     }else{
@@ -236,7 +238,7 @@
     
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    HUD.labelText = @"加载中";
+    HUD.labelText = @"加载中...";
     [self.view addSubview:HUD];
     HUD.delegate = self;
     
@@ -247,6 +249,12 @@
    [self.mytableview addSubview:self.slimeView];
     
     [self loadData];
+}
+
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [IQKeyboardManager sharedManager].enable = YES;
+    [IQKeyboardManager sharedManager].enableAutoToolbar = YES;
 }
 
 #pragma mark - getter

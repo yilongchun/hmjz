@@ -10,14 +10,14 @@
 #import "EaseMob.h"
 #import "MainViewController.h"
 
-@interface LoginViewController : UIViewController<UITextFieldDelegate,UINavigationControllerDelegate>
+@interface LoginViewController : UIViewController<UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *username;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 
 @property (nonatomic,copy) NSString *logintype;
 @property (strong, nonatomic) MainViewController *mainController;
-//@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
-@property (weak, nonatomic) IBOutlet UIImageView *loginImageView;
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
 
+- (IBAction)login:(id)sender;
 
 @end

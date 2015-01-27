@@ -16,7 +16,7 @@
     [self.view addSubview:loadingAni];
     
     label = [[UILabel alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] bounds].size.width/2-40, [[UIScreen mainScreen] bounds].size.height/2-20, 80, 40)];
-    label.text = @"加载中...";
+    label.text = @"加载中......";
     label.textColor = [UIColor whiteColor];
     label.backgroundColor = [UIColor clearColor];
     

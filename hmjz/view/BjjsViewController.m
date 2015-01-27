@@ -39,7 +39,7 @@
     }
 //    [self.mywebview setFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, self.view.frame.size.height-64-50)];
     
-    HUD.labelText = @"正在加载中";
+    HUD.labelText = @"加载中...";
     [HUD show:YES];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];

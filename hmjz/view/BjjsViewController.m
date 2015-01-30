@@ -37,7 +37,7 @@
     }else{
         [self.mywebview setFrame:CGRectMake(0, 0, self.mywebview.frame.size.width, self.mywebview.frame.size.height+64+49)];
     }
-//    [self.mywebview setFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, self.view.frame.size.height-64-50)];
+//    [self.mywebview setFrame:CGRectMake(0, 64, [[UIScreen mainScreen] bounds].size.width, self.view.frame.size.height-64-49)];
     
     HUD.labelText = @"加载中...";
     [HUD show:YES];

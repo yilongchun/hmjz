@@ -163,6 +163,7 @@
 		E4EC65A51A288AA800924611 /* xxhd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E4EC65A11A288AA800924611 /* xxhd@2x.png */; };
 		E4EC65AC1A28904700924611 /* XxhdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EC65AA1A28904700924611 /* XxhdViewController.m */; };
 		E4EC65AD1A28904700924611 /* XxhdViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4EC65AB1A28904700924611 /* XxhdViewController.xib */; };
+		E4EF641E1A83824100B1EFC0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4EF641D1A83824100B1EFC0 /* StoreKit.framework */; };
 		E4EFAAF21A1B28AA000CF20E /* ImgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFAAEF1A1B28AA000CF20E /* ImgScrollView.m */; };
 		E4EFAAF31A1B28AA000CF20E /* TapImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFAAF11A1B28AA000CF20E /* TapImageView.m */; };
 		E4EFB8971A12F24D007D8CB1 /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB72F1A12F24D007D8CB1 /* Emoji.m */; };
@@ -732,6 +733,7 @@
 		E4EC65A91A28904700924611 /* XxhdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XxhdViewController.h; path = view/XxhdViewController.h; sourceTree = "<group>"; };
 		E4EC65AA1A28904700924611 /* XxhdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = XxhdViewController.m; path = view/XxhdViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E4EC65AB1A28904700924611 /* XxhdViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = XxhdViewController.xib; path = view/XxhdViewController.xib; sourceTree = "<group>"; };
+		E4EF641D1A83824100B1EFC0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		E4EFAAEE1A1B28AA000CF20E /* ImgScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImgScrollView.h; path = view/ImgScrollView.h; sourceTree = "<group>"; };
 		E4EFAAEF1A1B28AA000CF20E /* ImgScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImgScrollView.m; path = view/ImgScrollView.m; sourceTree = "<group>"; };
 		E4EFAAF01A1B28AA000CF20E /* TapImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TapImageView.h; path = view/TapImageView.h; sourceTree = "<group>"; };
@@ -1271,6 +1273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4EF641E1A83824100B1EFC0 /* StoreKit.framework in Frameworks */,
 				E47D2AB81A19DF880020DD67 /* MediaPlayer.framework in Frameworks */,
 				E4FBAD981A0C5CBD005758FD /* MobileCoreServices.framework in Frameworks */,
 				E4FBAD961A0C5CB0005758FD /* libresolv.dylib in Frameworks */,
@@ -1450,6 +1453,7 @@
 		E4C7772D19F88B8B00532B09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4EF641D1A83824100B1EFC0 /* StoreKit.framework */,
 				E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */,
 				E4FBAD971A0C5CBD005758FD /* MobileCoreServices.framework */,
 				E4FBAD951A0C5CB0005758FD /* libresolv.dylib */,

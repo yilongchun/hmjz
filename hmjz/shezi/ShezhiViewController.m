@@ -11,9 +11,12 @@
 #import "YjfkViewController.h"
 #import "UpdatePasswordViewController.h"
 #import "ApplyViewController.h"
+#import "MKNetworkKit.h"
 
 @interface ShezhiViewController (){
     NSString *trackViewUrl;
+    MKNetworkEngine *engine;
+    UIActivityIndicatorView *indicatorView;
 }
 
 @end
@@ -26,7 +29,7 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"设置";
     [self.navigationController setNavigationBarHidden:NO];
-    
+    engine = [[MKNetworkEngine alloc] initWithHostName:@"itunes.apple.com" customHeaderFields:nil];
     [self drawTableView];
 }
 
@@ -38,12 +41,57 @@
     [tview setScrollEnabled:YES];
     [self.view addSubview:tview];
 }
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - UITableViewDatasource Methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            YjfkViewController *vc = [[YjfkViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 1){
+            UpdatePasswordViewController *vc = [[UpdatePasswordViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }else if (indexPath.row == 2){
+            [self checkUpdateWithAPPID:@"939954077"];
+        }else if (indexPath.row == 3){
+            [self showStoreProductInApp:@"939954077"];
+        }
+    }else{
+        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1){
+            alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+            [alert addAction:[UIAlertAction actionWithTitle:@"确定"
+                                                      style:UIAlertActionStyleDestructive
+                                                    handler:^(UIAlertAction *action) {
+                                                        //退出登陆
+                                                        [self logoutAction];
+                                                        //                                                        [self.navigationController setNavigationBarHidden:YES];
+                                                        //                                                        [self.navigationController popToRootViewControllerAnimated:YES];
+                                                    }]];
+            [alert addAction:[UIAlertAction actionWithTitle:@"取消"
+                                                      style:UIAlertActionStyleCancel
+                                                    handler:^(UIAlertAction *action) {
+                                                    }]];
+            [self presentViewController:alert animated:YES completion:nil];
+        }else{
+            UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil];
+            actionsheet.tag = 100;
+            [actionsheet showInView:self.view];
+        }
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 44;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 3;
+        return 4;
     }
     return 1;
 }
@@ -70,6 +118,9 @@
                 else if(row == 2){
                     cell.textLabel.text =  @"版本更新";
                 }
+                else if(row == 3){
+                    cell.textLabel.text =  @"去评分";
+                }
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
                 break;
             case 1:
@@ -85,60 +136,45 @@
     return cell;
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-#pragma mark - UITableViewDatasource Methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            YjfkViewController *vc = [[YjfkViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 1){
-            UpdatePasswordViewController *vc = [[UpdatePasswordViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }else if (indexPath.row == 2){
-            [self checkUpdateWithAPPID:@"939954077"];
+#pragma mark - UIActionSheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (actionSheet.tag == 100) {
+        if (buttonIndex == 0) {
+            //退出登陆
+            [self logoutAction];
+            //            [self.navigationController setNavigationBarHidden:YES];
+            //            [self.navigationController popToRootViewControllerAnimated:YES];
         }
-    }else{
-        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1){
-            alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-            [alert addAction:[UIAlertAction actionWithTitle:@"确定"
-                                                      style:UIAlertActionStyleDestructive
-                                                    handler:^(UIAlertAction *action) {
-                                                        //退出登陆
-                                                        [self logoutAction];
-//                                                        [self.navigationController setNavigationBarHidden:YES];
-//                                                        [self.navigationController popToRootViewControllerAnimated:YES];
-                                                    }]];
-            [alert addAction:[UIAlertAction actionWithTitle:@"取消"
-                                                      style:UIAlertActionStyleCancel
-                                                    handler:^(UIAlertAction *action) {
-                                                    }]];
-            [self presentViewController:alert animated:YES completion:nil];
-        }else{
-            UIActionSheet *actionsheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"退出登录" otherButtonTitles:nil];
-            actionsheet.tag = 100;
-            [actionsheet showInView:self.view];
+    }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag==10000) {
+        if (buttonIndex==1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl]];
         }
     }
 }
 
-#pragma mark - 检查更新
+#pragma mark - private
+
 - (void)checkUpdateWithAPPID:(NSString *)APPID{
+    [self showIndicator];
     //获取当前应用版本号
     NSDictionary *appInfo = [[NSBundle mainBundle] infoDictionary];
     NSString *currentVersion = [appInfo objectForKey:@"CFBundleShortVersionString"];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/cn/lookup?id=%@",APPID]]];
-    [request setHTTPMethod:@"GET"];
-    NSData *returnData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    if (returnData) {
-        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:returnData options:0 error:nil];
+    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+    [dic setValue:APPID forKey:@"id"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/cn/lookup" params:dic httpMethod:@"GET"];
+    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+        NSString *result = [operation responseString];
+        NSError *error;
+        NSDictionary *jsonData = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+        if (jsonData == nil) {
+            NSLog(@"json parse failed \r\n");
+        }
+        [self hideIndicator];
         NSArray *infoArray = [jsonData objectForKey:@"results"];
         if ([infoArray count]) {
             NSDictionary *releaseInfo = [infoArray objectAtIndex:0];
@@ -200,7 +236,9 @@
                 [alert2 show];
             }
         }
-    }else{
+    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        [self hideIndicator];
         if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_7_1){
             alert = [UIAlertController alertControllerWithTitle:@"更新" message:@"没有获取到版本信息" preferredStyle:UIAlertControllerStyleAlert];
             [alert addAction:[UIAlertAction actionWithTitle:@"确定"
@@ -213,19 +251,57 @@
             alert2.tag = 10001;
             [alert2 show];
         }
+    }];
+    [engine enqueueOperation:op];
+}
+
+//查看app商店信息
+- (void)showStoreProductInApp:(NSString *)appID{
+    Class isAllow = NSClassFromString(@"SKStoreProductViewController");
+    [self showIndicator];
+    if (isAllow != nil) {
+        SKStoreProductViewController *sKStoreProductViewController = [[SKStoreProductViewController alloc] init];
+        [sKStoreProductViewController.view setFrame:CGRectMake(0, 200, 320, 200)];
+        [sKStoreProductViewController setDelegate:self];
+        [sKStoreProductViewController loadProductWithParameters:@{SKStoreProductParameterITunesItemIdentifier: appID}
+                                                completionBlock:^(BOOL result, NSError *error) {
+                                                    if (result) {
+                                                        [self hideIndicator];
+                                                        [self presentViewController:sKStoreProductViewController
+                                                                           animated:YES
+                                                                         completion:nil];
+                                                        
+                                                        
+                                                    }else{
+                                                        [self hideIndicator];
+                                                        NSLog(@"error:%@",error);
+                                                    }
+                                                }];
+    }else{
+        //低于iOS6的系统版本没有这个类,不支持这个功能
+        NSString *string = [NSString stringWithFormat:@"https://itunes.apple.com/cn/app/hui-min-jia-yuan-tong-jia/id%@?mt=8&uo=4",appID];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:string]];
     }
 }
 
-#pragma mark - UIActionSheet Delegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (actionSheet.tag == 100) {
-        if (buttonIndex == 0) {
-            //退出登陆
-            [self logoutAction];
-//            [self.navigationController setNavigationBarHidden:YES];
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-        }
-    }
+-(void) productViewControllerDidFinish:(SKStoreProductViewController *)viewController{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+//加载等待视图
+- (void)showIndicator{
+    indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicatorView.autoresizingMask =
+    UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin
+    | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    [self.view addSubview:indicatorView];
+    [indicatorView sizeToFit];
+    [indicatorView startAnimating];
+    indicatorView.center = self.view.center;
+}
+
+- (void)hideIndicator{
+    [indicatorView stopAnimating];
 }
 
 - (void)logoutAction
@@ -243,13 +319,9 @@
     } onQueue:nil];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag==10000) {
-        if (buttonIndex==1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:trackViewUrl]];
-        }
-    }
-}
+
+
+
 
 /*
  #pragma mark - Navigation

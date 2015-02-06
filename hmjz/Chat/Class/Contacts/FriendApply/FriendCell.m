@@ -20,10 +20,10 @@
     // Configure the view for the selected state
 }
 
-- (void)layoutSubviews{
-    [super layoutSubviews];
-    self.myimageview.layer.cornerRadius = 3.0;
-    self.myimageview.layer.masksToBounds = YES;
-}
+//- (void)layoutSubviews{
+//    [super layoutSubviews];
+//    self.myimageview.layer.cornerRadius = 3.0;
+//    self.myimageview.layer.masksToBounds = YES;
+//}
 
 @end

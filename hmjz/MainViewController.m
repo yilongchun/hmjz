@@ -201,13 +201,13 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                             btnr = CGRectMake(width-100, 170, 90, 90);
                             break;
                         case 3:
-                            btnr = CGRectMake(10, 300, 90, 90);
+                            btnr = CGRectMake(10, 320, 90, 90);
                             break;
                         case 4:
-                            btnr = CGRectMake(width/2-45, 300, 90, 90);
+                            btnr = CGRectMake(width/2-45, 320, 90, 90);
                             break;
                         case 5:
-                            btnr = CGRectMake(width-100, 300, 90, 90);
+                            btnr = CGRectMake(width-100, 320, 90, 90);
                             break;
 //                        case 6:
 //                            if (height <= 480) {

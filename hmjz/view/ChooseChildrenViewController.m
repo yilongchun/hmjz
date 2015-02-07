@@ -32,9 +32,9 @@
 //    self.mytableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.navigationController setNavigationBarHidden:NO];
     // 禁用 iOS7 返回手势
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
     
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];

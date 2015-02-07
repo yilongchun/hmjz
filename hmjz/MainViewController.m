@@ -77,9 +77,9 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [self.navigationController setNavigationBarHidden:YES];
     
     // 禁用 iOS7 返回手势
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    }
+//    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+//        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+//    }
     
         
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
@@ -801,6 +801,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
         [self loadData];
     }
     [super viewDidAppear:animated];
+    NSLog(@"viewDidAppear");
 }
 
 //提示
@@ -853,6 +854,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 {
     [super viewWillAppear:animated];
     [self setupUnreadMessageCount];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    NSLog(@"viewWillAppear");
 }
 
 

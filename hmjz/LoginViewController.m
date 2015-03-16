@@ -54,9 +54,9 @@
     
     // Do any additional setup after loading the view from its nib.
     //添加手势，点击输入框其他区域隐藏键盘
-    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
-    tapGr.cancelsTouchesInView =NO;
-    [self.view addGestureRecognizer:tapGr];
+//    UITapGestureRecognizer *tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+//    tapGr.cancelsTouchesInView =NO;
+//    [self.view addGestureRecognizer:tapGr];
     //添加登陆事件
     
     

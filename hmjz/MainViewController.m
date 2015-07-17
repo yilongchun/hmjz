@@ -770,6 +770,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //小纸条
 - (IBAction)xztAction:(UIButton *)sender {
     
+    if ([[EaseMob sharedInstance].chatManager loginInfo] == nil) {
+        [self showHint:@"请稍后使用小纸条功能"];
+        return;
+    }
+    
 //    if (_mainController == nil) {
 //        _mainController = [[MainChatViewController alloc] init];
 //    }

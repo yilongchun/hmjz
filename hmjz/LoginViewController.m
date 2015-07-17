@@ -14,6 +14,7 @@
 #import "ChooseChildrenViewController.h"
 #import "ChooseClassViewController.h"
 #import "EMError.h"
+#import "RegisterViewController.h"
 
 
 
@@ -29,6 +30,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(registerSuccessedAndLogin:)
+                                                 name:@"registerSuccessedAndLogin"
+                                               object:nil];
     
     // 禁用 iOS7 返回手势
 //    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
@@ -47,8 +53,14 @@
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
     
+    
     [self.loginBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateNormal];
     [self.loginBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg2.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateHighlighted];
+    self.loginBtn.layer.cornerRadius = 5.0f;
+    
+//    [self.regBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateNormal];
+//    [self.regBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg2.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateHighlighted];
+//    self.regBtn.layer.cornerRadius = 5.0f;
     
     self.navigationController.delegate = self;
     
@@ -67,7 +79,8 @@
     
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     
-    self.loginBtn.layer.cornerRadius = 5.0f;
+    
+    
 //    self.loginImageView.layer.cornerRadius = 5.0f;
     
     _mainController = [[MainViewController alloc] init];
@@ -489,7 +502,7 @@
                              NSLog(@"连接服务器超时!");
                              break;
                          default:
-                             [self alertMsg:@"登录失败"];
+                             [self alertMsg:@"小纸条登录失败"];
                              NSLog(@"登录失败");
                              break;
                      }
@@ -518,5 +531,25 @@
         [hud hide:YES afterDelay:2];
     }];
     [engine enqueueOperation:op];
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+}
+
+- (IBAction)reg:(id)sender {
+    RegisterViewController *vc = [[RegisterViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)registerSuccessedAndLogin:(NSNotification *)notifi{
+    NSDictionary *info = notifi.userInfo;
+    NSString *username = [info objectForKey:@"userId"];
+    NSString *password = [info objectForKey:@"password"];
+    self.username.text = username;
+    self.password.text = password;
+    
+    [self performSelector:@selector(login:) withObject:nil afterDelay:0.5];
 }
 @end

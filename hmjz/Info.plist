@@ -33,7 +33,7 @@
 	<key>Httpurl</key>
 	<string>mobile.hmjxt.com/sma</string>
 	<key>Httpurl2</key>
-	<string>115.29.103.36/sma</string>
+	<string>hmjxt.tunnel.mobi/sma</string>
 	<key>Httpurl3</key>
 	<string>mobile.hmjxt.com/newsma</string>
 	<key>LSRequiresIPhoneOS</key>

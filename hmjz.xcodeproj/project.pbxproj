@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E412E1371B79D48E00F62A5D /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E1361B79D48E00F62A5D /* MBProgressHUD.m */; };
 		E472C7441B57AE1D00341BAE /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E472C7421B57AE1D00341BAE /* RegisterViewController.m */; };
 		E472C7451B57AE1D00341BAE /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E472C7431B57AE1D00341BAE /* RegisterViewController.xib */; };
 		E47D2AB81A19DF880020DD67 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */; };
@@ -173,7 +174,6 @@
 		E4EFB8971A12F24D007D8CB1 /* Emoji.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB72F1A12F24D007D8CB1 /* Emoji.m */; };
 		E4EFB8981A12F24D007D8CB1 /* EmojiEmoticons.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7311A12F24D007D8CB1 /* EmojiEmoticons.m */; };
 		E4EFB8991A12F24D007D8CB1 /* MBProgressHUD+Add.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7351A12F24D007D8CB1 /* MBProgressHUD+Add.m */; };
-		E4EFB89A1A12F24D007D8CB1 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7371A12F24D007D8CB1 /* MBProgressHUD.m */; };
 		E4EFB89B1A12F24D007D8CB1 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB73B1A12F24D007D8CB1 /* MWCaptionView.m */; };
 		E4EFB89C1A12F24D007D8CB1 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB73E1A12F24D007D8CB1 /* MWGridCell.m */; };
 		E4EFB89D1A12F24D007D8CB1 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4EFB7401A12F24D007D8CB1 /* MWGridViewController.m */; };
@@ -499,6 +499,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E412E1351B79D48E00F62A5D /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		E412E1361B79D48E00F62A5D /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E472C7411B57AE1D00341BAE /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		E472C7421B57AE1D00341BAE /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		E472C7431B57AE1D00341BAE /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -759,8 +761,6 @@
 		E4EFB7321A12F24D007D8CB1 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
 		E4EFB7341A12F24D007D8CB1 /* MBProgressHUD+Add.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+Add.h"; sourceTree = "<group>"; };
 		E4EFB7351A12F24D007D8CB1 /* MBProgressHUD+Add.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+Add.m"; sourceTree = "<group>"; };
-		E4EFB7361A12F24D007D8CB1 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
-		E4EFB7371A12F24D007D8CB1 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E4EFB73A1A12F24D007D8CB1 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
 		E4EFB73B1A12F24D007D8CB1 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
 		E4EFB73C1A12F24D007D8CB1 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
@@ -1847,10 +1847,10 @@
 		E4EFB7331A12F24D007D8CB1 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
+				E412E1351B79D48E00F62A5D /* MBProgressHUD.h */,
+				E412E1361B79D48E00F62A5D /* MBProgressHUD.m */,
 				E4EFB7341A12F24D007D8CB1 /* MBProgressHUD+Add.h */,
 				E4EFB7351A12F24D007D8CB1 /* MBProgressHUD+Add.m */,
-				E4EFB7361A12F24D007D8CB1 /* MBProgressHUD.h */,
-				E4EFB7371A12F24D007D8CB1 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
 			sourceTree = "<group>";
@@ -3252,7 +3252,6 @@
 				E48CFB2E1A0710D4002ECF19 /* ChildrenTableViewCell.m in Sources */,
 				E4EFB8B91A12F24D007D8CB1 /* WCAlertView.m in Sources */,
 				E4C9C9011A09F1F8002A23E7 /* UpdatePasswordViewController.m in Sources */,
-				E4EFB89A1A12F24D007D8CB1 /* MBProgressHUD.m in Sources */,
 				E4C7C9A81A009909006A0284 /* AFURLConnectionOperation.m in Sources */,
 				E4EFB90E1A12F24D007D8CB1 /* MessageModel.m in Sources */,
 				E4D6FF011AB9C81B00F1CAAA /* IQToolbar.m in Sources */,
@@ -3313,6 +3312,7 @@
 				E4EFB94A1A12F24E007D8CB1 /* SettingsViewController.m in Sources */,
 				E4EFB8CF1A12F24D007D8CB1 /* ChatViewController.m in Sources */,
 				E4EFB9071A12F24D007D8CB1 /* EMChatTextBubbleView.m in Sources */,
+				E412E1371B79D48E00F62A5D /* MBProgressHUD.m in Sources */,
 				E4EFB94F1A12F24E007D8CB1 /* BaseViewController.m in Sources */,
 				E4C7779119F8966800532B09 /* NSAlert+MKNetworkKitAdditions.m in Sources */,
 				E4EFB92E1A12F24D007D8CB1 /* NSRelationshipDescription+MagicalDataImport.m in Sources */,
@@ -3560,8 +3560,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wuhan Huimin Zhilian Network Technology Co., Ltd. (385K2MCGVE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wuhan Huimin Zhilian Network Technology Co., Ltd. (385K2MCGVE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/hmjz/Chat/3rdparty";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -3584,8 +3584,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wuhan Huimin Zhilian Network Technology Co., Ltd. (385K2MCGVE)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wuhan Huimin Zhilian Network Technology Co., Ltd. (385K2MCGVE)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yunchao Zhou (R2QU3CV878)";
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/hmjz/Chat/3rdparty";
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

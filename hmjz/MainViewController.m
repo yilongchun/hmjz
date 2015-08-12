@@ -353,7 +353,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         [btn2 addTarget:self action:@selector(childrenStory) forControlEvents:UIControlEventTouchUpInside];
                         UILabel *label2 = [[UILabel alloc] init];
                         [label2 setFrame:CGRectMake(btn2.frame.origin.x, btn2.frame.origin.y+95, 90, 20)];
-                        label2.text = @"儿歌故事会";
+                        label2.text = @"儿歌故事";
                         label2.textAlignment = NSTextAlignmentCenter;
                         [label2 setFont:[UIFont systemFontOfSize:16]];
                         [label2 setBackgroundColor:[UIColor clearColor]];

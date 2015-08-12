@@ -48,7 +48,6 @@
 		E459B5A91B7B197300E051AF /* kr-video-player-shrinkscreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E459B5971B7B197300E051AF /* kr-video-player-shrinkscreen@3x.png */; };
 		E459B5AA1B7B197300E051AF /* KrVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = E459B59A1B7B197300E051AF /* KrVideoPlayerController.m */; };
 		E459B5AB1B7B197300E051AF /* KrVideoPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = E459B59C1B7B197300E051AF /* KrVideoPlayerControlView.m */; };
-		E459B5AC1B7B197300E051AF /* READEME.md in Sources */ = {isa = PBXBuildFile; fileRef = E459B59D1B7B197300E051AF /* READEME.md */; };
 		E472C7441B57AE1D00341BAE /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E472C7421B57AE1D00341BAE /* RegisterViewController.m */; };
 		E472C7451B57AE1D00341BAE /* RegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E472C7431B57AE1D00341BAE /* RegisterViewController.xib */; };
 		E47D2AB81A19DF880020DD67 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E47D2AB71A19DF880020DD67 /* MediaPlayer.framework */; };
@@ -166,7 +165,6 @@
 		E4C9C9011A09F1F8002A23E7 /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9C8FF1A09F1F8002A23E7 /* UpdatePasswordViewController.m */; };
 		E4C9C9021A09F1F8002A23E7 /* UpdatePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */; };
 		E4CBDD6E1B588F2700247C12 /* UIView+RGSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CBDD6D1B588F2700247C12 /* UIView+RGSize.m */; };
-		E4CBDD731B58939B00247C12 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CBDD721B58939B00247C12 /* UIViewController+HUD.m */; };
 		E4D6FEF81AB9C81B00F1CAAA /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDA1AB9C81B00F1CAAA /* IQNSArray+Sort.m */; };
 		E4D6FEF91AB9C81B00F1CAAA /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDC1AB9C81B00F1CAAA /* IQUIView+Hierarchy.m */; };
 		E4D6FEFA1AB9C81B00F1CAAA /* IQUIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDE1AB9C81B00F1CAAA /* IQUIWindow+Hierarchy.m */; };
@@ -606,7 +604,6 @@
 		E459B59A1B7B197300E051AF /* KrVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KrVideoPlayerController.m; sourceTree = "<group>"; };
 		E459B59B1B7B197300E051AF /* KrVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KrVideoPlayerControlView.h; sourceTree = "<group>"; };
 		E459B59C1B7B197300E051AF /* KrVideoPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KrVideoPlayerControlView.m; sourceTree = "<group>"; };
-		E459B59D1B7B197300E051AF /* READEME.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = READEME.md; sourceTree = "<group>"; };
 		E472C7411B57AE1D00341BAE /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
 		E472C7421B57AE1D00341BAE /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
 		E472C7431B57AE1D00341BAE /* RegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RegisterViewController.xib; sourceTree = "<group>"; };
@@ -788,8 +785,6 @@
 		E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdatePasswordViewController.xib; path = view/UpdatePasswordViewController.xib; sourceTree = "<group>"; };
 		E4CBDD6C1B588F2700247C12 /* UIView+RGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RGSize.h"; sourceTree = "<group>"; };
 		E4CBDD6D1B588F2700247C12 /* UIView+RGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RGSize.m"; sourceTree = "<group>"; };
-		E4CBDD711B58939B00247C12 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
-		E4CBDD721B58939B00247C12 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
 		E4D6FED91AB9C81B00F1CAAA /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		E4D6FEDA1AB9C81B00F1CAAA /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
 		E4D6FEDB1AB9C81B00F1CAAA /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
@@ -1522,7 +1517,6 @@
 			children = (
 				E459B58B1B7B197300E051AF /* Assets */,
 				E459B5981B7B197300E051AF /* Classes */,
-				E459B59D1B7B197300E051AF /* READEME.md */,
 			);
 			path = KrVideoPlayer;
 			sourceTree = "<group>";
@@ -1579,7 +1573,6 @@
 		E4B2C8FF19F7621900B0E1DE /* hmjz */ = {
 			isa = PBXGroup;
 			children = (
-				E4CBDD6F1B58939B00247C12 /* Category */,
 				E4CBDD6B1B588F2700247C12 /* UIPickViewAlert */,
 				E459B58A1B7B197300E051AF /* KrVideoPlayer */,
 				E4B2C90419F7621900B0E1DE /* AppDelegate.h */,
@@ -1941,23 +1934,6 @@
 				E4CBDD6D1B588F2700247C12 /* UIView+RGSize.m */,
 			);
 			path = UIPickViewAlert;
-			sourceTree = "<group>";
-		};
-		E4CBDD6F1B58939B00247C12 /* Category */ = {
-			isa = PBXGroup;
-			children = (
-				E4CBDD701B58939B00247C12 /* UIViewController */,
-			);
-			path = Category;
-			sourceTree = "<group>";
-		};
-		E4CBDD701B58939B00247C12 /* UIViewController */ = {
-			isa = PBXGroup;
-			children = (
-				E4CBDD711B58939B00247C12 /* UIViewController+HUD.h */,
-				E4CBDD721B58939B00247C12 /* UIViewController+HUD.m */,
-			);
-			path = UIViewController;
 			sourceTree = "<group>";
 		};
 		E4D6FED71AB9C81B00F1CAAA /* IQKeyBoardManager */ = {
@@ -3665,7 +3641,6 @@
 				E4EFB9181A12F24D007D8CB1 /* GroupListViewController.m in Sources */,
 				E4EFB9291A12F24D007D8CB1 /* MagicalImportFunctions.m in Sources */,
 				E4EFB90B1A12F24D007D8CB1 /* EMChatViewBaseCell.m in Sources */,
-				E459B5AC1B7B197300E051AF /* READEME.md in Sources */,
 				E4EFB9221A12F24D007D8CB1 /* AddFriendCell.m in Sources */,
 				E4EFB8CD1A12F24D007D8CB1 /* CallViewController.m in Sources */,
 				E4C7779519F8966800532B09 /* NSString+MKNetworkKitAdditions.m in Sources */,
@@ -3687,7 +3662,6 @@
 				E4EFB8A31A12F24D007D8CB1 /* DACircularProgressView.m in Sources */,
 				E4EFB90C1A12F24D007D8CB1 /* EMChatViewCell.m in Sources */,
 				E4F7B0481A08BC0B00ACE07A /* PinglunTableViewCell.m in Sources */,
-				E4CBDD731B58939B00247C12 /* UIViewController+HUD.m in Sources */,
 				E4EFB9081A12F24D007D8CB1 /* EMChatVideoBubbleView.m in Sources */,
 				E4C7C9AA1A009909006A0284 /* AFURLResponseSerialization.m in Sources */,
 				E4C777A519F8B4BD00532B09 /* MainViewController.m in Sources */,

@@ -478,7 +478,7 @@
  */
 -(void)detail:(UITapGestureRecognizer *)gesture{
     NSDictionary *info = [dataSource objectAtIndex:gesture.view.tag - 1];
-    NSString *title = [info objectForKey:@"title"];
+//    NSString *title = [info objectForKey:@"title"];
     NSString *content = [info objectForKey:@"content"];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"详情" message:content delegate:nil cancelButtonTitle:@"关闭" otherButtonTitles:nil, nil];
     [alert show];

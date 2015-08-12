@@ -370,7 +370,6 @@
     NSString *title = [info objectForKey:@"title"];
     NSString *content = [info objectForKey:@"content"];
     NSString *path = [info objectForKey:@"path"];
-    DLog(@"share %d",gesture.view.tag);
     
     NSString *textToShare = [NSString stringWithFormat:@"名称:%@",title];
     NSURL *urlToShare = [NSURL URLWithString:path];
@@ -480,7 +479,9 @@
 -(void)detail:(UITapGestureRecognizer *)gesture{
     NSDictionary *info = [dataSource objectAtIndex:gesture.view.tag - 1];
     NSString *title = [info objectForKey:@"title"];
-    DLog(@"detail %@ %d",title,gesture.view.tag);
+    NSString *content = [info objectForKey:@"content"];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"详情" message:content delegate:nil cancelButtonTitle:@"关闭" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)didReceiveMemoryWarning {

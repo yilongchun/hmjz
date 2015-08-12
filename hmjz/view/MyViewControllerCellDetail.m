@@ -14,6 +14,7 @@
 #import "ContentCell.h"
 #import "PinglunTableViewCell.h"
 #import "CustomMoviePlayerViewController.h"
+#import "KrVideoPlayerController.h"
 #import "TapImageView.h"
 #import "ImgScrollView.h"
 #import "SRRefreshView.h"
@@ -34,7 +35,8 @@
     UIView *scrollPanel;
     ContentCell *tapCell;
 }
-
+@property BOOL  show;
+@property (nonatomic, strong) KrVideoPlayerController  *videoController;
 @property (strong, nonatomic)UIButton *videoPlayButton;
 @property (nonatomic, strong) SRRefreshView         *slimeView;
 @end
@@ -705,14 +707,63 @@
             [self alertMsg:@"视频地址错误，播放失败"];
             return;
         }
-        CustomMoviePlayerViewController *moviePlayer = [[CustomMoviePlayerViewController alloc] init];
-        //将视频地址传过去
-        moviePlayer.movieURL = [NSURL URLWithString:fileId];
-        //然后播放就OK了
-        [moviePlayer readyPlayer];
-        [self presentViewController:moviePlayer animated:YES completion:^{
-        }];
+        
+        NSURL *url = [NSURL URLWithString:fileId];
+        [self addVideoPlayerWithURL:url];
+        
+//        CustomMoviePlayerViewController *moviePlayer = [[CustomMoviePlayerViewController alloc] init];
+//        //将视频地址传过去
+//        moviePlayer.movieURL = [NSURL URLWithString:fileId];
+//        //然后播放就OK了
+//        [moviePlayer readyPlayer];
+//        [self presentViewController:moviePlayer animated:YES completion:^{
+//        }];
     }
+}
+
+- (void)addVideoPlayerWithURL:(NSURL *)url{
+    if (!self.videoController) {
+        self.videoController = [[KrVideoPlayerController alloc] initWithFrame:self.view.frame];
+        __weak typeof(self)weakSelf = self;
+        [self.videoController setDimissCompleteBlock:^{
+            weakSelf.videoController = nil;
+            [weakSelf toolbarHidden:NO];
+            weakSelf.show = NO;
+            [weakSelf setNeedsStatusBarAppearanceUpdate];
+        }];
+        [self.videoController setWillBackOrientationPortrait:^{
+            [weakSelf toolbarHidden:NO];
+            weakSelf.show = YES;
+            [weakSelf setNeedsStatusBarAppearanceUpdate];
+        }];
+        [self.videoController setWillChangeToFullscreenMode:^{
+            [weakSelf toolbarHidden:YES];
+            weakSelf.show = YES;
+            [weakSelf setNeedsStatusBarAppearanceUpdate];
+        }];
+        [self.videoController showInWindow];
+        self.show = YES;
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    self.videoController.contentURL = url;
+}
+
+- (void)toolbarHidden:(BOOL)Bool{
+    //    self.navigationController.navigationBar.hidden = Bool;
+    //    self.tabBarController.tabBar.hidden = Bool;
+    //    [[UIApplication sharedApplication] setStatusBarHidden:Bool];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleDefault;
+    //UIStatusBarStyleDefault = 0 黑色文字，浅色背景时使用
+    //UIStatusBarStyleLightContent = 1 白色文字，深色背景时使用
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return self.show; // 返回NO表示要显示，返回YES将hiden
 }
 
 

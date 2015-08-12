@@ -10,7 +10,7 @@
 #import "MainChatViewController.h"
 #import "ChatListViewController.h"
 
-@interface MainViewController : UIViewController<UINavigationControllerDelegate,IChatManagerDelegate>{
+@interface MainViewController : UIViewController<UINavigationControllerDelegate,IChatManagerDelegate,UIScrollViewDelegate>{
     BOOL loginSuccess;
 }
 - (IBAction)chooseChildren:(UIButton *)sender;

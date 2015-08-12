@@ -27,6 +27,7 @@
 #import "ApplyViewController.h"
 #import "MyTabbarController.h"
 #import "BbxxTarbarViewController.h"
+#import "ChildrenStoryViewController.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -37,7 +38,8 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     NSArray *kcbarr;//课程表
     NSArray *sparr;//食谱
     MBProgressHUD *HUD;
-    
+    UIPageControl *spacePageControl;
+    UIScrollView *mainScrollView;
     UILabel *unreadlabel;
 }
 
@@ -89,7 +91,11 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     //初始化网络引擎
     engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     unreadlabel = [[UILabel alloc] init];
-    
+    mainScrollView = [[UIScrollView alloc] init];
+    mainScrollView.delegate = self;
+    [mainScrollView setPagingEnabled:YES];
+    mainScrollView.showsHorizontalScrollIndicator = NO;
+    [self.view addSubview:mainScrollView];
     //添加加载等待条
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     HUD.labelText = @"加载中...";
@@ -118,10 +124,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 
 - (void)setButtons{
     
-//    float height = [UIScreen mainScreen].bounds.size.height;
+    float height = [UIScreen mainScreen].bounds.size.height;
     float width = [UIScreen mainScreen].bounds.size.width;
     
-//    [mainScrollView setFrame:CGRectMake(0, 170, width, height-170)];
+    [mainScrollView setFrame:CGRectMake(0, 170, width, height-170)];
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -183,39 +189,39 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                 for (NSString *menuStr in self.menus) {
 //                    NSString *menuStr = [self.menus objectAtIndex:i];
                     
-                    if ([menuStr isEqualToString:@"2_groupleChat"] ||
-                        [menuStr isEqualToString:@"2_checkin"] ||
-                        [menuStr isEqualToString:@"2_shuttle"]) {
+                    if ([menuStr isEqualToString:@"27_groupleChat"] ||
+                        [menuStr isEqualToString:@"28_checkin"] ||
+                        [menuStr isEqualToString:@"29_shuttle"]) {
                         continue;
                     }
                     
                     CGRect btnr;
                     switch (i) {
                         case 0:
-                            btnr = CGRectMake(10, 170, 90, 90);
+                            btnr = CGRectMake(10, 10, 90, 90);
                             break;
                         case 1:
-                            btnr = CGRectMake(width/2-45, 170, 90, 90);
+                            btnr = CGRectMake(width/2-45, 10, 90, 90);
                             break;
                         case 2:
-                            btnr = CGRectMake(width-100, 170, 90, 90);
+                            btnr = CGRectMake(width-100, 10, 90, 90);
                             break;
                         case 3:
-                            btnr = CGRectMake(10, 320, 90, 90);
+                            btnr = CGRectMake(10, 135, 90, 90);
                             break;
                         case 4:
-                            btnr = CGRectMake(width/2-45, 320, 90, 90);
+                            btnr = CGRectMake(width/2-45, 135, 90, 90);
                             break;
                         case 5:
-                            btnr = CGRectMake(width-100, 320, 90, 90);
+                            btnr = CGRectMake(width-100, 135, 90, 90);
                             break;
-//                        case 6:
-//                            if (height <= 480) {
-//                                btnr = CGRectMake(width+10, 10, 90, 90);
-//                            }else{
-//                                btnr = CGRectMake(10, 260, 90, 90);
-//                            }
-//                            break;
+                        case 6:
+                            if (height <= 480) {
+                                btnr = CGRectMake(width+10, 10, 90, 90);
+                            }else{
+                                btnr = CGRectMake(10, 260, 90, 90);
+                            }
+                            break;
                         default:
                             btnr = CGRectMake(0, 0, 0, 0);
                             break;
@@ -240,12 +246,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         [unreadlabel setTextAlignment:NSTextAlignmentCenter];
                         [unreadlabel setBackgroundColor:[UIColor redColor]];
                         [unreadlabel setHidden:YES];
-//                        [mainScrollView addSubview:btn4];
-//                        [mainScrollView addSubview:label4];
-//                        [mainScrollView addSubview:unreadlabel];
-                        [self.view addSubview:btn4];
-                        [self.view addSubview:label4];
-                        [self.view addSubview:unreadlabel];
+                        [mainScrollView addSubview:btn4];
+                        [mainScrollView addSubview:label4];
+                        [mainScrollView addSubview:unreadlabel];
+//                        [self.view addSubview:btn4];
+//                        [self.view addSubview:label4];
+//                        [self.view addSubview:unreadlabel];
                     }else if([menuStr isEqualToString:@"1_groupleChat"]){//1_groupleChat">教师园地
 //                        UIButton *btn2 = [[UIButton alloc] init];
 //                        [btn2 setFrame:btnr];
@@ -271,10 +277,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label2.textAlignment = NSTextAlignmentCenter;
                         [label2 setFont:[UIFont systemFontOfSize:16]];
                         [label2 setBackgroundColor:[UIColor clearColor]];
-//                        [mainScrollView addSubview:btn2];
-//                        [mainScrollView addSubview:label2];
-                        [self.view addSubview:btn2];
-                        [self.view addSubview:label2];
+                        [mainScrollView addSubview:btn2];
+                        [mainScrollView addSubview:label2];
+//                        [self.view addSubview:btn2];
+//                        [self.view addSubview:label2];
                     }else if([menuStr isEqualToString:@"22_class"]){//2_class">宝宝班级
                         UIButton *btn1 = [[UIButton alloc] init];
                         [btn1 setFrame:btnr];
@@ -287,10 +293,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label1.textAlignment = NSTextAlignmentCenter;
                         [label1 setFont:[UIFont systemFontOfSize:16]];
                         [label1 setBackgroundColor:[UIColor clearColor]];
-//                        [mainScrollView addSubview:btn1];
-//                        [mainScrollView addSubview:label1];
-                        [self.view addSubview:btn1];
-                        [self.view addSubview:label1];
+                        [mainScrollView addSubview:btn1];
+                        [mainScrollView addSubview:label1];
+//                        [self.view addSubview:btn1];
+//                        [self.view addSubview:label1];
                     }else if([menuStr isEqualToString:@"24_cookbook"]){//2_cookbook">宝宝食谱
                         UIButton *btn3 = [[UIButton alloc] init];
                         [btn3 setFrame:btnr];
@@ -303,10 +309,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label3.textAlignment = NSTextAlignmentCenter;
                         [label3 setFont:[UIFont systemFontOfSize:16]];
                         [label3 setBackgroundColor:[UIColor clearColor]];
-//                        [mainScrollView addSubview:btn3];
-//                        [mainScrollView addSubview:label3];
-                        [self.view addSubview:btn3];
-                        [self.view addSubview:label3];
+                        [mainScrollView addSubview:btn3];
+                        [mainScrollView addSubview:label3];
+//                        [self.view addSubview:btn3];
+//                        [self.view addSubview:label3];
                     }else if([menuStr isEqualToString:@"25_information"]){//2_information">育儿资讯
                         UIButton *btn5 = [[UIButton alloc] init];
                         [btn5 setFrame:btnr];
@@ -319,10 +325,10 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label5.textAlignment = NSTextAlignmentCenter;
                         [label5 setFont:[UIFont systemFontOfSize:16]];
                         [label5 setBackgroundColor:[UIColor clearColor]];
-//                        [mainScrollView addSubview:btn5];
-//                        [mainScrollView addSubview:label5];
-                        [self.view addSubview:btn5];
-                        [self.view addSubview:label5];
+                        [mainScrollView addSubview:btn5];
+                        [mainScrollView addSubview:label5];
+//                        [self.view addSubview:btn5];
+//                        [self.view addSubview:label5];
                     }else if([menuStr isEqualToString:@"23_course"]){//2_course">课程表
                         UIButton *btn6 = [[UIButton alloc] init];
                         [btn6 setFrame:btnr];
@@ -335,12 +341,65 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         label6.textAlignment = NSTextAlignmentCenter;
                         [label6 setFont:[UIFont systemFontOfSize:16]];
                         [label6 setBackgroundColor:[UIColor clearColor]];
-//                        [mainScrollView addSubview:btn6];
-//                        [mainScrollView addSubview:label6];
-                        [self.view addSubview:btn6];
-                        [self.view addSubview:label6];
+                        [mainScrollView addSubview:btn6];
+                        [mainScrollView addSubview:label6];
+//                        [self.view addSubview:btn6];
+//                        [self.view addSubview:label6];
+                    }else if([menuStr isEqualToString:@"211_eggs"]){//儿歌故事会
+                        UIButton *btn2 = [[UIButton alloc] init];
+                        [btn2 setFrame:btnr];
+                        [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_002.png"] forState:UIControlStateNormal];
+                        //                        [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_003_high.png"] forState:UIControlStateHighlighted];
+                        [btn2 addTarget:self action:@selector(childrenStory) forControlEvents:UIControlEventTouchUpInside];
+                        UILabel *label2 = [[UILabel alloc] init];
+                        [label2 setFrame:CGRectMake(btn2.frame.origin.x, btn2.frame.origin.y+95, 90, 20)];
+                        label2.text = @"儿歌故事会";
+                        label2.textAlignment = NSTextAlignmentCenter;
+                        [label2 setFont:[UIFont systemFontOfSize:16]];
+                        [label2 setBackgroundColor:[UIColor clearColor]];
+                        [mainScrollView addSubview:btn2];
+                        [mainScrollView addSubview:label2];
+                        //                        [self.view addSubview:btn2];
+                        //                        [self.view addSubview:label2];
                     }
                     i++;
+                }
+                
+                if (i > 6) {
+                    if (height <= 480) {
+                        [mainScrollView setContentSize:CGSizeMake(width*2, height-170)];
+                        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+                            spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-30, width, 10)];
+                        }else{
+                            spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-50, width, 10)];
+                        }
+                        spacePageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+                        spacePageControl.pageIndicatorTintColor = [UIColor grayColor];
+                        spacePageControl.numberOfPages = 2;
+                        spacePageControl.userInteractionEnabled = NO;
+                        [self.view addSubview:spacePageControl];
+                    }else if(height <= 1334/2){
+                        [mainScrollView setContentSize:CGSizeMake(width, height-170)];
+//                        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
+//                            if (iPhone5) {
+//                                spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-20, width, 10)];
+//                            }else{
+//                                spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-30, width, 10)];
+//                            }
+//                            
+//                        }else{
+//                            spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-50, width, 10)];
+//                        }
+//                        spacePageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
+//                        spacePageControl.pageIndicatorTintColor = [UIColor grayColor];
+//                        spacePageControl.numberOfPages = 1;
+//                        spacePageControl.userInteractionEnabled = NO;
+//                        [self.view addSubview:spacePageControl];
+                    }else{
+                        [mainScrollView setContentSize:CGSizeMake(width, height-170)];
+                    }
+                }else{
+                    [mainScrollView setContentSize:CGSizeMake(width, height-170)];
                 }
             }
             [HUD hide:YES];
@@ -357,6 +416,16 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     [engine enqueueOperation:op];
     
     
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)sender
+{
+    
+    // 得到每页宽度
+    CGFloat pageWidth = sender.frame.size.width;
+    // 根据当前的x坐标和页宽度计算出当前页数
+    int currentPage = floor((sender.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+    spacePageControl.currentPage = currentPage;
 }
 
 - (void)initData{
@@ -783,6 +852,12 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
     }
     [self.navigationController setNavigationBarHidden:NO];
     [self.navigationController pushViewController:_chatListController animated:YES];
+}
+
+-(void)childrenStory{
+    ChildrenStoryViewController *vc = [[ChildrenStoryViewController alloc] init];
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 //返回到该页面调用

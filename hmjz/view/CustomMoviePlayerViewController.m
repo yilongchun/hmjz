@@ -86,7 +86,9 @@
     if ([mp respondsToSelector:@selector(loadState)])
     {
         // Set movie player layout
-        [mp setControlStyle:MPMovieControlStyleFullscreen]; //MPMovieControlStyleFullscreen //MPMovieControlStyleEmbedded
+        [mp setControlStyle:MPMovieControlStyleEmbedded]; //MPMovieControlStyleFullscreen //MPMovieControlStyleEmbedded
+        
+        [mp setControlStyle:MPMovieControlStyleFullscreen];
         //满屏
         [mp setFullscreen:YES];
         // 有助于减少延迟

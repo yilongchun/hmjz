@@ -165,6 +165,7 @@
 		E4C9C9011A09F1F8002A23E7 /* UpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C9C8FF1A09F1F8002A23E7 /* UpdatePasswordViewController.m */; };
 		E4C9C9021A09F1F8002A23E7 /* UpdatePasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */; };
 		E4CBDD6E1B588F2700247C12 /* UIView+RGSize.m in Sources */ = {isa = PBXBuildFile; fileRef = E4CBDD6D1B588F2700247C12 /* UIView+RGSize.m */; };
+		E4D4BF371B7C3FE400C76555 /* ic_index_013.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D4BF361B7C3FE400C76555 /* ic_index_013.png */; };
 		E4D6FEF81AB9C81B00F1CAAA /* IQNSArray+Sort.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDA1AB9C81B00F1CAAA /* IQNSArray+Sort.m */; };
 		E4D6FEF91AB9C81B00F1CAAA /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDC1AB9C81B00F1CAAA /* IQUIView+Hierarchy.m */; };
 		E4D6FEFA1AB9C81B00F1CAAA /* IQUIWindow+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = E4D6FEDE1AB9C81B00F1CAAA /* IQUIWindow+Hierarchy.m */; };
@@ -785,6 +786,7 @@
 		E4C9C9001A09F1F8002A23E7 /* UpdatePasswordViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UpdatePasswordViewController.xib; path = view/UpdatePasswordViewController.xib; sourceTree = "<group>"; };
 		E4CBDD6C1B588F2700247C12 /* UIView+RGSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+RGSize.h"; sourceTree = "<group>"; };
 		E4CBDD6D1B588F2700247C12 /* UIView+RGSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RGSize.m"; sourceTree = "<group>"; };
+		E4D4BF361B7C3FE400C76555 /* ic_index_013.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_index_013.png; sourceTree = "<group>"; };
 		E4D6FED91AB9C81B00F1CAAA /* IQNSArray+Sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQNSArray+Sort.h"; sourceTree = "<group>"; };
 		E4D6FEDA1AB9C81B00F1CAAA /* IQNSArray+Sort.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQNSArray+Sort.m"; sourceTree = "<group>"; };
 		E4D6FEDB1AB9C81B00F1CAAA /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
@@ -1687,6 +1689,7 @@
 				E4C80B9B1A0B113B0094DA9F /* ic_index_010.png */,
 				E4C80B9C1A0B113B0094DA9F /* ic_index_011.png */,
 				E4C80B9D1A0B113B0094DA9F /* ic_index_012.png */,
+				E4D4BF361B7C3FE400C76555 /* ic_index_013.png */,
 				E4C80B9E1A0B113B0094DA9F /* ic_index_bg.png */,
 				E4C80B9F1A0B113B0094DA9F /* ic_kcb_bg.png */,
 				E4C80BA01A0B113B0094DA9F /* ic_kcb_bg2.png */,
@@ -3226,6 +3229,7 @@
 				E4EFB9DA1A13026B007D8CB1 /* chatListCellHead@2x.png in Resources */,
 				E4EFBA281A13026B007D8CB1 /* chat_receiver_bg.png in Resources */,
 				E412E1411B79DF4000F62A5D /* ChildrenStoryTableViewCell.xib in Resources */,
+				E4D4BF371B7C3FE400C76555 /* ic_index_013.png in Resources */,
 				E4EC65A41A288AA800924611 /* xxhd.png in Resources */,
 				E4EFB8E61A12F24D007D8CB1 /* chatBar_record.png in Resources */,
 				E4EFBA0B1A13026B007D8CB1 /* chat_video_play.png in Resources */,

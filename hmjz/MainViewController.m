@@ -348,7 +348,7 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                     }else if([menuStr isEqualToString:@"211_eggs"]){//儿歌故事会
                         UIButton *btn2 = [[UIButton alloc] init];
                         [btn2 setFrame:btnr];
-                        [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_002.png"] forState:UIControlStateNormal];
+                        [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_013.png"] forState:UIControlStateNormal];
                         //                        [btn2 setBackgroundImage:[UIImage imageNamed:@"ic_index_003_high.png"] forState:UIControlStateHighlighted];
                         [btn2 addTarget:self action:@selector(childrenStory) forControlEvents:UIControlEventTouchUpInside];
                         UILabel *label2 = [[UILabel alloc] init];

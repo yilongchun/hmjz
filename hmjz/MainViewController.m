@@ -378,23 +378,6 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
                         spacePageControl.numberOfPages = 2;
                         spacePageControl.userInteractionEnabled = NO;
                         [self.view addSubview:spacePageControl];
-                    }else if(height <= 1334/2){
-                        [mainScrollView setContentSize:CGSizeMake(width, height-170)];
-//                        if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1){
-//                            if (iPhone5) {
-//                                spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-20, width, 10)];
-//                            }else{
-//                                spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-30, width, 10)];
-//                            }
-//                            
-//                        }else{
-//                            spacePageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0.0, height-50, width, 10)];
-//                        }
-//                        spacePageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
-//                        spacePageControl.pageIndicatorTintColor = [UIColor grayColor];
-//                        spacePageControl.numberOfPages = 1;
-//                        spacePageControl.userInteractionEnabled = NO;
-//                        [self.view addSubview:spacePageControl];
                     }else{
                         [mainScrollView setContentSize:CGSizeMake(width, height-170)];
                     }

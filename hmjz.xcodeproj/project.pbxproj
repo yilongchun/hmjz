@@ -31,6 +31,8 @@
 		E412E17F1B79F09400F62A5D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16A1B79F09400F62A5D /* UIScrollView+MJExtension.m */; };
 		E412E1801B79F09400F62A5D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16C1B79F09400F62A5D /* UIScrollView+MJRefresh.m */; };
 		E412E1811B79F09400F62A5D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16E1B79F09400F62A5D /* UIView+MJExtension.m */; };
+		E4155EF31B7DD4A800694A83 /* GgxqWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E4155EF11B7DD4A800694A83 /* GgxqWebViewController.m */; };
+		E4155EF41B7DD4A800694A83 /* GgxqWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4155EF21B7DD4A800694A83 /* GgxqWebViewController.xib */; };
 		E459B5861B7AE71100E051AF /* PlayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E459B5841B7AE71100E051AF /* PlayTableViewCell.m */; };
 		E459B5871B7AE71100E051AF /* PlayTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E459B5851B7AE71100E051AF /* PlayTableViewCell.xib */; };
 		E459B5891B7B194900E051AF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E459B5881B7B194900E051AF /* AVFoundation.framework */; };
@@ -585,6 +587,9 @@
 		E412E16C1B79F09400F62A5D /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		E412E16D1B79F09400F62A5D /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		E412E16E1B79F09400F62A5D /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		E4155EF01B7DD4A800694A83 /* GgxqWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GgxqWebViewController.h; path = view/GgxqWebViewController.h; sourceTree = "<group>"; };
+		E4155EF11B7DD4A800694A83 /* GgxqWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GgxqWebViewController.m; path = view/GgxqWebViewController.m; sourceTree = "<group>"; };
+		E4155EF21B7DD4A800694A83 /* GgxqWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GgxqWebViewController.xib; path = view/GgxqWebViewController.xib; sourceTree = "<group>"; };
 		E459B5831B7AE71100E051AF /* PlayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayTableViewCell.h; path = view/PlayTableViewCell.h; sourceTree = "<group>"; };
 		E459B5841B7AE71100E051AF /* PlayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayTableViewCell.m; path = view/PlayTableViewCell.m; sourceTree = "<group>"; };
 		E459B5851B7AE71100E051AF /* PlayTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PlayTableViewCell.xib; path = view/PlayTableViewCell.xib; sourceTree = "<group>"; };
@@ -1803,6 +1808,9 @@
 				E4C69A6619F9E35400B0EFEA /* GgtzTableViewCell.h */,
 				E4C69A6719F9E35400B0EFEA /* GgtzTableViewCell.m */,
 				E4C69A6819F9E35400B0EFEA /* GgtzTableViewCell.xib */,
+				E4155EF01B7DD4A800694A83 /* GgxqWebViewController.h */,
+				E4155EF11B7DD4A800694A83 /* GgxqWebViewController.m */,
+				E4155EF21B7DD4A800694A83 /* GgxqWebViewController.xib */,
 				E4C69A7B19FA34FB00B0EFEA /* GgxqViewController.h */,
 				E4C69A7C19FA34FB00B0EFEA /* GgxqViewController.m */,
 				E4C69A7D19FA34FB00B0EFEA /* GgxqViewController.xib */,
@@ -3383,6 +3391,7 @@
 				E4EFBA2B1A13026B007D8CB1 /* chat_sender_audio_playing_000@2x.png in Resources */,
 				E4EFB9FE1A13026B007D8CB1 /* VoiceSearchFeedback014@2x.png in Resources */,
 				E4EFB9151A12F24D007D8CB1 /* group_invitee_delete@2x.png in Resources */,
+				E4155EF41B7DD4A800694A83 /* GgxqWebViewController.xib in Resources */,
 				E459B5871B7AE71100E051AF /* PlayTableViewCell.xib in Resources */,
 				E4EFBA3F1A13026B007D8CB1 /* tabbar_contactsHL@2x.png in Resources */,
 				E4EFB8E31A12F24D007D8CB1 /* chatBar_more@2x.png in Resources */,
@@ -3551,6 +3560,7 @@
 				E4EFB8BE1A12F24D007D8CB1 /* UIViewController+DismissKeyboard.m in Sources */,
 				E4EFB91B1A12F24D007D8CB1 /* GroupSettingViewController.m in Sources */,
 				E4EFB8A01A12F24D007D8CB1 /* MWTapDetectingImageView.m in Sources */,
+				E4155EF31B7DD4A800694A83 /* GgxqWebViewController.m in Sources */,
 				E4EFB9311A12F24D007D8CB1 /* NSManagedObject+MagicalDataImport.m in Sources */,
 				E4EFB91F1A12F24D007D8CB1 /* ChineseToPinyin.m in Sources */,
 				E4EFB8B61A12F24D007D8CB1 /* SRSlimeView.m in Sources */,

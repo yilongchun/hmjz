@@ -15,6 +15,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "BjtzDetailViewController.h"
 #import "SRRefreshView.h"
+#import "GgxqWebViewController.h"
 
 @interface BjtzViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MBProgressHUD *HUD;
@@ -306,11 +307,20 @@
         }
         
     }else{
+//        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+//        BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
+//        vc.title = @"公告详情";
+//        vc.dataSource = [NSMutableArray arrayWithObject:info];
+//        [self.navigationController pushViewController:vc animated:YES];
+        
+        GgxqWebViewController *vc = [[GgxqWebViewController alloc] init];
         NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
-        BjtzDetailViewController *vc = [[BjtzDetailViewController alloc]init];
+        NSString *tnid = [info objectForKey:@"tnid"];
         vc.title = @"公告详情";
-        vc.dataSource = [NSMutableArray arrayWithObject:info];
+        vc.tnid = tnid;
+        vc.type = 3;
         [self.navigationController pushViewController:vc animated:YES];
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     

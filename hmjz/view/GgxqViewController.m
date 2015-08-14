@@ -15,8 +15,9 @@
 #import "PinglunTableViewCell.h"
 #import "SRRefreshView.h"
 #import "IQKeyboardManager.h"
+#import "MJRefresh.h"
 
-@interface GgxqViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
+@interface GgxqViewController ()<MBProgressHUDDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
     NSNumber *totalpage;
@@ -63,11 +64,12 @@
     [dic setValue:self.tnid forKey:@"recordId"];
     [dic setValue:[userDefaults objectForKey:@"userid"]  forKey:@"userId"];
     [dic setValue:textView.text forKey:@"commentContent"];
-    [dic setValue:[NSNumber numberWithInt:4] forKey:@"type"];
+    [dic setValue:[NSNumber numberWithInt:self.type] forKey:@"type"];
     [dic setValue:[student objectForKey:@"studentid"] forKey:@"commentAttr1"];
     
     MKNetworkOperation *op = [engine operationWithPath:@"/Comment/sava.do" params:dic httpMethod:@"POST"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        [HUD hide:YES];
         //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
@@ -79,11 +81,11 @@
         NSString *msg = [resultDict objectForKey:@"msg"];
         
         if ([success boolValue]) {
-            self.dataSource = [NSMutableArray arrayWithObject:[self.dataSource objectAtIndex:0]];
-            page = [NSNumber numberWithInt:1];
-            [self loadDataPingLun];
+//            self.dataSource = [NSMutableArray arrayWithObject:[self.dataSource objectAtIndex:0]];
+//            page = [NSNumber numberWithInt:1];
+            [self.mytableview.header beginRefreshing];
         }else{
-            [HUD hide:YES];
+//            [HUD hide:YES];
             [self alertMsg:msg];
         }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
@@ -253,9 +255,23 @@
     if ([mytableview respondsToSelector:@selector(setLayoutMargins:)]) {
         [mytableview setLayoutMargins:UIEdgeInsetsZero];
     }
-   [self.mytableview addSubview:self.slimeView];
+//   [self.mytableview addSubview:self.slimeView];
     
-    [self loadData];
+//    [self loadData];
+    
+    // 添加下拉刷新控件
+    self.mytableview.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        //初始化数据
+        [self loadDataPingLun];
+    }];
+    self.mytableview.footer = [MJRefreshAutoFooter footerWithRefreshingBlock:^{
+        [self loadDataPingLunMore];
+    }];
+    
+    self.dataSource = [NSMutableArray array];
+    
+    [self.mytableview.header beginRefreshing];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated{
@@ -266,23 +282,23 @@
 
 #pragma mark - getter
 
-- (SRRefreshView *)slimeView
-{
-    if (!_slimeView) {
-        _slimeView = [[SRRefreshView alloc] init];
-        _slimeView.delegate = self;
-        _slimeView.upInset = 0;
-        _slimeView.slimeMissWhenGoingBack = YES;
-        _slimeView.slime.bodyColor = [UIColor grayColor];
-        _slimeView.slime.skinColor = [UIColor grayColor];
-        _slimeView.slime.lineWith = 1;
-        _slimeView.slime.shadowBlur = 4;
-        _slimeView.slime.shadowColor = [UIColor grayColor];
-        _slimeView.backgroundColor = [UIColor whiteColor];
-    }
-    
-    return _slimeView;
-}
+//- (SRRefreshView *)slimeView
+//{
+//    if (!_slimeView) {
+//        _slimeView = [[SRRefreshView alloc] init];
+//        _slimeView.delegate = self;
+//        _slimeView.upInset = 0;
+//        _slimeView.slimeMissWhenGoingBack = YES;
+//        _slimeView.slime.bodyColor = [UIColor grayColor];
+//        _slimeView.slime.skinColor = [UIColor grayColor];
+//        _slimeView.slime.lineWith = 1;
+//        _slimeView.slime.shadowBlur = 4;
+//        _slimeView.slime.shadowColor = [UIColor grayColor];
+//        _slimeView.backgroundColor = [UIColor whiteColor];
+//    }
+//    
+//    return _slimeView;
+//}
 
 - (void)loadData{
     [HUD show:YES];
@@ -330,13 +346,16 @@
     page = [NSNumber numberWithInt:1];
     rows = [NSNumber numberWithInt:10];
     
+    
+    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
     [dic setValue:self.tnid forKey:@"recordId"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    [dic setValue:[NSNumber numberWithInt:4] forKey:@"type"];
+    [dic setValue:[NSNumber numberWithInt:self.type] forKey:@"type"];//3班级 4学校
     MKNetworkOperation *op = [engine operationWithPath:@"/Comment/findPageList.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        [self.mytableview.header endRefreshing];
         //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
@@ -349,6 +368,7 @@
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
+                [self.dataSource removeAllObjects];
                 [self.dataSource addObjectsFromArray:arr];
                 NSNumber *total = [data objectForKey:@"total"];
                 if ([total intValue] % [rows intValue] == 0) {
@@ -358,13 +378,12 @@
                 }
                 [self.mytableview reloadData];
             }
-            [HUD hide:YES];
+            
         }else{
-            [HUD hide:YES];
         }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
-        [HUD hide:YES];
+        [self.mytableview.header endRefreshing];
         
     }];
     [engine enqueueOperation:op];
@@ -373,45 +392,47 @@
 - (void)loadDataPingLunMore{
     if ([page intValue]< [totalpage intValue]) {
         page = [NSNumber numberWithInt:[page intValue] +1];
-    }
-    NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-    [dic setValue:self.tnid forKey:@"recordId"];
-    [dic setValue:page forKey:@"page"];
-    [dic setValue:rows forKey:@"rows"];
-    [dic setValue:[NSNumber numberWithInt:4] forKey:@"type"];
-    MKNetworkOperation *op = [engine operationWithPath:@"/Comment/findPageList.do" params:dic httpMethod:@"GET"];
-    [op addCompletionHandler:^(MKNetworkOperation *operation) {
-        //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
-        NSString *result = [operation responseString];
-        NSError *error;
-        NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
-        if (resultDict == nil) {
-            NSLog(@"json parse failed \r\n");
-        }
-        NSNumber *success = [resultDict objectForKey:@"success"];
-        if ([success boolValue]) {
-            NSDictionary *data = [resultDict objectForKey:@"data"];
-            if (data != nil) {
-                NSArray *arr = [data objectForKey:@"rows"];
-                [self.dataSource addObjectsFromArray:arr];
-                NSNumber *total = [data objectForKey:@"total"];
-                if ([total intValue] % [rows intValue] == 0) {
-                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
-                }else{
-                    totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
-                }
-                [self.mytableview reloadData];
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setValue:self.tnid forKey:@"recordId"];
+        [dic setValue:page forKey:@"page"];
+        [dic setValue:rows forKey:@"rows"];
+        [dic setValue:[NSNumber numberWithInt:self.type] forKey:@"type"];//3班级 4学校
+        MKNetworkOperation *op = [engine operationWithPath:@"/Comment/findPageList.do" params:dic httpMethod:@"GET"];
+        [op addCompletionHandler:^(MKNetworkOperation *operation) {
+            [self.mytableview.footer endRefreshing];
+            //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
+            NSString *result = [operation responseString];
+            NSError *error;
+            NSDictionary *resultDict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+            if (resultDict == nil) {
+                NSLog(@"json parse failed \r\n");
             }
-            [HUD hide:YES];
-        }else{
-            [HUD hide:YES];
-        }
-    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
-        [HUD hide:YES];
-        
-    }];
-    [engine enqueueOperation:op];
+            NSNumber *success = [resultDict objectForKey:@"success"];
+            if ([success boolValue]) {
+                NSDictionary *data = [resultDict objectForKey:@"data"];
+                if (data != nil) {
+                    NSArray *arr = [data objectForKey:@"rows"];
+                    [self.dataSource addObjectsFromArray:arr];
+                    NSNumber *total = [data objectForKey:@"total"];
+                    if ([total intValue] % [rows intValue] == 0) {
+                        totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
+                    }else{
+                        totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
+                    }
+                    [self.mytableview reloadData];
+                }
+            }else{
+            }
+        }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
+            NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+            [self.mytableview.footer endRefreshing];
+            
+        }];
+        [engine enqueueOperation:op];
+    }else{
+        [self.mytableview.footer endRefreshing];
+    }
+    
 }
 
 
@@ -423,53 +444,53 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if ([page intValue]!= [totalpage intValue] && [self.dataSource count] != 1) {
-        return [[self dataSource] count] + 1;
-    }else{
+//    if ([page intValue]!= [totalpage intValue] && [self.dataSource count] != 1) {
+//        return [[self dataSource] count] + 1;
+//    }else{
         return [[self dataSource] count];
-    }
+//    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([indexPath row] == 0) {
-        static NSString *cellIdentifier = @"contentcell";
-        ContentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (!cell) {
-            cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
-        }
-        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
-
-        NSString *title = [data objectForKey:@"tntitle"];
-        NSString *date = [data objectForKey:@"tnmoddate"];
-        NSString *content = [data objectForKey:@"tncontent"];
-        cell.contentTitle.text = title;
-        cell.contentDate.text = date;
-        cell.content.text = content;
-        //    cell.content.text = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
-        cell.content.numberOfLines = 0;
-        [cell.content sizeToFit];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width ;
-        UIFont *font = [UIFont systemFontOfSize:17];
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth-16, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        [cell.content setFrame:CGRectMake(cell.content.frame.origin.x, cell.content.frame.origin.y, cell.content.frame.size.width, size.height)];
-        return cell;
-        
-    }else{
-        if ([self.dataSource count] == indexPath.row) {
-            static NSString *cellIdentifier = @"morecell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-            if (!cell) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-                cell.textLabel.text = @"点击加载更多";
-            }
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
-            return cell;
-            
-        }else{
+//    if ([indexPath row] == 0) {
+//        static NSString *cellIdentifier = @"contentcell";
+//        ContentCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//        if (!cell) {
+//            cell = [[[NSBundle mainBundle] loadNibNamed:@"ContentCell" owner:self options:nil] lastObject];
+//        }
+//        NSDictionary *data = [self.dataSource objectAtIndex:indexPath.row];
+//
+//        NSString *title = [data objectForKey:@"tntitle"];
+//        NSString *date = [data objectForKey:@"tnmoddate"];
+//        NSString *content = [data objectForKey:@"tncontent"];
+//        cell.contentTitle.text = title;
+//        cell.contentDate.text = date;
+//        cell.content.text = content;
+//        //    cell.content.text = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
+//        cell.content.numberOfLines = 0;
+//        [cell.content sizeToFit];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        
+//        CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width ;
+//        UIFont *font = [UIFont systemFontOfSize:17];
+//        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth-16, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+//        [cell.content setFrame:CGRectMake(cell.content.frame.origin.x, cell.content.frame.origin.y, cell.content.frame.size.width, size.height)];
+//        return cell;
+//        
+//    }else{
+//        if ([self.dataSource count] == indexPath.row) {
+//            static NSString *cellIdentifier = @"morecell";
+//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//            if (!cell) {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//                cell.textLabel.text = @"点击加载更多";
+//            }
+//            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+//            return cell;
+//            
+//        }else{
             static NSString *cellIdentifier = @"pingluncell";
             PinglunTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
             if (!cell) {
@@ -508,28 +529,28 @@
             }
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
-        }
-    }
+//        }
+//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSInteger row = [indexPath row];
-    if (row == 0) {
-        NSInteger row = [indexPath row];
-        // 列寬
-        CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width;
-        // 用何種字體進行顯示
-        UIFont *font = [UIFont systemFontOfSize:17];
-        // 該行要顯示的內容
-        NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"tncontent"];
-        //    NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
-        // 計算出顯示完內容需要的最小尺寸
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth-16, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
-        return size.height+86;
-    }else{
-        if ([self.dataSource count] == indexPath.row) {
-            return 44;
-        }else{
+//    if (row == 0) {
+//        NSInteger row = [indexPath row];
+//        // 列寬
+//        CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width;
+//        // 用何種字體進行顯示
+//        UIFont *font = [UIFont systemFontOfSize:17];
+//        // 該行要顯示的內容
+//        NSString *content = [[self.dataSource objectAtIndex:row] objectForKey:@"tncontent"];
+//        //    NSString *content = @"测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试测试";
+//        // 計算出顯示完內容需要的最小尺寸
+//        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth-16, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
+//        return size.height+86;
+//    }else{
+//        if ([self.dataSource count] == indexPath.row) {
+//            return 44;
+//        }else{
             // 列寬
             CGFloat contentWidth = [UIScreen mainScreen].bounds.size.width-59;
             // 用何種字體進行顯示
@@ -539,8 +560,8 @@
             // 計算出顯示完內容需要的最小尺寸
             CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, MAXFLOAT) lineBreakMode:NSLineBreakByCharWrapping];
             return size.height+60;
-        }
-    }
+//        }
+//    }
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -552,22 +573,22 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if ([self.dataSource count] != 1) {
-        if ([self.dataSource count] == indexPath.row) {
-            if (page == totalpage) {
-                
-            }else{
-                [HUD show:YES];
-                [self loadDataPingLunMore];
-            }
-        }else{
-            
-        }
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+////    if ([self.dataSource count] != 1) {
+//        if ([self.dataSource count] == indexPath.row) {
+//            if (page == totalpage) {
+//                
+//            }else{
+//                [HUD show:YES];
+//                [self loadDataPingLunMore];
+//            }
+//        }else{
+//            
+//        }
+////    }
+//    
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//}
 
 //提示
 - (void)alertMsg:(NSString *)msg{
@@ -584,22 +605,22 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    [_slimeView scrollViewDidScroll];
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    [_slimeView scrollViewDidEndDraging];
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    [_slimeView scrollViewDidScroll];
+//}
+//
+//- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+//{
+//    [_slimeView scrollViewDidEndDraging];
+//}
 
 #pragma mark - slimeRefresh delegate
 //刷新消息列表
 - (void)slimeRefreshStartRefresh:(SRRefreshView *)refreshView
 {
     
-    [self loadData];
+    [self loadDataPingLun];
     [_slimeView endRefresh];
 }
 /*

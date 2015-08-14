@@ -14,7 +14,7 @@
 #import "GgxqViewController.h"
 #import "SRRefreshView.h"
 #import "UIImageView+AFNetworking.h"
-
+#import "GgxqWebViewController.h"
 
 @interface GgtzViewController ()<MBProgressHUDDelegate,SRRefreshDelegate>{
     MBProgressHUD *HUD;
@@ -308,12 +308,21 @@
         }
         
     }else{
+//        NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
+//        NSString *tnid = [info objectForKey:@"tnid"];
+//        GgxqViewController *ggxq = [[GgxqViewController alloc]init];
+//        ggxq.title = @"公告详情";
+//        ggxq.tnid = tnid;
+//        [self.navigationController pushViewController:ggxq animated:YES];
+        
+        GgxqWebViewController *vc = [[GgxqWebViewController alloc] init];
         NSDictionary *info = [self.dataSource objectAtIndex:indexPath.row];
         NSString *tnid = [info objectForKey:@"tnid"];
-        GgxqViewController *ggxq = [[GgxqViewController alloc]init];
-        ggxq.title = @"公告详情";
-        ggxq.tnid = tnid;
-        [self.navigationController pushViewController:ggxq animated:YES];
+        vc.title = @"公告详情";
+        vc.tnid = tnid;
+        vc.type = 4;
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

@@ -96,7 +96,7 @@
 - (void)feecback{
     [self.mytextview resignFirstResponder];
     if (self.mytextview.text.length == 0) {
-        [self alertMsg:@"请填写内容"];
+        [self showHint:@"请填写内容"];
     }else{
         [HUD show:YES];
         NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
@@ -118,11 +118,12 @@
             NSNumber *success = [resultDict objectForKey:@"success"];
             if ([success boolValue]) {
                 [HUD hide:YES];
-                [self okMsk:@"提交成功"];
+                UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                [self showHint:@"提交成功" customView:imageview];
                 self.mytextview.text = @"";
             }else{
                 [HUD hide:YES];
-                [self alertMsg:@"提交失败"];
+                [self showHint:@"提交失败"];
             }
         }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
             NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
@@ -133,28 +134,6 @@
     }
     
     
-}
-//成功
-- (void)okMsk:(NSString *)msg{
-    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    hud.mode = MBProgressHUDModeCustomView;
-    hud.delegate = self;
-    hud.labelText = msg;
-    [hud show:YES];
-    [hud hide:YES afterDelay:1];
-}
-
-
-//提示
-- (void)alertMsg:(NSString *)msg{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = msg;
-    hud.margin = 10.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
 }
 
 //隐藏键盘

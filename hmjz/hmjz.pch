@@ -9,9 +9,11 @@
 #ifndef hmjz_hmjz_pch
 #define hmjz_hmjz_pch
 
-//#define HOST @"hmjxt.tunnel.mobi/sma"
-#define HOST @"mobile.hmjxt.com"
+//#define HOST @"hmjxt.tunnel.mobi/sma"//测试地址
+#define HOST @"mobile.hmjxt.com/sma"//正式地址
 
+//com.hmzl.inhouse.hmjz
+//com.hmzl.hmjz
 
 #import <Foundation/Foundation.h>
 

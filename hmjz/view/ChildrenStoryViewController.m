@@ -7,18 +7,15 @@
 //
 
 #import "ChildrenStoryViewController.h"
-#import "MBProgressHUD.h"
-#import "MKNetworkKit.h"
 #import "ChildrenStoryTableViewCell.h"
 #import "PlayTableViewCell.h"
 #import "MJRefresh.h"
 #import "Utils.h"
 #import "CustomMoviePlayerViewController.h"
 #import "KrVideoPlayerController.h"
+#import "AFNetworking.h"
 
-@interface ChildrenStoryViewController ()<MBProgressHUDDelegate>{
-    MBProgressHUD *HUD;
-    MKNetworkEngine *engine;
+@interface ChildrenStoryViewController (){
     NSNumber *totalpage;
     NSNumber *page;
     NSNumber *rows;
@@ -42,7 +39,6 @@
     
     self.show = NO;
     
-    engine = [[MKNetworkEngine alloc] initWithHostName:[Utils getHostname] customHeaderFields:nil];
     dataSource = [NSMutableArray array];
     segDataSource = [NSMutableArray array];
     UIView *v = [[UIView alloc] initWithFrame:CGRectZero];
@@ -69,10 +65,12 @@
 
 //加载数据
 - (void)loadSeg{
-    
-    
-    MKNetworkOperation *op = [engine operationWithPath:@"/puzzle/puzzletypeList.do" params:nil httpMethod:@"GET"];
-    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/puzzle/puzzletypeList.do",HOST];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
@@ -84,8 +82,6 @@
         NSString *msg = [resultDict objectForKey:@"msg"];
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
-//            [HUD hide:YES];
-            //            [self okMsk:@"加载成功"];
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
@@ -95,21 +91,19 @@
 //                    NSString *typeid = [info objectForKey:@"id"];
                     [segDataSource addObject:info];
                     [self.myseg insertSegmentWithTitle:typename atIndex:i animated:YES];
-
                 }
                 [self.myseg setSelectedSegmentIndex:0];
                 [self.myseg addTarget:self action:@selector(segChanged:) forControlEvents:UIControlEventValueChanged];
                 [self.mytableview.header beginRefreshing];
             }
         }else{
-            [self alertMsg:msg];
+            [self showHint:msg];
         }
-    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"MKNetwork request error : %@", [error localizedDescription]);
         [self.mytableview.header endRefreshing];
-        [self alertMsg:[err localizedDescription]];
+        [self showHint:[error localizedDescription]];
     }];
-    [engine enqueueOperation:op];
 }
 
 
@@ -128,9 +122,12 @@
     [dic setValue:typeid forKey:@"typeid"];
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
-    
-    MKNetworkOperation *op = [engine operationWithPath:@"/puzzle/puzzleList.do" params:dic httpMethod:@"GET"];
-    [op addCompletionHandler:^(MKNetworkOperation *operation) {
+    NSString *urlString = [NSString stringWithFormat:@"http://%@/puzzle/puzzleList.do",HOST];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
+    [manager GET:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];
         NSError *error;
@@ -143,13 +140,11 @@
         //        NSString *code = [resultDict objectForKey:@"code"];
         if ([success boolValue]) {
             [self.mytableview.header endRefreshing];
-            //            [self okMsk:@"加载成功"];
             NSDictionary *data = [resultDict objectForKey:@"data"];
             if (data != nil) {
                 NSArray *arr = [data objectForKey:@"rows"];
                 dataSource = [NSMutableArray arrayWithArray:arr];
                 NSNumber *total = [data objectForKey:@"total"];
-                
                 
                 if ([total intValue] % [rows intValue] == 0) {
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue]];
@@ -157,21 +152,17 @@
                     totalpage = [NSNumber numberWithInt:[total intValue] / [rows intValue] + 1];
                 }
                 
-                
-                
                 [self.mytableview reloadData];
             }
         }else{
             [self.mytableview.header endRefreshing];
-            [self alertMsg:msg];
-            
+            [self showHint:msg];
         }
-    }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-        NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"MKNetwork request error : %@", [error localizedDescription]);
         [self.mytableview.header endRefreshing];
-        [self alertMsg:[err localizedDescription]];
+        [self showHint:[error localizedDescription]];
     }];
-    [engine enqueueOperation:op];
 }
 
 - (void)loadMore{
@@ -184,8 +175,12 @@
         [dic setValue:typeid forKey:@"typeid"];
         [dic setValue:page forKey:@"page"];
         [dic setValue:rows forKey:@"rows"];
-        MKNetworkOperation *op = [engine operationWithPath:@"/puzzle/puzzleList.do" params:dic httpMethod:@"GET"];
-        [op addCompletionHandler:^(MKNetworkOperation *operation) {
+        NSString *urlString = [NSString stringWithFormat:@"http://%@/puzzle/puzzleList.do",HOST];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",@"text/json", @"text/plain", @"text/html", nil];
+        [manager GET:urlString parameters:dic success:^(AFHTTPRequestOperation *operation, id responseObject) {
             //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
             NSString *result = [operation responseString];
             NSError *error;
@@ -198,7 +193,6 @@
             //        NSString *code = [resultDict objectForKey:@"code"];
             if ([success boolValue]) {
                 [self.mytableview.footer endRefreshing];
-                //            [self okMsk:@"加载成功"];
                 NSDictionary *data = [resultDict objectForKey:@"data"];
                 if (data != nil) {
                     NSArray *arr = [data objectForKey:@"rows"];
@@ -213,42 +207,15 @@
                 }
             }else{
                 [self.mytableview.footer endRefreshing];
-                [self alertMsg:msg];
-                
+                [self showHint:msg];
             }
-        }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
-            NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSLog(@"MKNetwork request error : %@", [error localizedDescription]);
             [self.mytableview.footer endRefreshing];
-            [self alertMsg:[err localizedDescription]];
+            [self showHint:[error localizedDescription]];
         }];
-        [engine enqueueOperation:op];
     }
-    
 }
-
-//成功
-- (void)okMsk:(NSString *)msg{
-    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    hud.mode = MBProgressHUDModeCustomView;
-    hud.delegate = self;
-    hud.labelText = msg;
-    [hud show:YES];
-    [hud hide:YES afterDelay:1];
-}
-
-
-//提示
-- (void)alertMsg:(NSString *)msg{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = msg;
-    hud.margin = 10.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
-}
-
 #pragma mark - Table view data source
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -391,32 +358,8 @@
 -(void)play:(UITapGestureRecognizer *)gesture{
     NSDictionary *info = [dataSource objectAtIndex:gesture.view.tag - 1];
     NSString *path = [info objectForKey:@"path"];
-//    CustomMoviePlayerViewController *moviePlayer = [[CustomMoviePlayerViewController alloc] init];
-//    moviePlayer.moviePlayer.scalingMode=MPMovieScalingModeAspectFit;//窗口模式设置
-//    moviePlayer.moviePlayer.controlStyle=MPMovieControlStyleFullscreen;
-//    //将视频地址传过去
-//    moviePlayer.movieURL = [NSURL URLWithString:path];
-//    //然后播放就OK了
-//    [moviePlayer readyPlayer];
-//    [self presentViewController:moviePlayer animated:YES completion:^{
-//    }];
-    
     NSURL *url = [NSURL URLWithString:path];
     [self addVideoPlayerWithURL:url];
-    
-//    MPMoviePlayerViewController *playerViewController = [[MPMoviePlayerViewController alloc] initWithContentURL:[NSURL fileURLWithPath:path]];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieFinishedCallback:)
-//                                                 name:MPMoviePlayerPlaybackDidFinishNotification
-//                                               object:playerViewController];
-//    //-- add to view---
-//    [self presentViewController:playerViewController animated:YES completion:^{
-//    }];
-//    
-//    //---play movie---
-//    MPMoviePlayerController *player = [playerViewController moviePlayer];
-//    [player play];
-    
-    
 }
 
 - (void)addVideoPlayerWithURL:(NSURL *)url{
@@ -464,13 +407,6 @@
     return self.show; // 返回NO表示要显示，返回YES将hiden
 }
 
-//- (void) movieFinishedCallback:(NSNotification*) aNotification {
-//    MPMoviePlayerViewController *playerViewController = [aNotification object];
-//    [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:playerViewController];
-//    [[playerViewController moviePlayer] stop];
-//    [playerViewController dismissMoviePlayerViewControllerAnimated];
-//}
-
 /**
  *  详情
  *
@@ -492,16 +428,6 @@
 -(void)segChanged:(UISegmentedControl *)seg{
     [self.mytableview.header beginRefreshing];
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 
 @end

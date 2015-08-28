@@ -248,7 +248,7 @@
             [self updateImgData:[resultDict objectForKey:@"data"]];
             
         }else{
-            [self alertMsg:@"上传失败"];
+            [self showHint:@"上传失败"];
         }
         if (saveFlag) {
             NSFileManager *fileMgr = [NSFileManager defaultManager];
@@ -263,7 +263,7 @@
             [fileMgr removeItemAtPath:savedImagePath error:&err];
         }
         [HUD hide:YES];
-        [self alertMsg:[err localizedDescription]];
+        [self showHint:[err localizedDescription]];
     }];
     [engine enqueueOperation:op];
     
@@ -302,15 +302,16 @@
 //            [userDefaults removeObjectForKey:@"student"];
             [userDefaults setObject:updatestudent forKey:@"student"];
             [userDefaults setObject:@"1" forKey:@"updateImgFlag"];
-            [self okMsk:msg];
+            UIImageView *imageview = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+            [self showHint:msg customView:imageview];
         }else{
             [HUD hide:YES];
-            [self alertMsg:msg];
+            [self showHint:msg];
         }
     }errorHandler:^(MKNetworkOperation *errorOp, NSError* err) {
         NSLog(@"MKNetwork request error : %@", [err localizedDescription]);
         [HUD hide:YES];
-        [self alertMsg:[err localizedDescription]];
+        [self showHint:[err localizedDescription]];
     }];
     [engine enqueueOperation:op];
 }
@@ -323,32 +324,6 @@
     }];
 
 }
-
-//成功
-- (void)okMsk:(NSString *)msg{
-    MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:hud];
-    hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    hud.mode = MBProgressHUDModeCustomView;
-    hud.delegate = self;
-    hud.labelText = msg;
-    [hud show:YES];
-    [hud hide:YES afterDelay:1];
-}
-
-//提示
-- (void)alertMsg:(NSString *)msg{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.mode = MBProgressHUDModeText;
-    hud.labelText = msg;
-    hud.margin = 10.f;
-    hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
-}
-
-
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

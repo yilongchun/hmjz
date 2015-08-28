@@ -53,6 +53,18 @@
     self.navigationItem.backBarButtonItem = backItem;
     backItem.title = @"返回";
     
+    UIView *leftview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 35, 30)];
+    UIImageView *leftImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_login_password"]];
+    [leftview addSubview:leftImageView];
+    self.username.leftView = leftview;
+    self.username.leftViewMode = UITextFieldViewModeAlways;
+    
+    UIView *leftview2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 35, 30)];
+    UIImageView *leftImageView2 = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ic_login_user"]];
+    [leftview2 addSubview:leftImageView2];
+    self.password.leftView = leftview2;
+    self.password.leftViewMode = UITextFieldViewModeAlways;
+    
     
     [self.loginBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateNormal];
     [self.loginBtn setBackgroundImage:[[UIImage imageNamed:@"loginBtnBg2.png"]stretchableImageWithLeftCapWidth:5.0 topCapHeight:5.0] forState:UIControlStateHighlighted];

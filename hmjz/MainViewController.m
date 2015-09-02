@@ -608,24 +608,28 @@ static const CGFloat kDefaultPlaySoundInterval = 3.0;
 //育儿资讯
 - (IBAction)yezxAction:(UIButton *)sender {
     
-    NSMutableArray *vcs = [NSMutableArray array];
-    for (int i = 0; i < [typearr count]; i++) {
-        NSDictionary *type = [typearr objectAtIndex:i];
+    if ([typearr count] > 0) {
+        NSMutableArray *vcs = [NSMutableArray array];
+        for (int i = 0; i < [typearr count]; i++) {
+            NSDictionary *type = [typearr objectAtIndex:i];
+            
+            MyViewController *vc = [[MyViewController alloc] init];
+            vc.typeId = [type objectForKey:@"id"];
+            //        UIViewController *vc = [[UIViewController alloc] init];
+            vc.title = [NSString stringWithFormat:@"%@", [type objectForKey:@"typename"]];
+            [vcs addObject:vc];
+        }
         
-        MyViewController *vc = [[MyViewController alloc] init];
-        vc.typeId = [type objectForKey:@"id"];
-//        UIViewController *vc = [[UIViewController alloc] init];
-        vc.title = [NSString stringWithFormat:@"%@", [type objectForKey:@"typename"]];
-        [vcs addObject:vc];
+        JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
+        slideSegmentController.title = @"育儿资讯";
+        slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
+        slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
+        
+        [self.navigationController setNavigationBarHidden:NO];
+        [self.navigationController pushViewController:slideSegmentController animated:YES];
+    }else{
+        [self showHint:@"暂时没有育儿资讯"];
     }
-    
-    JYSlideSegmentController *slideSegmentController = [[JYSlideSegmentController alloc] initWithViewControllers:vcs];
-    slideSegmentController.title = @"育儿资讯";
-    slideSegmentController.indicatorInsets = UIEdgeInsetsMake(0, 8, 8, 8);
-    slideSegmentController.indicator.backgroundColor = [UIColor greenColor];
-    
-    [self.navigationController setNavigationBarHidden:NO];
-    [self.navigationController pushViewController:slideSegmentController animated:YES];
     
    
 }

@@ -34,10 +34,6 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
 }
 
 - (void)showHint:(NSString *)hint {
-    if ([hint isEqualToString:@"录音没有开始"]) {
-
-    }
-    
     //显示提示信息
     UIView *view = [[UIApplication sharedApplication].delegate window];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
@@ -59,7 +55,7 @@ static const void *HttpRequestHUDKey = &HttpRequestHUDKey;
     hud.mode = MBProgressHUDModeCustomView;
     hud.labelText = hint;
     hud.removeFromSuperViewOnHide = YES;
-    [hud hide:YES afterDelay:1];
+    [hud hide:YES afterDelay:1.5];
 }
 
 - (void)showHint:(NSString *)hint yOffset:(float)yOffset {

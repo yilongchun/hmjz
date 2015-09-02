@@ -97,9 +97,9 @@
     NSNumber *studentsex = [data objectForKey:@"studentsex"];
     NSString *sex;
     if ([studentsex intValue]== 0) {
-        sex = @"男";
-    }else if ([studentsex intValue]== 1){
         sex = @"女";
+    }else if ([studentsex intValue]== 1){
+        sex = @"男";
     }
     NSString *fileid = [data objectForKey:@"flieid"];
     

@@ -358,13 +358,25 @@
 -(void)play:(UITapGestureRecognizer *)gesture{
     NSDictionary *info = [dataSource objectAtIndex:gesture.view.tag - 1];
     NSString *path = [info objectForKey:@"path"];
+    NSNumber *type = [info objectForKey:@"type"];
     NSURL *url = [NSURL URLWithString:path];
-    [self addVideoPlayerWithURL:url];
+    if ([type intValue] == 0) {//MP3
+        [self addVideoPlayerWithURL:url backgroundIsShow:YES];
+    }else if ([type intValue] == 1) {//MP4
+        [self addVideoPlayerWithURL:url backgroundIsShow:NO];
+    }
 }
 
-- (void)addVideoPlayerWithURL:(NSURL *)url{
+- (void)addVideoPlayerWithURL:(NSURL *)url backgroundIsShow:(BOOL)show{
     if (!self.videoController) {
         self.videoController = [[KrVideoPlayerController alloc] initWithFrame:self.view.frame];
+        if (show) {
+            //设置背景图片
+            UIImage *image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:@"ic_index_bg" ofType:@"png"]];
+            self.videoController.backgroundView.layer.contents = (id)image.CGImage;
+        }
+       
+        
         __weak typeof(self)weakSelf = self;
         [self.videoController setDimissCompleteBlock:^{
             weakSelf.videoController = nil;

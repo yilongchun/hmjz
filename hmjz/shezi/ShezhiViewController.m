@@ -53,6 +53,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"设置"];
     [engine cancelAllOperations];
     alert = nil;
     alert2 = nil;
@@ -329,6 +330,10 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"设置"];
+}
 
 
 

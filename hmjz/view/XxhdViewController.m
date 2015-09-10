@@ -14,6 +14,7 @@
 #import "MyViewControllerCellDetail.h"
 #import "MJRefresh.h"
 
+
 @interface XxhdViewController (){
     NSNumber *totalpage;
     NSNumber *page;
@@ -241,6 +242,16 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"学校活动"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"学校活动"];
 }
 
 @end

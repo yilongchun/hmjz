@@ -13,6 +13,9 @@
 #import "GuideViewController.h"
 #import "IQKeyboardManager.h"
 
+
+#define UMENG_APPKEY @"55f0fb65e0f55afab3001da7"
+
 @interface AppDelegate ()
 
 @end
@@ -21,11 +24,29 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+//    获取设备标识
+//    Class cls = NSClassFromString(@"UMANUtil");
+//    SEL deviceIDSelector = @selector(openUDIDString);
+//    NSString *deviceID = nil;
+//    if(cls && [cls respondsToSelector:deviceIDSelector]){
+//        deviceID = [cls performSelector:deviceIDSelector];
+//    }
+//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
+//                                                       options:NSJSONWritingPrettyPrinted
+//                                                         error:nil];
+//    NSLog(@"%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //友盟统计
+//    [MobClick setLogEnabled:YES];
+    [MobClick startWithAppkey:UMENG_APPKEY reportPolicy:(ReportPolicy) BATCH channelId:nil];
+    [MobClick setAppVersion:XcodeAppVersion];
+    [MobClick updateOnlineConfig];  //在线参数配置
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onlineConfigCallBack:) name:UMOnlineConfigDidFinishedNotification object:nil];
+    
+    
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    
-
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -112,6 +133,11 @@
 
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (void)onlineConfigCallBack:(NSNotification *)note {
+    
+    NSLog(@"online config has fininshed and note = %@", note.userInfo);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

@@ -114,7 +114,6 @@
     }
 }
 
-
 //登陆之后根据userid获取家长信息
 - (void)getParentInfo:(NSString *)userid{
     

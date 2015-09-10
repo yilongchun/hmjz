@@ -14,6 +14,7 @@
 #import "UIImageView+AFNetworking.h"
 #import "MJRefresh.h"
 
+
 @interface GgtzViewController (){
     NSNumber *totalpage;
     NSNumber *page;
@@ -236,7 +237,15 @@
     [self.navigationController pushViewController:ggxq animated:YES];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"学校公告"];
+}
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"学校公告"];
+}
 
 
 @end

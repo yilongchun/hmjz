@@ -441,5 +441,15 @@
     [self.mytableview.header beginRefreshing];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [MobClick beginLogPageView:@"益智乐园"];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [MobClick endLogPageView:@"益智乐园"];
+}
+
 
 @end

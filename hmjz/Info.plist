@@ -28,6 +28,11 @@
 	<string>mobile.hmjxt.com</string>
 	<key>HttpImageurl2</key>
 	<string>115.29.103.36/SM</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>HttpImageurl3</key>
 	<string>mobile.hmjxt.com/newsm</string>
 	<key>Httpurl</key>

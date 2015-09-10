@@ -31,6 +31,7 @@
 		E412E17F1B79F09400F62A5D /* UIScrollView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16A1B79F09400F62A5D /* UIScrollView+MJExtension.m */; };
 		E412E1801B79F09400F62A5D /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16C1B79F09400F62A5D /* UIScrollView+MJRefresh.m */; };
 		E412E1811B79F09400F62A5D /* UIView+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = E412E16E1B79F09400F62A5D /* UIView+MJExtension.m */; };
+		E41A51651BA1291900455F36 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E41A51621BA1291900455F36 /* libMobClickLibrary.a */; };
 		E439EFF31B9029100053C6C8 /* MLPhotoBrowserAssets.m in Sources */ = {isa = PBXBuildFile; fileRef = E439EFD71B9029100053C6C8 /* MLPhotoBrowserAssets.m */; };
 		E439EFF41B9029100053C6C8 /* MLPhotoBrowserDatas.m in Sources */ = {isa = PBXBuildFile; fileRef = E439EFD91B9029100053C6C8 /* MLPhotoBrowserDatas.m */; };
 		E439EFF51B9029100053C6C8 /* MLPhotoBrowserPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E439EFDB1B9029100053C6C8 /* MLPhotoBrowserPhoto.m */; };
@@ -595,6 +596,9 @@
 		E412E16C1B79F09400F62A5D /* UIScrollView+MJRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+MJRefresh.m"; sourceTree = "<group>"; };
 		E412E16D1B79F09400F62A5D /* UIView+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+MJExtension.h"; sourceTree = "<group>"; };
 		E412E16E1B79F09400F62A5D /* UIView+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+MJExtension.m"; sourceTree = "<group>"; };
+		E41A51621BA1291900455F36 /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickLibrary.a; sourceTree = "<group>"; };
+		E41A51631BA1291900455F36 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
+		E41A51641BA1291900455F36 /* MobClickSocialAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickSocialAnalytics.h; sourceTree = "<group>"; };
 		E439EFD61B9029100053C6C8 /* MLPhotoBrowserAssets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserAssets.h; sourceTree = "<group>"; };
 		E439EFD71B9029100053C6C8 /* MLPhotoBrowserAssets.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLPhotoBrowserAssets.m; sourceTree = "<group>"; };
 		E439EFD81B9029100053C6C8 /* MLPhotoBrowserDatas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLPhotoBrowserDatas.h; sourceTree = "<group>"; };
@@ -1438,6 +1442,7 @@
 				E4C7772A19F88B4E00532B09 /* CFNetwork.framework in Frameworks */,
 				E4C7772819F88B2D00532B09 /* SystemConfiguration.framework in Frameworks */,
 				E4FBAD871A0C5A28005758FD /* libEaseMobClientSDKLite.a in Frameworks */,
+				E41A51651BA1291900455F36 /* libMobClickLibrary.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1542,6 +1547,16 @@
 				E412E1641B79F09400F62A5D /* MJRefreshStateHeader.m */,
 			);
 			path = Header;
+			sourceTree = "<group>";
+		};
+		E41A51611BA1291900455F36 /* UMAnalytics_Sdk_3.5.13 */ = {
+			isa = PBXGroup;
+			children = (
+				E41A51621BA1291900455F36 /* libMobClickLibrary.a */,
+				E41A51631BA1291900455F36 /* MobClick.h */,
+				E41A51641BA1291900455F36 /* MobClickSocialAnalytics.h */,
+			);
+			path = UMAnalytics_Sdk_3.5.13;
 			sourceTree = "<group>";
 		};
 		E439EFD31B9029100053C6C8 /* MLPhotoBrowser */ = {
@@ -1685,6 +1700,7 @@
 		E4B2C8FF19F7621900B0E1DE /* hmjz */ = {
 			isa = PBXGroup;
 			children = (
+				E41A51611BA1291900455F36 /* UMAnalytics_Sdk_3.5.13 */,
 				E4CBDD6B1B588F2700247C12 /* UIPickViewAlert */,
 				E459B58A1B7B197300E051AF /* KrVideoPlayer */,
 				E439EFD31B9029100053C6C8 /* MLPhotoBrowser */,
@@ -3950,6 +3966,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/hmjz/EaseMobSDK/lib",
+					"$(PROJECT_DIR)/hmjz/UMAnalytics_Sdk_3.5.12",
+					"$(PROJECT_DIR)/hmjz/UMAnalytics_Sdk_3.5.13",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3974,6 +3992,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/hmjz/EaseMobSDK/lib",
+					"$(PROJECT_DIR)/hmjz/UMAnalytics_Sdk_3.5.12",
+					"$(PROJECT_DIR)/hmjz/UMAnalytics_Sdk_3.5.13",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

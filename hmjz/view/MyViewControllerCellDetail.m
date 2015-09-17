@@ -15,12 +15,12 @@
 #import "PinglunTableViewCell.h"
 #import "CustomMoviePlayerViewController.h"
 #import "KrVideoPlayerController.h"
-#import "TapImageView.h"
 #import "ImgScrollView.h"
 #import "SRRefreshView.h"
 #import "IQKeyboardManager.h"
+#import "MLPhotoBrowserViewController.h"
 
-@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UIScrollViewDelegate,SRRefreshDelegate>{
+@interface MyViewControllerCellDetail ()<MBProgressHUDDelegate,ImgScrollViewDelegate,UIScrollViewDelegate,SRRefreshDelegate>{
     MKNetworkEngine *engine;
     MBProgressHUD *HUD;
     NSNumber *totalpage;
@@ -514,19 +514,34 @@
                 CGFloat x = 0;
                 CGFloat y = cell.content.frame.origin.y+10+cell.content.frame.size.height;
                 for (int i = 0 ; i < [filelist count]; i++) {
-                    file = [filelist objectAtIndex:i];
+//                    file = [filelist objectAtIndex:i];
+//                    if ((i % 3 == 0) && i != 0) {
+//                        y += 105;
+//                    }
+//                    x = 5+(105 * (i % 3));
+//                    TapImageView *tmpView = [[TapImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
+//                    tmpView.t_delegate = self;
+//                    [tmpView setImageWithURL:[file objectForKey:@"fileId"]];
+//                    tmpView.tag = 10 + i;
+//                    [cell.contentView addSubview:tmpView];
+//                    
+//                    tmpView = (TapImageView *)[cell.contentView viewWithTag:10+i];
+//                    tmpView.identifier = cell;
+                    
+                    
+                    NSDictionary *picDic = [filelist objectAtIndex:i];
                     if ((i % 3 == 0) && i != 0) {
                         y += 105;
                     }
                     x = 5+(105 * (i % 3));
-                    TapImageView *tmpView = [[TapImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
-                    tmpView.t_delegate = self;
-                    [tmpView setImageWithURL:[file objectForKey:@"fileId"]];
-                    tmpView.tag = 10 + i;
-                    [cell.contentView addSubview:tmpView];
+                    UIImageView *imageview = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, 100, 100)];
+                    [imageview setImageWithURL:[NSURL URLWithString:[picDic objectForKey:@"fileId"]]];
+                    imageview.tag = i;
+                    imageview.userInteractionEnabled = YES;
+                    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPic:)];
+                    [imageview addGestureRecognizer:tap];
+                    [cell.contentView addSubview:imageview];
                     
-                    tmpView = (TapImageView *)[cell.contentView viewWithTag:10+i];
-                    tmpView.identifier = cell;
                 }
                 
                 
@@ -766,94 +781,6 @@
     return self.show; // 返回NO表示要显示，返回YES将hiden
 }
 
-
-#pragma mark -
-#pragma mark - custom method
-- (void) addSubImgView
-{
-    for (UIView *tmpView in myScrollView.subviews)
-    {
-        [tmpView removeFromSuperview];
-    }
-    
-    for (int i = 0; i < imgCount; i ++)
-    {
-        if (i == currentIndex)
-        {
-            continue;
-        }
-        
-        TapImageView *tmpView = (TapImageView *)[tapCell viewWithTag:10 + i];
-        
-        //转换后的rect
-        CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
-        
-        ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){i*myScrollView.bounds.size.width,0,myScrollView.bounds.size}];
-        [tmpImgScrollView setContentWithFrame:convertRect];
-        [tmpImgScrollView setImage:tmpView.image];
-        [myScrollView addSubview:tmpImgScrollView];
-        tmpImgScrollView.i_delegate = self;
-        
-        [tmpImgScrollView setAnimationRect];
-    }
-}
-
-- (void) setOriginFrame:(ImgScrollView *) sender
-{
-    [UIView animateWithDuration:0.2 animations:^{
-        [sender setAnimationRect];
-        markView.alpha = 1.0;
-        [self.navigationController setNavigationBarHidden:YES];
-    }];
-}
-
-#pragma mark -
-#pragma mark - custom delegate
-- (void) tappedWithObject:(id)sender
-{
-    
-    [self.view bringSubviewToFront:scrollPanel];
-    scrollPanel.alpha = 1.0;
-    
-    TapImageView *tmpView = sender;
-    currentIndex = tmpView.tag - 10;
-    
-    tapCell = tmpView.identifier;
-    
-    //转换后的rect
-    CGRect convertRect = [[tmpView superview] convertRect:tmpView.frame toView:self.view];
-    
-    CGPoint contentOffset = myScrollView.contentOffset;
-    contentOffset.x = currentIndex*self.view.frame.size.width;
-    myScrollView.contentOffset = contentOffset;
-    
-    //添加
-    [self addSubImgView];
-    
-    ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){contentOffset,myScrollView.bounds.size}];
-    [tmpImgScrollView setContentWithFrame:convertRect];
-    [tmpImgScrollView setImage:tmpView.image];
-    [myScrollView addSubview:tmpImgScrollView];
-    tmpImgScrollView.i_delegate = self;
-    
-    [self performSelector:@selector(setOriginFrame:) withObject:tmpImgScrollView afterDelay:0.1];
-    
-}
-
-- (void) tapImageViewTappedWithObject:(id)sender
-{
-    [self.navigationController setNavigationBarHidden:NO];
-    ImgScrollView *tmpImgView = sender;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        markView.alpha = 0;
-        [tmpImgView rechangeInitRdct];
-    } completion:^(BOOL finished) {
-        scrollPanel.alpha = 0;
-    }];
-    
-}
-
 #pragma mark -
 #pragma mark - scrollView delegate
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
@@ -884,6 +811,41 @@
     
     [self loadData];
     [_slimeView endRefresh];
+}
+
+/**
+ *  点击图片查看大图
+ */
+-(void)showPic:(UITapGestureRecognizer *)recognizer{
+    // 图片游览器
+    MLPhotoBrowserViewController *photoBrowser = [[MLPhotoBrowserViewController alloc] init];
+    // 缩放动画
+    photoBrowser.status = UIViewAnimationAnimationStatusFade;
+    // 可以删除
+    photoBrowser.editing = NO;
+    // 数据源/delegate
+    //    photoBrowser.delegate = self;
+    // 同样支持数据源/DataSource
+    //                    photoBrowser.dataSource = self;
+    
+    NSMutableArray *imgDataSource = [NSMutableArray array];
+    
+    
+    NSDictionary *data = [self.dataSource objectAtIndex:0];
+    NSArray *picList = [data objectForKey:@"filelist"];
+    
+    for (int i = 0; i < picList.count; i++) {
+        MLPhotoBrowserPhoto *photo = [[MLPhotoBrowserPhoto alloc] init];
+        photo.photoURL = [NSURL URLWithString:[[picList objectAtIndex:i] objectForKey:@"fileId"]];
+        [imgDataSource addObject:photo];
+    }
+    
+    photoBrowser.photos = imgDataSource;
+    int index = (int)recognizer.view.tag;
+    // 当前选中的值
+    photoBrowser.currentIndexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    // 展示控制器
+    [photoBrowser showPickerVc:self];
 }
 
 /*

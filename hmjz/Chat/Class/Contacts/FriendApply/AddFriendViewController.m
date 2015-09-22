@@ -63,7 +63,7 @@
     [dic setValue:page forKey:@"page"];
     [dic setValue:rows forKey:@"rows"];
     
-    MKNetworkOperation *op = [engine operationWithPath:@"/Parentfield/findPageList.do" params:dic httpMethod:@"GET"];
+    MKNetworkOperation *op = [engine operationWithPath:@"/Parentfield/findTlist.do" params:dic httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *operation) {
 //        NSLog(@"[operation responseData]-->>%@", [operation responseString]);
         NSString *result = [operation responseString];

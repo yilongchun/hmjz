@@ -293,6 +293,7 @@
             if ([success boolValue]) {
                 NSDictionary *data = [resultDict objectForKey:@"data"];
                 if (data != nil) {
+                    [self.dataSource removeAllObjects];
                     self.dataSource = [NSMutableArray arrayWithObject:data];
                     NSNumber *type = [data objectForKey:@"tntype"];
                     tntype = [type intValue];
